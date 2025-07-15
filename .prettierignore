@@ -1,0 +1,17 @@
+/dist/*
+.local
+.output.js
+/node_modules/**
+
+**/*.svg
+**/*.sh
+
+/public/*
+README.md
+.editorconfig
+.prettierrc
+.prettierignore
+pnpm-lock.yaml
+stats.html
+auto-imports.d.ts
+components.d.ts

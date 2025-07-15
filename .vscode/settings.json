@@ -1,0 +1,26 @@
+{
+	"editor.formatOnSave": true,
+	"editor.formatOnSaveMode": "file",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.tabSize": 2,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	// "i18n-ally.localesPaths": ["src/languages/modules"]
+	"i18n-ally.localesPaths": ["src/languages/modules"],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.sortKeys": true,
+	"i18n-ally.namespace": false,
+	"i18n-ally.enabledParsers": ["ts"],
+	"i18n-ally.sourceLanguage": "en",
+	"i18n-ally.displayLanguage": "zh-CN",
+	"i18n-ally.enabledFrameworks": ["vue", "react"],
+	"i18n-ally.annotationInPlace": false
+}
