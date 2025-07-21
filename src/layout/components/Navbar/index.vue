@@ -75,15 +75,11 @@ async function logout() {
 				</div>
 				<template #dropdown>
 					<ElDropdownMenu>
-						<RouterLink to="/">
+						<!-- <RouterLink to="/">
 							<ElDropdownItem>Dashboard</ElDropdownItem>
-						</RouterLink>
-						<ElDropdownItem
-							divided
-							@click="logout"
-						>
-							Log Out
-						</ElDropdownItem>
+						</RouterLink> -->
+						<!-- divided -->
+						<ElDropdownItem @click="logout"> 退出登录 </ElDropdownItem>
 					</ElDropdownMenu>
 				</template>
 			</ElDropdown>

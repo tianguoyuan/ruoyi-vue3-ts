@@ -29,6 +29,19 @@ export const notFoundRoute: RouteRecordRaw = {
 
 export const constantRoutes: RouteRecordRaw[] = [
 	{
+		path: '',
+		component: Layout,
+		redirect: '/index',
+		children: [
+			{
+				path: '/index',
+				component: () => import('@/views/index.vue'),
+				name: 'Index',
+				meta: { title: '首页', icon: 'dashboard', affix: true }
+			}
+		]
+	},
+	{
 		path: '/redirect',
 		component: Layout,
 		meta: { hidden: true },
@@ -62,7 +75,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 				path: 'index',
 				name: 'demo',
 				component: () => import('@/views/demo/index.vue'),
-				meta: { title: 'demo', icon: 'project' }
+				meta: { title: '生成表单', icon: 'project' }
 			}
 		]
 	}

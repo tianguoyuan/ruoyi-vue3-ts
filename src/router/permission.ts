@@ -28,7 +28,7 @@ export const setupPermission = (router: Router) => {
 					NProgress.done()
 				} else {
 					const [err, result] = await apiTo(userStore.getUserInfo())
-					if (err) {
+					if (err || !result) {
 						userStore.resetUserInfo()
 						ElMessage.error(err || '获取用户信息失败')
 						next({

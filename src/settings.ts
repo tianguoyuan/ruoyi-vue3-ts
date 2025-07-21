@@ -11,7 +11,7 @@ const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
 const defaultSettings: AppSettings = {
 	title: pkg.name,
 	version: pkg.version,
-	showSettings: true,
+	showSettings: false,
 	tagsView: true,
 	fixedHeader: true,
 	sidebarLogo: true,

@@ -1,7 +1,9 @@
 import axios, { type AxiosRequestConfig, type AxiosInstance, type Canceler, type Method } from 'axios'
 import { ResultEnum as REQUEST } from '@/enums/ResultEnum'
 import Storage from './storage'
-import { ElLoading, ElMessage } from 'element-plus'
+import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import router from '@/router'
+import { useUserStoreWidthOut } from '@/store/user'
 
 interface RequestState {
 	baseUrl: string
@@ -42,6 +44,18 @@ class Request {
 	/** 登录过期, 重新登录 */
 	private errorAuthToast(msg: string) {
 		console.log('errorAuthToast', msg)
+		ElMessageBox.confirm('登录过期, 是否重新登录?', {
+			title: '提示',
+			type: 'warning'
+		})
+			.then(() => {
+				const userStore = useUserStoreWidthOut()
+				userStore.resetUserInfo()
+				router.replace('/login')
+			})
+			.catch(() => {
+				// catch error
+			})
 	}
 	private hideLoading() {
 		console.log('hideLoading')
@@ -90,7 +104,7 @@ class Request {
 			response => {
 				this.destroy(url, loading)
 				const code = response.data[REQUEST.RESPONSE_CODE_FIELD]
-				const data = response.data[REQUEST.RESPONSE_DATA_FIELD]
+				const data = REQUEST.RESPONSE_DATA_FIELD ? response.data[REQUEST.RESPONSE_DATA_FIELD] : response.data
 				const msg = response.data[REQUEST.RESPONSE_MSG_FIELD] || '系统错误，请稍候再试'
 
 				console.timeEnd(url)
@@ -121,7 +135,7 @@ class Request {
 		)
 	}
 	public request = <T>(
-		options: AxiosRequestConfig & { method: Method },
+		options: AxiosRequestConfig & { method: Uppercase<Method> },
 		loading?: boolean,
 		cancelToken?: boolean
 	): Promise<T> => {
@@ -140,6 +154,6 @@ class Request {
 		return instance(options)
 	}
 }
-export const http = new Request({
+export const { request } = new Request({
 	baseUrl: import.meta.env.VITE_API_URL
 })

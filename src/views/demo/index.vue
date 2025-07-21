@@ -23,16 +23,6 @@ const formConfig = ref<FormConfig>({
 		{
 			type: 'select',
 			label: '城市',
-			prop: 'city5',
-			options: [
-				{ label: '北京', value: 'beijing' },
-				{ label: '上海', value: 'shanghai' },
-				{ label: '广州', value: 'guangzhou' }
-			]
-		},
-		{
-			type: 'select',
-			label: '城市',
 			prop: 'city4',
 			options: [
 				{ label: '北京', value: 'beijing' },
@@ -61,9 +51,14 @@ const formConfig = ref<FormConfig>({
 			]
 		},
 		{
-			type: 'editor',
+			type: 'select',
 			label: '城市',
-			prop: 'city1'
+			prop: 'city1',
+			options: [
+				{ label: '北京', value: 'beijing' },
+				{ label: '上海', value: 'shanghai' },
+				{ label: '广州', value: 'guangzhou' }
+			]
 		}
 	],
 	buttons: [
@@ -89,6 +84,8 @@ const handleButtonClick = async (event: string, data: any) => {
 	if (event === 'search') {
 		const isPass = await formGeneratorRef.value?.validate()
 		if (!isPass) return
+		console.log('data', data)
+
 		formGeneratorRef.value?.queryTableData()
 	} else if (event === 'reset') {
 		console.log(' 重置表单')

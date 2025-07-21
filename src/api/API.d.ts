@@ -13,6 +13,8 @@ declare namespace API {
 		username: string
 		/** 密码 */
 		password: string
+		uuid: string
+		code: string
 	}
 	interface ILoginRes {
 		/** token */
@@ -20,17 +22,21 @@ declare namespace API {
 	}
 
 	/** 获取用户信息 */
-	interface IUserInfo {
-		/**token */
-		token: string
-	}
-	type role = 'admin' | 'editor'
+	type role = 'admin' | 'editor' | string
+	type permissions = '*:*:*'
 	interface IUserInfoRes {
+		isDefaultModifyPwd: boolean
+		isPasswordExpired: boolean
+		permissions: [] | permissions[]
 		roles: [] | role[]
-		introduction: string
-		avatar: string
-		name: string
-		routes: any[]
+		user: {
+			avatar: string
+			nickName: string
+		}
+		// introduction: string
+		// avatar: string
+		// name: string
+		// routes: any[]
 	}
 
 	interface IDemoList {
@@ -41,5 +47,15 @@ declare namespace API {
 	interface IDemoListRes {
 		total: number
 		rows: any[]
+	}
+
+	interface ICaptchaImageRes {
+		captchaEnabled: boolean
+		uuid: string
+		img: string
+	}
+
+	interface IGetRoutersRes {
+		[key: string]: any
 	}
 }

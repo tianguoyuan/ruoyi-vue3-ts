@@ -51,15 +51,36 @@ export function formatRoutes(routes: any[]) {
 }
 
 /**
- * @desc 权限判断函数 - v-if="checkPermission(['admin'])"
- * @param value - string[] - 权限['admin','edit']
+ * @desc 字符权限校验 - v-if="checkPermission(['admin'])"
+ * @param value - string[] - 权限['system:user:add','system:user:edit']
  */
 export const checkPermission = (permissionRoles: string[]): boolean => {
 	const userStore = useUserStoreWidthOut()
 
+	const allPermission = '*:*:*'
+	if (userStore.userInfo.permissions.includes(allPermission)) return true
+
 	if (permissionRoles && permissionRoles instanceof Array && permissionRoles.length > 0) {
-		const userRoles = userStore.userInfo.roles
+		const userRoles = userStore.userInfo.permissions
 		return userRoles.some(role => permissionRoles.includes(role))
+	} else {
+		return false
+	}
+}
+
+/**
+ * @desc 角色权限校验 - v-if="checkRole(['admin'])"
+ * @param value - string[] - 权限['admin','edit']
+ */
+export const checkRole = (roles: string[]): boolean => {
+	const userStore = useUserStoreWidthOut()
+	const superAdmin = 'admin'
+
+	if (userStore.userInfo.roles.includes(superAdmin)) return true
+
+	if (roles && roles instanceof Array && roles.length > 0) {
+		const userRoles = userStore.userInfo.roles
+		return userRoles.some(role => roles.includes(role))
 	} else {
 		return false
 	}
