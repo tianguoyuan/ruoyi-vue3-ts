@@ -5,7 +5,7 @@ import defaultSettings from '@/settings'
 import { computed, ref } from 'vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
-import type { SizeEnum } from '@/enums/SizeEnum'
+import type { ISizeEnumType } from '@/enums/SizeEnum'
 
 export const useAppStore = defineStore('app', () => {
 	/** 语言 */
@@ -21,7 +21,7 @@ export const useAppStore = defineStore('app', () => {
 
 	/** 大小 */
 	const size = useStorage('size', defaultSettings.size)
-	function setSize(type: SizeEnum) {
+	function setSize(type: ISizeEnumType) {
 		size.value = type
 	}
 

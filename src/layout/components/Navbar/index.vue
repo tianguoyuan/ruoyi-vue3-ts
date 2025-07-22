@@ -9,7 +9,6 @@ import SizeSelect from './SizeSelect.vue'
 import { computed, ref } from 'vue'
 import { useUserStore } from '@/store/user'
 import { useRoute, useRouter } from 'vue-router'
-import { CaretBottom } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const userStore = useUserStore()
@@ -17,6 +16,10 @@ const router = useRouter()
 const route = useRoute()
 const sidebarOpened = computed(() => appStore.sidebarOpened)
 const avatar = computed(() => userStore.userInfo.avatar)
+
+console.log('import.meta.env', import.meta.env)
+
+const username = computed(() => userStore.userInfo.name)
 const device = computed(() => appStore.device)
 
 function toggleSideBar() {
@@ -50,7 +53,7 @@ async function logout() {
 					class="right-menu-item hover-effect"
 				/>
 				<ElTooltip
-					content="Global Size"
+					content="布局大小"
 					effect="dark"
 					placement="bottom"
 				>
@@ -64,22 +67,29 @@ async function logout() {
 
 			<ElDropdown
 				class="avatar-container right-menu-item hover-effect"
-				trigger="click"
+				trigger="hover"
 			>
 				<div class="avatar-wrapper">
-					<img
-						:src="avatar + '?imageView2/1/w/80/h/80'"
-						class="user-avatar"
-					/>
-					<el-icon><CaretBottom /></el-icon>
+					<div class="flex items-center">
+						<img
+							:src="avatar"
+							class="w-7 h-7 rounded-full"
+						/>
+						<span class="pl-2 text-3.5">{{ username }}</span>
+					</div>
+					<!-- <el-icon class="ml-1"><CaretBottom /></el-icon> -->
 				</div>
 				<template #dropdown>
 					<ElDropdownMenu>
-						<!-- <RouterLink to="/">
-							<ElDropdownItem>Dashboard</ElDropdownItem>
-						</RouterLink> -->
-						<!-- divided -->
-						<ElDropdownItem @click="logout"> 退出登录 </ElDropdownItem>
+						<RouterLink to="/system/user/profile">
+							<ElDropdownItem>个人中心</ElDropdownItem>
+						</RouterLink>
+						<ElDropdownItem
+							divided
+							@click="logout"
+						>
+							退出登录
+						</ElDropdownItem>
 					</ElDropdownMenu>
 				</template>
 			</ElDropdown>

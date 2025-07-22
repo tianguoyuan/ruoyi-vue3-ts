@@ -6,9 +6,14 @@ import type { App } from 'vue'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import { useAppStoreWithOut } from '@/store/app'
+import type { ISizeEnumType } from '@/enums/SizeEnum'
 
 export function setupElementUI(app: App) {
-	app.use(ElementPlus)
+	const appStore = useAppStoreWithOut()
+	app.use(ElementPlus, {
+		size: (appStore.size || 'default') as ISizeEnumType
+	})
 	for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 		app.component(key, component)
 	}

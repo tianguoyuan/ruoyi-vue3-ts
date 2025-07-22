@@ -18,7 +18,7 @@ const defaultSettings: AppSettings = {
 	needErrorLog: ['production'],
 	watermarkEnabled: false,
 	watermarkContent: pkg.name,
-	size: SizeEnum.DEFAULT,
+	size: 'default',
 	language: LanguageEnum.ZH_CN,
 
 	layout: LayoutEnum.LEFT,

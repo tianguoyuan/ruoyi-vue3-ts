@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { SizeEnum } from '@/enums/SizeEnum'
+import { SizeEnum, type ISizeEnumType } from '@/enums/SizeEnum'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import { useAppStore } from '@/store/app'
 
 const appStore = useAppStore()
 const sizeOptions = computed(() => {
-	return Object.values(SizeEnum).map(size => ({
-		label: size,
-		value: size,
-		disabled: appStore.size === size
+	return SizeEnum.map(val => ({
+		label: val.label,
+		value: val.value,
+		disabled: appStore.size === val.value
 	}))
 })
 
-function handleCommand(command: string | number | object) {
+function handleCommand(command: ISizeEnumType) {
 	console.log('command', command)
-	appStore.setSize(command as SizeEnum)
+	appStore.setSize(command as ISizeEnumType)
 }
 </script>
 
@@ -32,7 +32,7 @@ function handleCommand(command: string | number | object) {
 					:command="item['value']"
 					:disabled="item['disabled']"
 				>
-					{{ item['value'] }}
+					{{ item['label'] }}
 				</ElDropdown-item>
 			</ElDropdown-menu>
 		</template>

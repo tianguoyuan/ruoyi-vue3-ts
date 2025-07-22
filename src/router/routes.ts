@@ -78,6 +78,22 @@ export const constantRoutes: RouteRecordRaw[] = [
 				meta: { title: '生成表单', icon: 'project' }
 			}
 		]
+	},
+	{
+		path: '/system',
+		redirect: 'noRedirect',
+		component: Layout,
+		meta: {
+			hidden: true
+		},
+		children: [
+			{
+				path: 'user/profile',
+				component: () => import('@/views/system/user/profile/index.vue'),
+				name: 'Profile',
+				meta: { title: '个人中心', icon: 'user' }
+			}
+		]
 	}
 ]
 

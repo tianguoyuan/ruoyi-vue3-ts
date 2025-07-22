@@ -32,6 +32,7 @@ declare namespace API {
 		user: {
 			avatar: string
 			nickName: string
+			phonenumber: string
 		}
 		// introduction: string
 		// avatar: string
@@ -58,4 +59,17 @@ declare namespace API {
 	interface IGetRoutersRes {
 		[key: string]: any
 	}
+
+	// 修改用户信息
+	interface IUpdateUserProfile {
+		nickName: string
+		phonenumber: string
+		email: string
+		sex: string
+	}
+	// 修改头像
+	// interface IUploadAvatar {
+	// 	avatarfile: FormData<'avatarfile'>
+	// }
+	type IUploadAvatar = FormData
 }

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useAppStore } from '@/store/app'
 import { computed } from 'vue'
-import type { SizeEnum } from './enums/SizeEnum'
+import type { ISizeEnumType } from './enums/SizeEnum'
 import { useSettingsStore } from './store/settings'
 const appStore = useAppStore()
 
 const locale = computed(() => appStore.locale)
-const size = computed(() => appStore.size as SizeEnum)
+const size = computed(() => appStore.size as ISizeEnumType)
 
 const settingsStore = useSettingsStore()
 </script>

@@ -3,11 +3,8 @@ import { store } from '.'
 import { ref } from 'vue'
 import { login as loginApi, getUserInfo as getUserInfoApi, userLogout } from '@/api/user'
 import Storage from '@/utils/storage'
-import to from 'await-to-js'
 import { getRouters } from '@/api/menu'
-interface IUserInfo extends API.IUserInfoRes {
-	token: string
-}
+import router from '@/router'
 
 export const useUserStore = defineStore('user', () => {
 	const userInfoDefault = {
@@ -17,9 +14,7 @@ export const useUserStore = defineStore('user', () => {
 		name: '',
 		roles: [] as string[],
 		permissions: [] as string[],
-		routes: [], // 存储后端返回的路由
-		isDefaultModifyPwd: false,
-		isPasswordExpired: false
+		routes: [] // 存储后端返回的路由
 	}
 	const userInfo = ref({ ...userInfoDefault })
 
@@ -29,22 +24,43 @@ export const useUserStore = defineStore('user', () => {
 		Storage.set('token', result.token)
 	}
 
-	async function getUserInfo() {
-		const [userResult, routesResult] = await Promise.all([getUserInfoApi(), getRouters()])
-		userInfo.value.isDefaultModifyPwd = userResult.isDefaultModifyPwd
-		userInfo.value.isPasswordExpired = userResult.isDefaultModifyPwd
+	async function userInfoSimple() {
+		const userResult = await getUserInfoApi()
 		userInfo.value.roles = userResult.roles
 		userInfo.value.permissions = userResult.permissions
-		userInfo.value.avatar = userResult.user.avatar || 'https://foruda.gitee.com/images/1723603502796844527/03cdca2a_716974.gif'
+		userInfo.value.avatar = import.meta.env.VITE_API_URL + userResult.user.avatar
 		userInfo.value.name = userResult.user.nickName
+		return userResult
+	}
 
+	async function getUserInfo() {
+		const [userResult, routesResult] = await Promise.all([userInfoSimple(), getRouters()])
 		userInfo.value.routes = routesResult.data || []
 
-		// userInfo.value.avatar = result.user.avatar
-		// userInfo.value.introduction = ''
-		// userInfo.value.name = result.user.nickName
-		// userInfo.value.roles = result.roles
-		// return result
+		/* 初始密码提示 */
+		if (userResult.isDefaultModifyPwd) {
+			ElMessageBox.confirm('您的密码还是初始密码，请修改密码！', '安全提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					router.push({ path: '/system/user/profile', query: { activeTab: 'resetPwd' } })
+				})
+				.catch(() => {})
+		}
+		/* 过期密码提示 */
+		if (!userResult.isDefaultModifyPwd && userResult.isPasswordExpired) {
+			ElMessageBox.confirm('您的密码已过期，请尽快修改密码！', '安全提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				type: 'warning'
+			})
+				.then(() => {
+					router.push({ path: '/system/user/profile', query: { activeTab: 'resetPwd' } })
+				})
+				.catch(() => {})
+		}
 
 		return {
 			...userInfo.value
@@ -59,7 +75,11 @@ export const useUserStore = defineStore('user', () => {
 		resetUserInfo()
 	}
 
-	return { userInfo, login, getUserInfo, resetUserInfo, logout }
+	function setAvatar(val: string) {
+		userInfo.value.avatar = val
+	}
+
+	return { userInfo, login, getUserInfo, userInfoSimple, resetUserInfo, logout, setAvatar }
 })
 
 export function useUserStoreWidthOut() {
