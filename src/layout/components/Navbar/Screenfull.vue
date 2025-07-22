@@ -36,6 +36,7 @@ function change() {
 	<div>
 		<SvgIcon
 			:icon-class="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"
+			size="18px"
 			@click="click"
 		/>
 	</div>

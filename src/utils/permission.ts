@@ -1,7 +1,7 @@
 import Layout from '@/layout/index.vue'
 import { useUserStoreWidthOut } from '@/store/user'
 
-const modules = import.meta.glob('/src/views/*/*.vue')
+const modules = import.meta.glob('/src/views/**/*.vue')
 
 /**
  * @desc 是否有权限访问
@@ -42,6 +42,7 @@ export function formatRoutes(routes: any[]) {
 			tmp.component = Layout
 		} else {
 			tmp.component = modules[`/src/views/${route.component}.vue`]
+			console.log('route.component', route.component)
 		}
 		if (tmp.children && tmp.children.length) {
 			tmp.children = formatRoutes(tmp.children)

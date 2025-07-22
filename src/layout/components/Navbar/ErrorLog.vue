@@ -13,7 +13,10 @@ const errorLogs = computed(() => errorStore.logs)
 			:offset="[0, 15]"
 			@click="dialogVisible = !dialogVisible"
 		>
-			<SvgIcon icon-class="bug" />
+			<SvgIcon
+				icon-class="bug"
+				size="18px"
+			/>
 		</ElBadge>
 		<ElDialog
 			v-model="dialogVisible"

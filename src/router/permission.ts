@@ -6,6 +6,7 @@ import { useUserStoreWidthOut } from '@/store/user'
 import { to as apiTo } from 'await-to-js'
 import { ElMessage } from 'element-plus'
 import { usePermissionStoreWidthOut } from '@/store/permission'
+import { isExternal } from '@/utils/is'
 
 export const setupPermission = (router: Router) => {
 	const whiteList = ['/login'] // no redirect whitelist
@@ -44,7 +45,11 @@ export const setupPermission = (router: Router) => {
 						// const accessedRoutes = permissionStore.generateRoutesByFront(roles)
 						// 后端过滤权限路由
 						const accessedRoutes = permissionStore.generateRoutesByBackend(routes)
-						accessedRoutes.forEach(route => router.addRoute(route))
+						accessedRoutes.forEach(route => {
+							if (!isExternal(route.path)) {
+								router.addRoute(route)
+							}
+						})
 						next({ ...to, replace: true })
 					}
 				}

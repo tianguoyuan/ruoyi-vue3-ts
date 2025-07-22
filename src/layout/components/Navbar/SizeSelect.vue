@@ -23,7 +23,10 @@ function handleCommand(command: ISizeEnumType) {
 		trigger="click"
 		@command="handleCommand"
 	>
-		<SvgIcon icon-class="size" />
+		<SvgIcon
+			icon-class="size"
+			size="18px"
+		/>
 		<template #dropdown>
 			<ElDropdown-menu>
 				<ElDropdown-item

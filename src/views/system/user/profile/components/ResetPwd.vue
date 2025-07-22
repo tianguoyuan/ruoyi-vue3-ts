@@ -48,7 +48,7 @@ function submit() {
 
 <template>
 	<el-form
-		ref="pwdRef"
+		ref="formRef"
 		:model="formModel"
 		:rules="formRules"
 		label-width="80px"

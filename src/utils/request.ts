@@ -38,7 +38,7 @@ class Request {
 		console.log('errorToast', msg)
 		ElMessage({
 			message: msg,
-			type: 'warning'
+			type: 'error'
 		})
 	}
 	/** 登录过期, 重新登录 */
