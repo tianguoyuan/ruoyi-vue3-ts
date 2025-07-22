@@ -3,5 +3,6 @@ module.exports = {
 	'*.{cjs,json}': ['prettier --write'],
 	'*.{vue,html}': ['eslint --fix', 'prettier --write', 'stylelint --fix'],
 	'*.{scss,css}': ['stylelint --fix', 'prettier --write'],
-	'*.md': ['prettier --write']
+	'*.md': ['prettier --write'],
+	'*.svg': ['svgo']
 }
