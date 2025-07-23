@@ -47,7 +47,7 @@
 		"await-to-js": "^3.0.0",
 		"axios": "^1.6.3",
 		"dayjs": "^1.11.10",
-		"element-plus": "^2.7.7",
+		"element-plus": "^2.10.4",
 		"js-cookie": "^3.0.5",
 		"jsencrypt": "^3.3.2",
 		"mathjs": "^12.4.2",
