@@ -36,7 +36,11 @@ function hasOneShowingChild(children: RouteRecordRaw[] = [], parent: RouteRecord
 	}
 
 	if (showingChildren.length === 0) {
-		onlyOneChild.value = { ...parent, path: '', noShowingChildren: true }
+		onlyOneChild.value = {
+			...parent,
+			path: '',
+			noShowingChildren: true
+		}
 		return true
 	}
 

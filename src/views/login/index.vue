@@ -14,7 +14,7 @@ const route = useRoute()
 const router = useRouter()
 const redirect = ref<string | null>(null)
 const otherQuery = ref({})
-const getOtherQuery = function (query) {
+function getOtherQuery(query) {
 	return Object.keys(query).reduce((pre, cur) => {
 		if (cur !== 'redirect') pre[cur] = query[cur]
 		return pre
@@ -68,7 +68,7 @@ const formRule = ref({
 })
 const formRef = ref<null | FormInstance>(null)
 const userStore = useUserStore()
-const submit = async () => {
+async function submit() {
 	await formRef.value?.validate()
 	const [err] = await to(
 		userStore.login({
@@ -197,7 +197,7 @@ getCookie()
 					size="large"
 					@click="submit"
 				>
-					login
+					登录
 				</ElButton>
 			</ElForm>
 		</div>

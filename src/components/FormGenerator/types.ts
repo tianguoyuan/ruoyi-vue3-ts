@@ -275,10 +275,16 @@ export interface FormButton {
 	disabled?: boolean
 	event?: string
 	handler?: (formData: any) => void
+	plain?: boolean
+	show?: boolean
 }
 
 // 表单配置
 export interface FormConfig {
+	modelValue?: {
+		prop: ''
+		order: ''
+	}
 	labelWidth?: string
 	labelPosition?: 'left' | 'right' | 'top'
 	size?: 'large' | 'default' | 'small'
@@ -288,9 +294,12 @@ export interface FormConfig {
 
 	api?: (v: any) => Promise<any>
 	tableShow?: boolean
+	/**初始不查询 */
 	tableInitQueryRefuse?: boolean
+	/**显示多选框 */
 	tableShowSelection?: boolean
 	tableSelection?: (row: any, index: number) => boolean
+	/**显示序号 */
 	tableShowIndex?: boolean
 	tableHeader?: any
 
@@ -315,6 +324,9 @@ export interface FormConfig {
 		| TableField
 	>
 	buttons?: FormButton[]
+	leftButtons?: FormButton[]
+	/**是否自定义修改页面函数 */
+	customPageChange?: boolean
 }
 
 // 表格操作列

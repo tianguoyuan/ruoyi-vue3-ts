@@ -14,7 +14,12 @@ if (checkNeed()) {
 	Vue.onErrorCaptured((err, vm, info) => {
 		Vue.nextTick(() => {
 			const errorStore = useErrorStoreWithOut()
-			errorStore.addErrorLog({ err, vm, info, url: window.location.href })
+			errorStore.addErrorLog({
+				err,
+				vm,
+				info,
+				url: window.location.href
+			})
 		})
 	})
 }

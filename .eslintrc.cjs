@@ -126,6 +126,25 @@ module.exports = {
 			}
 		],
 		// "script-setup", "composition", "composition-vue2", or "options"
-		'vue/component-api-style': ['error', ['script-setup']]
+		'vue/component-api-style': ['error', ['script-setup']],
+
+		// 函数声明只允许 function声明
+		'func-style': [
+			'error',
+			'declaration',
+			{
+				allowArrowFunctions: false // 不允许箭头函数
+			}
+		],
+
+		// 对象多个属性换行
+		'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
+		'object-curly-newline': [
+			'error',
+			{
+				consistent: true,
+				multiline: true
+			}
+		]
 	}
 }

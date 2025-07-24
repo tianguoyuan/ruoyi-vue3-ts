@@ -86,7 +86,10 @@ class Request {
 		instance.interceptors.request.use(config => {
 			if (cancelToken) {
 				config.cancelToken = new axios.CancelToken(cancel => {
-					this.cancelTokenList.push({ url: url, cancel })
+					this.cancelTokenList.push({
+						url: url,
+						cancel
+					})
 				})
 			}
 			if (loading) {
@@ -98,17 +101,47 @@ class Request {
 			if (Storage.get('token')) {
 				config.headers[REQUEST.REQUEST_HEADER_TOKEN_FIELD] = Storage.get('token')
 			}
+
+			// 兼容get参数数组
+			if (config.method === 'get' && config.params) {
+				const filteredParams = Object.fromEntries(
+					Object.entries(config.params).filter(([_, value]) => value !== null && value !== undefined && value !== '')
+				) as { [key: string]: string }
+				const params = new URLSearchParams(filteredParams).toString()
+
+				config.url = config.url + '?' + params
+				config.params = undefined
+			}
 			return config
 		})
 		instance.interceptors.response.use(
 			response => {
 				this.destroy(url, loading)
+
 				const code = response.data[REQUEST.RESPONSE_CODE_FIELD]
+
 				const data = REQUEST.RESPONSE_DATA_FIELD ? response.data[REQUEST.RESPONSE_DATA_FIELD] : response.data
 				const msg = response.data[REQUEST.RESPONSE_MSG_FIELD] || '系统错误，请稍候再试'
 
+				const requestParams = response.config.data || response.config.params || response.config.url?.split('?')?.[1]
 				console.timeEnd(url)
-				console.log('request: success->', url, response.config.data || response.config.params, data)
+
+				if (response.data instanceof Blob) {
+					const disposition = response.headers['content-disposition']
+					let filename = ''
+					if (disposition) {
+						const match = disposition.match(/filename="?([^"]+)"?/)
+						if (match) filename = decodeURIComponent(match[1])
+					}
+					const blobData = {
+						filename: filename,
+						data: response.data
+					}
+					console.log('request: success->', url, requestParams, blobData)
+					return blobData
+				}
+				console.log('request: success->', url, requestParams, data)
+
 				if (REQUEST.SUCCESS_CODE_ARR.includes(code)) return data
 				if (REQUEST.RESPONSE_CODE_ERROR_AUTH === code) {
 					this.errorAuthToast(msg)
@@ -135,7 +168,7 @@ class Request {
 		)
 	}
 	public request = <T>(
-		options: AxiosRequestConfig & { method: Uppercase<Method> },
+		options: AxiosRequestConfig & { method: Lowercase<Method> },
 		loading?: boolean,
 		cancelToken?: boolean
 	): Promise<T> => {

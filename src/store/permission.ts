@@ -30,7 +30,12 @@ export const usePermissionStore = defineStore('permission', () => {
 		routes.value = constantRoutes.concat(accessedRoutes)
 		return accessedRoutes
 	}
-	return { generateRoutesByBackend, generateRoutesByFront, routes, addRoutes }
+	return {
+		generateRoutesByBackend,
+		generateRoutesByFront,
+		routes,
+		addRoutes
+	}
 })
 
 export function usePermissionStoreWidthOut() {

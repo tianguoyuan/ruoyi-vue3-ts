@@ -1,21 +1,30 @@
 import { request } from '@/utils/request'
 
-export const captchaImage = (): Promise<API.ICaptchaImageRes> => {
-	return request({ url: '/captchaImage', method: 'GET' })
+export function captchaImage(): Promise<API.ICaptchaImageRes> {
+	return request({
+		url: '/captchaImage',
+		method: 'get'
+	})
 }
 
-export const login = (data: API.ILogin): Promise<API.ILoginRes> => {
+export function login(data: API.ILogin): Promise<API.ILoginRes> {
 	return request({
 		url: '/login',
-		method: 'POST',
+		method: 'post',
 		data
 	})
 }
 
-export const getUserInfo = (): Promise<API.IUserInfoRes> => {
-	return request({ url: '/getInfo', method: 'GET' })
+export function getUserInfo(): Promise<API.IUserInfoRes> {
+	return request({
+		url: '/getInfo',
+		method: 'get'
+	})
 }
 
-export const userLogout = (): Promise<null> => {
-	return request({ url: '/logout', method: 'POST' })
+export function userLogout(): Promise<null> {
+	return request({
+		url: '/logout',
+		method: 'get'
+	})
 }

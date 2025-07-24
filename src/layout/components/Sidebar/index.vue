@@ -30,7 +30,7 @@ const activeMenu = computed(() => {
 			<ElMenu
 				:default-active="activeMenu"
 				:collapse="isCollapse"
-				:unique-opened="false"
+				:unique-opened="true"
 				:collapse-transition="false"
 				mode="vertical"
 				background-color="#304156"

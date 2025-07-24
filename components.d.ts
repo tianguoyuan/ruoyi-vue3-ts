@@ -59,6 +59,7 @@ declare module 'vue' {
     FormGenerator: typeof import('./src/components/FormGenerator/index.vue')['default']
     Hamburger: typeof import('./src/layout/components/Navbar/Hamburger.vue')['default']
     HeaderSearch: typeof import('./src/layout/components/Navbar/HeaderSearch.vue')['default']
+    IFrame: typeof import('./src/components/iFrame/index.vue')['default']
     Link: typeof import('./src/layout/components/Sidebar/Link.vue')['default']
     Logo: typeof import('./src/layout/components/Sidebar/Logo.vue')['default']
     Navbar: typeof import('./src/layout/components/Navbar/index.vue')['default']
@@ -76,5 +77,8 @@ declare module 'vue' {
     TagsView: typeof import('./src/layout/components/TagsView/index.vue')['default']
     UserAvatar: typeof import('./src/components/UserAvatar.vue')['default']
     UserInfo: typeof import('./src/views/system/user/profile/components/UserInfo.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

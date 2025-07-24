@@ -8,7 +8,7 @@ import { ElMessage } from 'element-plus'
 import { usePermissionStoreWidthOut } from '@/store/permission'
 import { isExternal } from '@/utils/is'
 
-export const setupPermission = (router: Router) => {
+export function setupPermission(router: Router) {
 	const whiteList = ['/login'] // no redirect whitelist
 
 	router.beforeEach(async (to, _from, next) => {
@@ -50,7 +50,10 @@ export const setupPermission = (router: Router) => {
 								router.addRoute(route)
 							}
 						})
-						next({ ...to, replace: true })
+						next({
+							...to,
+							replace: true
+						})
 					}
 				}
 			}

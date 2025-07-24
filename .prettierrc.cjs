@@ -34,5 +34,7 @@ module.exports = {
 	// Vue文件脚本和样式标签缩进
 	vueIndentScriptAndStyle: false,
 	// 多个 attribute 单独占据一行
-	singleAttributePerLine: true
+	singleAttributePerLine: true,
+
+	bracketSameLine: false
 }

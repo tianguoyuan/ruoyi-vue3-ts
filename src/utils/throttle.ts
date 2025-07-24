@@ -13,9 +13,12 @@ interface IThrottleFunc {
  * - 节流 - 只有当上一次函数执行后过了规定的时间间隔，才能进行下一次该函数的调用
  * - 应用场景：比如窗口调整、页面滚动、抢购和疯狂点击等会用到节流。
  */
-export const throttleFunc = (callback: () => void, options?: IThrottleFunc) => {
+export function throttleFunc(callback: () => void, options?: IThrottleFunc) {
 	const { delay = funcDelay, noLeading, noTrailing } = options || {}
-	return throttle(delay, callback, { noLeading, noTrailing })
+	return throttle(delay, callback, {
+		noLeading,
+		noTrailing
+	})
 }
 
 interface IDebounceFunc {
@@ -27,7 +30,7 @@ interface IDebounceFunc {
  * - 防抖 - 在事件被触发n秒后再执行回调，如果在这n秒内又被触发，则重新计时
  * - 应用场景：输入框
  */
-export const debounceFunc = (callback: () => void, options?: IDebounceFunc) => {
+export function debounceFunc(callback: () => void, options?: IDebounceFunc) {
 	const { delay = funcDelay, atBegin } = options || {}
 	return debounce(delay, callback, { atBegin })
 }

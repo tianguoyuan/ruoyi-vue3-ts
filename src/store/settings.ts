@@ -26,7 +26,7 @@ export const useSettingsStore = defineStore('settings', () => {
 		watermarkEnabled,
 		watermarkContent
 	})
-	const changeSettings = <K extends ISettingsKey>({ key, value }: { key: K; value: ISettings[K] }) => {
+	function changeSettings<K extends ISettingsKey>({ key, value }: { key: K; value: ISettings[K] }) {
 		if (Object.prototype.hasOwnProperty.call(settings.value, key)) {
 			settings.value[key] = value
 		}
@@ -37,6 +37,6 @@ export const useSettingsStore = defineStore('settings', () => {
 	}
 })
 
-export const useSettingsStoreWithOut = () => {
+export function useSettingsStoreWithOut() {
 	return useSettingsStore(store)
 }

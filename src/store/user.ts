@@ -45,7 +45,10 @@ export const useUserStore = defineStore('user', () => {
 				type: 'warning'
 			})
 				.then(() => {
-					router.push({ path: '/system/user/profile', query: { activeTab: 'resetPwd' } })
+					router.push({
+						path: '/system/user/profile',
+						query: { activeTab: 'resetPwd' }
+					})
 				})
 				.catch(() => {})
 		}
@@ -57,7 +60,10 @@ export const useUserStore = defineStore('user', () => {
 				type: 'warning'
 			})
 				.then(() => {
-					router.push({ path: '/system/user/profile', query: { activeTab: 'resetPwd' } })
+					router.push({
+						path: '/system/user/profile',
+						query: { activeTab: 'resetPwd' }
+					})
 				})
 				.catch(() => {})
 		}
@@ -68,7 +74,10 @@ export const useUserStore = defineStore('user', () => {
 	}
 	function resetUserInfo() {
 		Storage.remove('token')
-		userInfo.value = { ...userInfoDefault, token: '' }
+		userInfo.value = {
+			...userInfoDefault,
+			token: ''
+		}
 	}
 	async function logout() {
 		await userLogout()
@@ -79,7 +88,15 @@ export const useUserStore = defineStore('user', () => {
 		userInfo.value.avatar = val
 	}
 
-	return { userInfo, login, getUserInfo, userInfoSimple, resetUserInfo, logout, setAvatar }
+	return {
+		userInfo,
+		login,
+		getUserInfo,
+		userInfoSimple,
+		resetUserInfo,
+		logout,
+		setAvatar
+	}
 })
 
 export function useUserStoreWidthOut() {

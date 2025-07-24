@@ -17,7 +17,7 @@ const i18n = createI18n({
 	}
 })
 
-export const setupI18n = (app: App) => {
+export function setupI18n(app: App) {
 	app.use(i18n)
 }
 

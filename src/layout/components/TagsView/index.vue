@@ -105,7 +105,10 @@ function refreshSelectedTag(view?: RouteLocationNormalizedLoaded) {
 }
 function closeSelectedTag(view?: RouteLocationNormalizedLoaded) {
 	if (!view) return
-	const { visitedViews } = tagsStore.delView({ path: view.path, name: view.name as string })
+	const { visitedViews } = tagsStore.delView({
+		path: view.path,
+		name: view.name as string
+	})
 	if (isActive(view)) {
 		toLastView(visitedViews, view)
 	}
@@ -113,7 +116,10 @@ function closeSelectedTag(view?: RouteLocationNormalizedLoaded) {
 function closeOthersTags() {
 	if (!selectedTag.value) return
 	router.push(selectedTag.value)
-	tagsStore.delOthersViews({ path: selectedTag.value.path, name: selectedTag.value.name as string })
+	tagsStore.delOthersViews({
+		path: selectedTag.value.path,
+		name: selectedTag.value.name as string
+	})
 	moveToCurrentTag()
 }
 function closeAllTags(view?: RouteLocationNormalizedLoaded) {

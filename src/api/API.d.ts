@@ -72,4 +72,30 @@ declare namespace API {
 	// 	avatarfile: FormData<'avatarfile'>
 	// }
 	type IUploadAvatar = FormData
+
+	// 代码生成
+	interface IGenList {
+		pageNum: number
+		pageSize: number
+		orderByColumn?: 'createTime'
+		isAsc?: 'ascending' | 'descending'
+	}
+	interface IGenListRes {
+		total: number
+		rows: {
+			tableName: string
+			tableComment: string
+			className: string
+			createTime: string
+			updateTime: string
+		}[]
+	}
+	// 代码生成下载文件
+	interface IGenBatchGenCode {
+		tables: string
+	}
+	interface IGenBatchGenCodeRes {
+		filename: string
+		data: Blob
+	}
 }

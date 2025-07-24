@@ -15,21 +15,21 @@ export function isFunction<T = Function>(val: unknown): val is T {
 /**
  * @description: 是否已定义
  */
-export const isDef = <T = unknown>(val?: T): val is T => {
+export function isDef<T = unknown>(val?: T): val is T {
 	return typeof val !== 'undefined'
 }
 
 /**
  * @description: 是否未定义
  */
-export const isUnDef = <T = unknown>(val?: T): val is T => {
+export function isUnDef<T = unknown>(val?: T): val is T {
 	return !isDef(val)
 }
 
 /**
  * @description: 是否为对象
  */
-export const isObject = (val: any): val is Record<any, any> => {
+export function isObject(val: any): val is Record<any, any> {
 	return val !== null && is(val, 'Object')
 }
 
@@ -85,21 +85,21 @@ export function isArray(val: any): val is Array<any> {
 /**
  * @description: 是否客户端
  */
-export const isClient = () => {
+export function isClient() {
 	return typeof window !== 'undefined'
 }
 
 /**
  * @description: 是否为浏览器
  */
-export const isWindow = (val: any): val is Window => {
+export function isWindow(val: any): val is Window {
 	return typeof window !== 'undefined' && is(val, 'Window')
 }
 
 /**
  * @description: 是否为 element 元素
  */
-export const isElement = (val: unknown): val is Element => {
+export function isElement(val: unknown): val is Element {
 	return isObject(val) && !!val.tagName
 }
 
@@ -120,7 +120,7 @@ export function isNullOrUnDef(val: unknown): val is null | undefined {
 /**
  * @description: 是否为 16 进制颜色
  */
-export const isHexColor = (str: string) => {
+export function isHexColor(str: string) {
 	return /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str)
 }
 

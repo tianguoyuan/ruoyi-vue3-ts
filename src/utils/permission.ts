@@ -6,7 +6,7 @@ const modules = import.meta.glob('/src/views/**/*.vue')
 /**
  * @desc 是否有权限访问
  */
-const hasPermission = (roles: string[], route: any) => {
+function hasPermission(roles: string[], route: any) {
 	if (route.meta && route.meta.roles) {
 		return roles.some(role => (route.meta?.roles as string[]).includes(role))
 	} else {
@@ -18,7 +18,7 @@ const hasPermission = (roles: string[], route: any) => {
  * @param routes - string[] - 接口返回路由表
  * @param roles - string[] - 当前用户等级
  */
-export const filterAsyncRoutes = (routes: any[], roles: string[]) => {
+export function filterAsyncRoutes(routes: any[], roles: string[]) {
 	const res: any[] = []
 	routes.forEach(route => {
 		const r = { ...route }
@@ -42,7 +42,6 @@ export function formatRoutes(routes: any[]) {
 			tmp.component = Layout
 		} else {
 			tmp.component = modules[`/src/views/${route.component}.vue`]
-			console.log('route.component', route.component)
 		}
 		if (tmp.children && tmp.children.length) {
 			tmp.children = formatRoutes(tmp.children)
@@ -55,7 +54,7 @@ export function formatRoutes(routes: any[]) {
  * @desc 字符权限校验 - v-if="checkPermission(['admin'])"
  * @param value - string[] - 权限['system:user:add','system:user:edit']
  */
-export const checkPermission = (permissionRoles: string[]): boolean => {
+export function checkPermission(permissionRoles: string[]): boolean {
 	const userStore = useUserStoreWidthOut()
 
 	const allPermission = '*:*:*'
@@ -73,7 +72,7 @@ export const checkPermission = (permissionRoles: string[]): boolean => {
  * @desc 角色权限校验 - v-if="checkRole(['admin'])"
  * @param value - string[] - 权限['admin','edit']
  */
-export const checkRole = (roles: string[]): boolean => {
+export function checkRole(roles: string[]): boolean {
 	const userStore = useUserStoreWidthOut()
 	const superAdmin = 'admin'
 

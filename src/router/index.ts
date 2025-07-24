@@ -7,7 +7,10 @@ const router = createRouter({
 	history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
 	routes: constantRoutes,
 	strict: true,
-	scrollBehavior: () => ({ left: 0, top: 0 })
+	scrollBehavior: () => ({
+		left: 0,
+		top: 0
+	})
 })
 
 export function setupRouter(app: App) {
@@ -16,7 +19,7 @@ export function setupRouter(app: App) {
 	setupPermission(router)
 }
 
-export const resetRouter = (): void => {
+export function resetRouter(): void {
 	const resetWhiteNameList = ['redirect', 'login']
 	router.getRoutes().forEach(route => {
 		const { name } = route

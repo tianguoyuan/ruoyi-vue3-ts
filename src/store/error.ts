@@ -8,7 +8,13 @@ export const useErrorStore = defineStore('error', () => {
 		logs.value.splice(0)
 	}
 
-	return { addErrorLog, clearErrorLog, logs }
+	return {
+		addErrorLog,
+		clearErrorLog,
+		logs
+	}
 })
 
-export const useErrorStoreWithOut = () => useErrorStore(store)
+export function useErrorStoreWithOut() {
+	return useErrorStore(store)
+}

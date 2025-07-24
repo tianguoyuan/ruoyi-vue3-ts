@@ -23,7 +23,10 @@ export const errorPageRoute: RouteRecordRaw[] = [
 export const notFoundRoute: RouteRecordRaw = {
 	path: '/:pathMatch(.*)*',
 	name: 'NotFound',
-	meta: { title: '404', hidden: true },
+	meta: {
+		title: '404',
+		hidden: true
+	},
 	redirect: '/'
 }
 
@@ -37,7 +40,11 @@ export const constantRoutes: RouteRecordRaw[] = [
 				path: '/index',
 				component: () => import('@/views/index.vue'),
 				name: 'Index',
-				meta: { title: '首页', icon: 'dashboard', affix: true }
+				meta: {
+					title: '首页',
+					icon: 'dashboard',
+					affix: true
+				}
 			}
 		]
 	},
@@ -75,7 +82,10 @@ export const constantRoutes: RouteRecordRaw[] = [
 				path: 'index',
 				name: 'demo',
 				component: () => import('@/views/demo/index.vue'),
-				meta: { title: '生成表单', icon: 'project' }
+				meta: {
+					title: '生成表单',
+					icon: 'project'
+				}
 			}
 		]
 	},
@@ -91,7 +101,10 @@ export const constantRoutes: RouteRecordRaw[] = [
 				path: 'user/profile',
 				component: () => import('@/views/system/user/profile/index.vue'),
 				name: 'Profile',
-				meta: { title: '个人中心', icon: 'user' }
+				meta: {
+					title: '个人中心',
+					icon: 'user'
+				}
 			}
 		]
 	}

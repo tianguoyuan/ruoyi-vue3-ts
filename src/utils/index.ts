@@ -56,3 +56,24 @@ export function addClass(ele: HTMLElement, cls: string) {
 export function removeClass(ele: HTMLElement, cls: string) {
 	if (hasClass(ele, cls)) ele.classList.remove(cls)
 }
+
+/**
+ * 下载文件流
+ * @param data Blob 数据
+ * @param filename 文件名（可选，默认从响应 header 或 url 获取）
+ */
+export function downloadBlobFile(data: Blob, filename: string) {
+	// 兼容 IE
+	if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+		window.navigator.msSaveOrOpenBlob(data, filename)
+	} else {
+		const url = window.URL.createObjectURL(data)
+		const link = document.createElement('a')
+		link.href = url
+		link.download = filename
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
+		window.URL.revokeObjectURL(url)
+	}
+}

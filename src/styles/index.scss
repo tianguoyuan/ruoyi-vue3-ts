@@ -15,7 +15,7 @@ label {
 	font-weight: 700;
 }
 html {
-	box-sizing: border-box;
+	box-sizing: content-box;
 	height: 100%;
 }
 #app {
@@ -167,7 +167,6 @@ svg {
 	display: inline-block;
 }
 input:-webkit-autofill {
-	box-shadow: 0 0 0 1000px #ffffff inset !important;
 	box-shadow: 0 0 0 1000px #ffffff inset !important;
 	-webkit-text-fill-color: #000000 !important;
 }

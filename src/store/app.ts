@@ -56,6 +56,6 @@ export const useAppStore = defineStore('app', () => {
 	}
 })
 
-export const useAppStoreWithOut = () => {
+export function useAppStoreWithOut() {
 	return useAppStore(store)
 }

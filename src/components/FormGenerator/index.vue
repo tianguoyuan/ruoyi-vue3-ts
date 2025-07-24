@@ -12,6 +12,8 @@ const emit = defineEmits<{
 	buttonClick: [value: string, value: any]
 	tableEditClick: [value: any, index: any]
 	selectionChange: [value: Record<string, any>[]]
+	customPageChange: []
+	sortChange: [value: any]
 }>()
 
 const formRef = ref<any>(null)
@@ -19,16 +21,19 @@ const formData = ref<Record<string, any>>({})
 const formRules = ref<Record<string, any>>({})
 
 // 初始化表单数据
-const initFormData = () => {
+function initFormData() {
 	const data: Record<string, any> = {}
 	props.config.fields?.forEach(field => {
 		data[field.prop] = field.defaultValue !== undefined ? field.defaultValue : ''
 	})
-	formData.value = { ...data, ...props.modelValue }
+	formData.value = {
+		...data,
+		...props.modelValue
+	}
 }
 
 // 获取组件
-const getComponent = (item: any) => {
+function getComponent(item: any) {
 	switch (item.type) {
 		case 'input':
 			return 'el-input'
@@ -70,7 +75,7 @@ const getComponent = (item: any) => {
 }
 
 // 表单验证
-const validate = async () => {
+async function validate() {
 	try {
 		await formRef.value.validate()
 		return true
@@ -80,17 +85,17 @@ const validate = async () => {
 }
 
 // 重置表单
-const resetFields = () => {
+function resetFields() {
 	formRef.value.resetFields()
 }
 
 // 清除验证
-const clearValidate = (props: string | string[]) => {
+function clearValidate(props: string | string[]) {
 	formRef.value.clearValidate(props)
 }
 
 // 按钮点击事件
-const handleButtonClick = (btn: any) => {
+function handleButtonClick(btn: any) {
 	if (btn.handler) {
 		btn.handler(formData.value)
 	} else {
@@ -102,7 +107,10 @@ const handleButtonClick = (btn: any) => {
 watch(
 	() => props.modelValue,
 	newVal => {
-		formData.value = { ...formData.value, ...newVal }
+		formData.value = {
+			...formData.value,
+			...newVal
+		}
 	},
 	{ deep: true }
 )
@@ -124,7 +132,12 @@ const pageSize = ref(10)
 async function queryTableData(otherParams: Record<string, any> = {}) {
 	const isPass = await validate()
 	if (!isPass) return
-	const params = { ...formData.value, pageNum: pageNum.value, pageSize: pageSize.value, ...otherParams }
+	const params = {
+		...formData.value,
+		pageNum: pageNum.value,
+		pageSize: pageSize.value,
+		...otherParams
+	}
 	if (!props.config.api) return
 	const result = await props.config.api(params)
 
@@ -132,6 +145,16 @@ async function queryTableData(otherParams: Record<string, any> = {}) {
 	total.value = result.total || 0
 }
 function pageChange() {
+	if (props.config.customPageChange) {
+		emit('customPageChange')
+	} else {
+		queryTableData()
+	}
+}
+
+function handleSortChange(val) {
+	formData.value.orderByColumn = val.prop
+	formData.value.isAsc = val.order
 	queryTableData()
 }
 
@@ -396,8 +419,8 @@ defineExpose({
 									:start-placeholder="item.startPlaceholder || '开始日期'"
 									:end-placeholder="item.endPlaceholder || '结束日期'"
 									:range-separator="item.rangeSeparator || '至'"
-									:format="item.format"
-									:value-format="item.valueFormat"
+									:format="item.format || 'YYYY-MM-DD'"
+									:value-format="item.valueFormat || 'YYYY-MM-DD'"
 									:clearable="item.clearable"
 									:disabled="item.disabled"
 									:editable="item.editable"
@@ -507,23 +530,45 @@ defineExpose({
 					</template>
 				</template>
 			</el-row>
-
-			<!-- 表单操作按钮 -->
-			<el-form-item v-if="config.buttons && config.buttons.length > 0">
-				<div class="flex justify-end w-full">
-					<el-button
-						v-for="(btn, idx) in config.buttons"
-						:key="idx"
-						:type="btn.type || 'primary'"
-						:icon="btn.icon"
-						:loading="btn.loading"
-						:disabled="btn.disabled"
-						@click="handleButtonClick(btn)"
-					>
-						{{ btn.label }}
-					</el-button>
+			<div class="flex justify-between">
+				<!-- 表单左侧操作按钮 -->
+				<div v-if="config.leftButtons && config.leftButtons.length > 0">
+					<div class="flex justify-end w-full">
+						<el-button
+							v-for="(btn, idx) in config.leftButtons"
+							v-show="btn.show || true"
+							:key="idx"
+							:type="btn.type || 'primary'"
+							:icon="btn.icon"
+							:loading="btn.loading"
+							:disabled="btn.disabled"
+							:plain="btn.plain"
+							@click="handleButtonClick(btn)"
+						>
+							{{ btn.label }}
+						</el-button>
+					</div>
 				</div>
-			</el-form-item>
+
+				<!-- 表单操作按钮 -->
+				<div v-if="config.buttons && config.buttons.length > 0">
+					<div class="flex justify-end w-full">
+						<el-button
+							v-for="(btn, idx) in config.buttons"
+							v-show="btn.show || true"
+							:key="idx"
+							:type="btn.type || 'primary'"
+							:icon="btn.icon"
+							:loading="btn.loading"
+							:disabled="btn.disabled"
+							:plain="btn.plain"
+							@click="handleButtonClick(btn)"
+						>
+							{{ btn.label }}
+						</el-button>
+					</div>
+				</div>
+			</div>
 		</el-form>
 
 		<div v-if="config.tableShow">
@@ -535,15 +580,19 @@ defineExpose({
 				center
 				border
 				@selectionChange="selectList => emit('selectionChange', selectList)"
+				@sortChange="handleSortChange"
 			>
 				<el-table-column
 					v-if="config.tableShowSelection"
 					type="selection"
 					:selectable="config.tableSelection"
+					:width="50"
 				/>
 				<el-table-column
 					v-if="config.tableShowIndex"
 					type="index"
+					label="序号"
+					:width="55"
 				/>
 				<el-table-column
 					v-for="(item, index) in config.tableHeader"
@@ -551,19 +600,45 @@ defineExpose({
 					:prop="item.prop"
 					:label="item.label"
 					:width="item.width || undefined"
+					:sortable="item.sortable"
+					:sort-orders="item.sortOrders || ['ascending', 'descending']"
 				>
 					<template
 						v-if="item.custom"
 						#default="{ row }"
 					>
-						<el-button
+						<span
 							v-for="(btn, btnIndex) in item.tableEditBtn"
 							:key="btnIndex"
-							:type="btn.type"
-							@click="emit('tableEditClick', row, btn)"
 						>
-							{{ btn.label }}
-						</el-button>
+							<el-tooltip
+								v-if="btn.tip"
+								:content="btn.tip"
+								placement="top"
+							>
+								<el-button
+									v-show="btn.show || true"
+									:type="btn.type"
+									:link="btn.link"
+									:icon="btn.icon"
+									:disabled="btn.disabled"
+									@click="emit('tableEditClick', row, btn)"
+								>
+									{{ btn.label }}
+								</el-button>
+							</el-tooltip>
+							<el-button
+								v-else
+								v-show="btn.show || true"
+								:type="btn.type"
+								:link="btn.link"
+								:icon="btn.icon"
+								:disabled="btn.disabled"
+								@click="emit('tableEditClick', row, btn)"
+							>
+								{{ btn.label }}
+							</el-button>
+						</span>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -575,7 +650,7 @@ defineExpose({
 					v-model:current-page="pageNum"
 					v-model:page-size="pageSize"
 					background
-					layout="prev, pager, next, sizes, total"
+					layout="total, sizes, prev, pager, next, jumper"
 					:total="total"
 					@change="pageChange"
 				/>
@@ -583,3 +658,8 @@ defineExpose({
 		</div>
 	</div>
 </template>
+<style lang="scss" scoped>
+:deep(.el-form-item__label) {
+	font-weight: 700;
+}
+</style>
