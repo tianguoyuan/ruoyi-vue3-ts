@@ -22,12 +22,12 @@ export const errorPageRoute: RouteRecordRaw[] = [
 
 export const notFoundRoute: RouteRecordRaw = {
 	path: '/:pathMatch(.*)*',
-	name: 'NotFound',
+	// name: 'NotFound',
 	meta: {
 		title: '404',
 		hidden: true
 	},
-	redirect: '/'
+	component: () => import('@/views/errorPage/404.vue')
 }
 
 export const constantRoutes: RouteRecordRaw[] = [
@@ -107,50 +107,30 @@ export const constantRoutes: RouteRecordRaw[] = [
 				}
 			}
 		]
-	}
+	},
+	...errorPageRoute,
+	notFoundRoute
 ]
 
+// 动态路由，基于用户权限动态去加载
 export const asyncRoutes: RouteRecordRaw[] = [
-	// {
-	// 	path: '/',
-	// 	component: Layout,
-	// 	redirect: '/home',
-	// 	meta: {
-	// 		title: '首页',
-	// 		breadcrumb: false
-	// 	},
-	// 	children: [
-	// 		{
-	// 			path: 'home',
-	// 			name: 'Home',
-	// 			component: () => import('@/views/home/index.vue'),
-	// 			meta: {
-	// 				title: '首页',
-	// 				affix: true,
-	// 				icon: 'dashboard'
-	// 			}
-	// 		}
-	// 	]
-	// },
-	// {
-	// 	path: '/guide',
-	// 	redirect: '/guide/index',
-	// 	component: Layout,
-	// 	meta: {
-	// 		title: '指南',
-	// 		icon: 'guide',
-	// 		roles: ['admin'],
-	// 		alwaysShow: true
-	// 	},
-	// 	children: [
-	// 		{
-	// 			path: 'index',
-	// 			name: 'Guide',
-	// 			component: () => import('@/views/guide/index.vue'),
-	// 			meta: { title: '指南', icon: 'guide' }
-	// 		}
-	// 	]
-	// },
-	// ...errorPage,
-	// notFoundRoute
+	{
+		path: '/tool/gen-edit',
+		component: Layout,
+		meta: {
+			hidden: true,
+			permissions: ['tool:gen:edit']
+		},
+		children: [
+			{
+				path: 'index/:tableId(\\d+)',
+				component: () => import('@/views/tool/gen/editTable.vue'),
+				name: 'GenEdit',
+				meta: {
+					title: '修改生成配置',
+					activeMenu: '/tool/gen'
+				}
+			}
+		]
+	}
 ]

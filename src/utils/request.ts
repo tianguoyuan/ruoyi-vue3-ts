@@ -45,8 +45,10 @@ class Request {
 	private errorAuthToast(msg: string) {
 		console.log('errorAuthToast', msg)
 		ElMessageBox.confirm('登录过期, 是否重新登录?', {
-			title: '提示',
-			type: 'warning'
+			title: '系统提示',
+			type: 'warning',
+			confirmButtonText: '确定',
+			cancelButtonText: '取消'
 		})
 			.then(() => {
 				const userStore = useUserStoreWidthOut()
@@ -58,11 +60,9 @@ class Request {
 			})
 	}
 	private hideLoading() {
-		console.log('hideLoading')
 		this.loadingInstance?.close()
 	}
 	private showLoading() {
-		console.log('showLoading')
 		this.loadingInstance = ElLoading.service({
 			lock: true,
 			text: '加载中...',
@@ -74,7 +74,6 @@ class Request {
 		if (loading) {
 			this.queueUrl--
 		}
-		console.log('destroy', this.queueUrl)
 		this.cancelTokenList = this.cancelTokenList.filter(cancel => url !== cancel.url)
 		if (!this.queueUrl) {
 			this.hideLoading()

@@ -22,7 +22,7 @@ import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
  * 创建 vite 插件
  * @param viteEnv
  */
-export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOption[])[] => {
+export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOption[])[] {
 	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA, VITE_MOCK_DEV_SERVER } = viteEnv
 
 	return [
@@ -55,7 +55,12 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 		// vitePWA
 		VITE_PWA && createVitePwa(viteEnv),
 		// 是否生成包预览，分析依赖包大小做优化处理
-		VITE_REPORT && (visualizer({ filename: 'stats.html', gzipSize: true, brotliSize: true }) as PluginOption),
+		VITE_REPORT &&
+			(visualizer({
+				filename: 'stats.html',
+				gzipSize: true,
+				brotliSize: true
+			}) as PluginOption),
 		// unocss
 		UnoCSS(),
 		AutoImport({
@@ -91,7 +96,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
 				})
 			],
 			// 指定自定义组件位置(默认:src/components)
-			dirs: ['src/components', 'src/**/components'],
+			dirs: ['src/components'],
 			// 指定自动导入组件TS类型声明文件路径 (false:关闭自动生成)
 			dts: true
 			// dts: "src/types/components.d.ts",
@@ -105,7 +110,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
  * @description 根据 compress 配置，生成不同的压缩规则
  * @param viteEnv
  */
-const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
+function createCompression(viteEnv: ViteEnv): PluginOption | PluginOption[] {
 	const { VITE_BUILD_COMPRESS = 'none', VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE } = viteEnv
 	const compressList = VITE_BUILD_COMPRESS.split(',')
 	const plugins: PluginOption[] = []
@@ -134,7 +139,7 @@ const createCompression = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
  * @description VitePwa
  * @param viteEnv
  */
-const createVitePwa = (viteEnv: ViteEnv): PluginOption | PluginOption[] => {
+function createVitePwa(viteEnv: ViteEnv): PluginOption | PluginOption[] {
 	const { VITE_GLOB_APP_TITLE } = viteEnv
 	return VitePWA({
 		registerType: 'autoUpdate',

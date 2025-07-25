@@ -16,8 +16,17 @@ const formConfig = ref<FormConfig>({
 			prop: 'username',
 			placeholder: '请输入用户名',
 			rules: [
-				{ required: true, message: '用户名不能为空', trigger: 'change' },
-				{ min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'change' }
+				{
+					required: true,
+					message: '用户名不能为空',
+					trigger: 'change'
+				},
+				{
+					min: 3,
+					max: 10,
+					message: '长度在 3 到 10 个字符',
+					trigger: 'change'
+				}
 			]
 		},
 		{
@@ -25,9 +34,18 @@ const formConfig = ref<FormConfig>({
 			label: '城市',
 			prop: 'city4',
 			options: [
-				{ label: '北京', value: 'beijing' },
-				{ label: '上海', value: 'shanghai' },
-				{ label: '广州', value: 'guangzhou' }
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
 			]
 		},
 		{
@@ -35,9 +53,18 @@ const formConfig = ref<FormConfig>({
 			label: '城市',
 			prop: 'city3',
 			options: [
-				{ label: '北京', value: 'beijing' },
-				{ label: '上海', value: 'shanghai' },
-				{ label: '广州', value: 'guangzhou' }
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
 			]
 		},
 		{
@@ -45,9 +72,18 @@ const formConfig = ref<FormConfig>({
 			label: '城市',
 			prop: 'city2',
 			options: [
-				{ label: '北京', value: 'beijing' },
-				{ label: '上海', value: 'shanghai' },
-				{ label: '广州', value: 'guangzhou' }
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
 			]
 		},
 		{
@@ -55,15 +91,32 @@ const formConfig = ref<FormConfig>({
 			label: '城市',
 			prop: 'city1',
 			options: [
-				{ label: '北京', value: 'beijing' },
-				{ label: '上海', value: 'shanghai' },
-				{ label: '广州', value: 'guangzhou' }
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
 			]
 		}
 	],
 	buttons: [
-		{ label: '搜索', type: 'primary', event: 'search' },
-		{ label: '重置', type: 'danger', event: 'reset' }
+		{
+			label: '搜索',
+			type: 'primary',
+			event: 'search'
+		},
+		{
+			label: '重置',
+			type: 'danger',
+			event: 'reset'
+		}
 	],
 
 	tableShow: true,
@@ -72,15 +125,33 @@ const formConfig = ref<FormConfig>({
 	tableShowSelection: true,
 	tableShowIndex: true,
 	tableHeader: [
-		{ label: 'a1', prop: 'date' },
-		{ label: 'a2', prop: 'name' },
-		{ label: 'a3', prop: 'address' },
-		{ label: '操作', custom: true, tableEditBtn: [{ label: '编辑', type: 'primary' }] }
+		{
+			label: 'a1',
+			prop: 'date'
+		},
+		{
+			label: 'a2',
+			prop: 'name'
+		},
+		{
+			label: 'a3',
+			prop: 'address'
+		},
+		{
+			label: '操作',
+			custom: true,
+			tableEditBtn: [
+				{
+					label: '编辑',
+					type: 'primary'
+				}
+			]
+		}
 	]
 })
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
-const handleButtonClick = async (event: string, data: any) => {
+async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
 		const isPass = await formGeneratorRef.value?.validate()
 		if (!isPass) return
@@ -93,7 +164,7 @@ const handleButtonClick = async (event: string, data: any) => {
 	}
 }
 
-const tableEditClick = (row, conf) => {
+function tableEditClick(row, conf) {
 	console.log('row,conf', row, conf)
 }
 function selectionChange(selectList) {

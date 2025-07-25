@@ -16,12 +16,36 @@ const selectedTab = ref('userinfo')
 async function getUserProfile() {
 	const { postGroup, roleGroup, data } = await systemUserProfile()
 	userProfile.value = [
-		{ label: '用户名称', icon: 'user', value: data.userName },
-		{ label: '手机号码', icon: 'phone', value: data.phonenumber },
-		{ label: '用户邮箱', icon: 'email', value: data.email },
-		{ label: '所属部门', icon: 'tree', value: data.dept.deptName + ' / ' + postGroup },
-		{ label: '所属角色', icon: 'peoples', value: roleGroup },
-		{ label: '创建日期', icon: 'date', value: data.createTime }
+		{
+			label: '用户名称',
+			icon: 'user',
+			value: data.userName
+		},
+		{
+			label: '手机号码',
+			icon: 'phone',
+			value: data.phonenumber
+		},
+		{
+			label: '用户邮箱',
+			icon: 'email',
+			value: data.email
+		},
+		{
+			label: '所属部门',
+			icon: 'tree',
+			value: data.dept.deptName + ' / ' + postGroup
+		},
+		{
+			label: '所属角色',
+			icon: 'peoples',
+			value: roleGroup
+		},
+		{
+			label: '创建日期',
+			icon: 'date',
+			value: data.createTime
+		}
 	]
 
 	userForm.value.nickName = data.nickName

@@ -98,4 +98,13 @@ declare namespace API {
 		filename: string
 		data: Blob
 	}
+
+	interface IGetDbList {
+		tableName: string
+		tableComment: string
+	}
+	interface IGetDbListRes {
+		total: string
+		rows: any[]
+	}
 }

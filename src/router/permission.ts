@@ -11,7 +11,7 @@ import { isExternal } from '@/utils/is'
 export function setupPermission(router: Router) {
 	const whiteList = ['/login'] // no redirect whitelist
 
-	router.beforeEach(async (to, _from, next) => {
+	router.beforeEach((to, _from, next) => {
 		NProgress.start()
 		// 设置页面标题
 		document.title = `${to.meta?.title} - ${defaultSettings.title}`
@@ -28,33 +28,32 @@ export function setupPermission(router: Router) {
 					next()
 					NProgress.done()
 				} else {
-					const [err, result] = await apiTo(userStore.getUserInfo())
-					if (err || !result) {
-						userStore.resetUserInfo()
-						ElMessage.error(err || '获取用户信息失败')
-						next({
-							path: '/login',
-							query: {
-								...to.query,
-								redirect: to.path
-							}
+					userStore
+						.getUserInfo()
+						.then(result => {
+							const { roles, routes } = result
+							// 前端过滤权限路由
+							// const accessedRoutes = permissionStore.generateRoutesByFront(roles)
+							// 后端过滤权限路由
+							const accessedRoutes = permissionStore.generateRoutesByBackend(routes)
+							console.warn('项目路由', accessedRoutes)
+							accessedRoutes.forEach(route => !isExternal(route.path) && router.addRoute(route))
+							next({
+								...to,
+								replace: true
+							})
 						})
-					} else {
-						const { roles, routes } = result
-						// 前端过滤权限路由
-						// const accessedRoutes = permissionStore.generateRoutesByFront(roles)
-						// 后端过滤权限路由
-						const accessedRoutes = permissionStore.generateRoutesByBackend(routes)
-						accessedRoutes.forEach(route => {
-							if (!isExternal(route.path)) {
-								router.addRoute(route)
-							}
+						.catch(err => {
+							userStore.resetUserInfo()
+							ElMessage.error(err || '获取用户信息失败')
+							next({
+								path: '/login',
+								query: {
+									...to.query,
+									redirect: to.path
+								}
+							})
 						})
-						next({
-							...to,
-							replace: true
-						})
-					}
 				}
 			}
 		} else {

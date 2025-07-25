@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
 import type { FormConfig } from './types'
+import type { Sort } from 'element-plus'
 
 const props = defineProps<{
 	config: FormConfig
 	modelValue: Record<string, any>
+	defaultSort?: Sort
 }>()
 
 const emit = defineEmits<{
@@ -158,6 +160,11 @@ function handleSortChange(val) {
 	queryTableData()
 }
 
+function resetPage() {
+	pageNum.value = 1
+	pageSize.value = 10
+}
+
 // 初始化
 onMounted(() => {
 	initFormData()
@@ -170,6 +177,7 @@ onMounted(() => {
 defineExpose({
 	validate,
 	resetFields,
+	resetPage,
 	clearValidate,
 	getFormData: () => formData.value,
 	queryTableData
@@ -532,13 +540,16 @@ defineExpose({
 			</el-row>
 			<div class="flex justify-between">
 				<!-- 表单左侧操作按钮 -->
-				<div v-if="config.leftButtons && config.leftButtons.length > 0">
-					<div class="flex justify-end w-full">
+				<div>
+					<div
+						v-if="config.leftButtons && config.leftButtons.length > 0"
+						class="flex justify-end w-full"
+					>
 						<el-button
 							v-for="(btn, idx) in config.leftButtons"
 							v-show="btn.show || true"
 							:key="idx"
-							:type="btn.type || 'primary'"
+							:type="btn.type || ''"
 							:icon="btn.icon"
 							:loading="btn.loading"
 							:disabled="btn.disabled"
@@ -557,7 +568,7 @@ defineExpose({
 							v-for="(btn, idx) in config.buttons"
 							v-show="btn.show || true"
 							:key="idx"
-							:type="btn.type || 'primary'"
+							:type="btn.type || ''"
 							:icon="btn.icon"
 							:loading="btn.loading"
 							:disabled="btn.disabled"
@@ -565,6 +576,29 @@ defineExpose({
 							@click="handleButtonClick(btn)"
 						>
 							{{ btn.label }}
+						</el-button>
+					</div>
+				</div>
+				<div v-else-if="!config.buttons && !config.hideDefaultButton">
+					<div class="flex justify-end w-full">
+						<el-button
+							type="primary"
+							icon="Search"
+							@click="queryTableData()"
+						>
+							搜索
+						</el-button>
+
+						<el-button
+							icon="Refresh"
+							@click="
+								() => {
+									resetFields()
+									queryTableData()
+								}
+							"
+						>
+							重置
 						</el-button>
 					</div>
 				</div>
@@ -578,7 +612,7 @@ defineExpose({
 				class="mt-3"
 				:max-height="500"
 				center
-				border
+				:default-sort="defaultSort"
 				@selectionChange="selectList => emit('selectionChange', selectList)"
 				@sortChange="handleSortChange"
 			>
@@ -602,6 +636,7 @@ defineExpose({
 					:width="item.width || undefined"
 					:sortable="item.sortable"
 					:sort-orders="item.sortOrders || ['ascending', 'descending']"
+					:show-overflow-tooltip="item.showOverflowTooltip"
 				>
 					<template
 						v-if="item.custom"

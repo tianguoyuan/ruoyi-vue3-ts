@@ -294,6 +294,8 @@ export interface FormConfig {
 
 	api?: (v: any) => Promise<any>
 	tableShow?: boolean
+	// 是否隐藏默认搜索重置
+	hideDefaultButton?: boolean
 	/**初始不查询 */
 	tableInitQueryRefuse?: boolean
 	/**显示多选框 */

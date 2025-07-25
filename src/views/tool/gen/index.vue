@@ -1,13 +1,33 @@
 <script setup lang="ts">
-import { genBatchGenCode, getGenList } from '@/api/tool/gen'
+import { delTable, genBatchGenCode, getGenList, synchDb } from '@/api/tool/gen'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import type { FormConfig } from '@/components/FormGenerator/types'
 import { downloadBlobFile } from '@/utils'
 import { checkPermission } from '@/utils/permission'
+import { ElMessage, type Sort } from 'element-plus'
+import CreateDialog from './components/CreateDialog.vue'
+import ImportDialog from './components/importDialog.vue'
 
-const formData = ref<Record<string, any>>({})
+const router = useRouter()
+// 新增弹窗
+const createDialogRef = ref<InstanceType<typeof CreateDialog> | null>(null)
+// 导入弹窗
+const importDialogRef = ref<InstanceType<typeof ImportDialog> | null>(null)
 
-const selectionList = ref<{ tableName: string }[]>([])
+const formData = ref<Record<string, any>>({
+	orderByColumn: 'createTime',
+	isAsc: 'ascending'
+})
+const defaultSort = {
+	prop: 'createTime',
+	order: 'ascending'
+} as Sort
+
+interface IListRow {
+	tableName: string
+	tableId: string
+}
+const selectionList = ref<IListRow[]>([])
 function selectionChange(val) {
 	selectionList.value = val
 }
@@ -47,12 +67,13 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '搜索',
 			type: 'primary',
-			event: 'search'
+			event: 'search',
+			icon: 'Search'
 		},
 		{
 			label: '重置',
-			type: 'danger',
-			event: 'reset'
+			event: 'reset',
+			icon: 'Refresh'
 		}
 	],
 	leftButtons: [
@@ -145,7 +166,7 @@ const formConfig = ref<FormConfig>({
 					type: 'primary',
 					link: true,
 					icon: 'Edit',
-					tip: '编辑',
+					tip: '修改',
 					event: 'handleEditTable',
 					show: checkPermission(['tool:gen:edit'])
 				},
@@ -195,40 +216,88 @@ onMounted(() => {
 // 表单按钮点击
 async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
+		// 查询
 		const isPass = await formGeneratorRef.value?.validate()
 		if (!isPass) return
 		pageChange()
 	} else if (event === 'reset') {
+		// 重置表单
 		formGeneratorRef.value?.resetFields()
+		formGeneratorRef.value?.resetPage()
+		pageChange()
 	} else if (event === 'handleGenTable') {
 		// 生成
 		handleGenTable(selectionList.value.map(v => v.tableName).join(','))
 	} else if (event === 'openCreateTable') {
 		// 创建
+		createDialogRef.value?.setVisible(true)
 	} else if (event === 'openImportTable') {
 		// 导入
+		importDialogRef.value?.setVisible(true)
 	} else if (event === 'handleEditTable') {
 		// 修改
+		handleEditTable(selectionList.value.map(v => v.tableId).join(','))
 	} else if (event === 'handleDelete') {
 		// 删除
+		handleDelete(selectionList.value.map(v => v.tableId).join(','))
 	}
 }
 // 表格按钮点击
-function tableEditClick(row, btn) {
+async function tableEditClick(row, btn) {
 	if (btn.event === 'handlePreview') {
 		// 预览
 	} else if (btn.event === 'handleEditTable') {
-		// 编辑
+		// 修改
+		handleEditTable(row.tableId)
 	} else if (btn.event === 'handleDelete') {
 		// 删除
+		handleDelete(row.tableId)
 	} else if (btn.event === 'handleSynchDb') {
 		// 同步
+		await ElMessageBox.confirm('确认要强制同步"' + row.tableName + '"表结构吗？', {
+			title: '系统提示',
+			type: 'warning',
+			confirmButtonText: '确定',
+			cancelButtonText: '取消'
+		})
+		await synchDb(row.tableName)
+		ElMessage({
+			message: '同步成功',
+			type: 'success'
+		})
 	} else if (btn.event === 'handleGenTable') {
 		// 生成
 		handleGenTable(row.tableName)
 	}
 }
 
+function handleEditTable(id: string) {
+	router.push({
+		path: `/tool/gen-edit/index/${id}`,
+		query: {
+			pageNum: 1
+		}
+	})
+}
+
+// 删除
+async function handleDelete(ids: string) {
+	await ElMessageBox.confirm('是否确认删除表编号为"' + ids + '"的数据项？', {
+		title: '系统提示',
+		type: 'warning',
+		confirmButtonText: '确定',
+		cancelButtonText: '取消'
+	})
+	await delTable(ids)
+	ElMessage({
+		message: '删除成功',
+		type: 'success'
+	})
+
+	pageChange()
+}
+
+// 生成代码
 function handleGenTable(tableName: string) {
 	genBatchGenCode({ tables: tableName }).then(data => {
 		downloadBlobFile(data.data, data.filename || new Date().getTime() + '.zip')
@@ -242,10 +311,23 @@ function handleGenTable(tableName: string) {
 			ref="formGeneratorRef"
 			v-model="formData"
 			:config="formConfig"
+			:default-sort="defaultSort"
 			@buttonClick="handleButtonClick"
 			@tableEditClick="tableEditClick"
 			@customPageChange="pageChange"
 			@selectionChange="selectionChange"
+		/>
+
+		<!-- 新增弹窗 -->
+		<CreateDialog
+			ref="createDialogRef"
+			@refresh="pageChange"
+		/>
+
+		<!-- 导入弹窗 -->
+		<ImportDialog
+			ref="importDialogRef"
+			@refresh="pageChange"
 		/>
 	</div>
 </template>

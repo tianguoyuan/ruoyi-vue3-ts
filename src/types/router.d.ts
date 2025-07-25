@@ -61,6 +61,11 @@ declare module 'vue-router' {
 		 * 页面权限
 		 * @example ['admin', 'editor']
 		 */
-		roles?: ('admin' | 'editor')[]
+		roles?: ('admin' | 'editor' | string)[]
+
+		/**
+		 * 用户权限
+		 */
+		permissions?: string[] | ['*.*.*']
 	}
 }

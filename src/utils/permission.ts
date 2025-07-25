@@ -1,31 +1,28 @@
 import Layout from '@/layout/index.vue'
 import { useUserStoreWidthOut } from '@/store/user'
+import type { RouteRecordRaw } from 'vue-router'
 
 const modules = import.meta.glob('/src/views/**/*.vue')
 
 /**
- * @desc 是否有权限访问
- */
-function hasPermission(roles: string[], route: any) {
-	if (route.meta && route.meta.roles) {
-		return roles.some(role => (route.meta?.roles as string[]).includes(role))
-	} else {
-		return true
-	}
-}
-/**
  * @desc 路由表过滤后有权限的
  * @param routes - string[] - 接口返回路由表
- * @param roles - string[] - 当前用户等级
  */
-export function filterAsyncRoutes(routes: any[], roles: string[]) {
+export function filterAsyncRoutes(routes: RouteRecordRaw[]) {
 	const res: any[] = []
 	routes.forEach(route => {
 		const r = { ...route }
-		if (hasPermission(roles, r)) {
+		if (r.meta?.permissions && checkPermission(r.meta?.permissions)) {
 			if (r.children) {
-				r.children = filterAsyncRoutes(r.children, roles)
+				r.children = filterAsyncRoutes(r.children)
 			}
+			res.push(r)
+		} else if (r.meta?.roles && checkRole(r.meta?.roles)) {
+			if (r.children) {
+				r.children = filterAsyncRoutes(r.children)
+			}
+			res.push(r)
+		} else if (!r.meta?.permissions && !r.meta?.roles) {
 			res.push(r)
 		}
 	})

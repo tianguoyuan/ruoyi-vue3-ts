@@ -15,9 +15,9 @@ export const usePermissionStore = defineStore('permission', () => {
 		if (roles.includes('admin')) {
 			accessedRoutes = asyncRoutes
 		} else {
-			accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+			accessedRoutes = filterAsyncRoutes(asyncRoutes)
 		}
-		accessedRoutes = accessedRoutes.concat(errorPageRoute, notFoundRoute)
+		// accessedRoutes = accessedRoutes.concat(errorPageRoute, notFoundRoute)
 		addRoutes.value = accessedRoutes
 		routes.value = constantRoutes.concat(accessedRoutes)
 		return accessedRoutes
@@ -25,11 +25,16 @@ export const usePermissionStore = defineStore('permission', () => {
 
 	// 后端过滤角色权限路由
 	function generateRoutesByBackend(backendRoutes: RouteRecordRaw[]) {
-		const accessedRoutes = formatRoutes(backendRoutes).concat(errorPageRoute, notFoundRoute)
+		const backendFilterRoutes = formatRoutes(backendRoutes)
+		const frontFilterRoutes = filterAsyncRoutes(asyncRoutes)
+		const accessedRoutes = backendFilterRoutes.concat(frontFilterRoutes)
+		// errorPageRoute, notFoundRoute
+
 		addRoutes.value = accessedRoutes
 		routes.value = constantRoutes.concat(accessedRoutes)
 		return accessedRoutes
 	}
+
 	return {
 		generateRoutesByBackend,
 		generateRoutesByFront,
