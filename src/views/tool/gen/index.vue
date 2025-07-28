@@ -1,18 +1,27 @@
-<script setup lang="ts">
-import { delTable, genBatchGenCode, getGenList, synchDb } from '@/api/tool/gen'
+<script setup lang="ts" name="GenEditIndex">
+import { delTable, genBatchGenCode, getGenList, previewTable, synchDb } from '@/api/tool/gen'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import type { FormConfig } from '@/components/FormGenerator/types'
 import { downloadBlobFile } from '@/utils'
 import { checkPermission } from '@/utils/permission'
 import { ElMessage, type Sort } from 'element-plus'
 import CreateDialog from './components/CreateDialog.vue'
-import ImportDialog from './components/importDialog.vue'
+import ImportDialog from './components/ImportDialog.vue'
+import PreviewDialog from './components/PreviewDialog.vue'
+import { useTagsViewStore } from '@/store/tagsView'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
+const tagsViewStore = useTagsViewStore()
+
 // 新增弹窗
 const createDialogRef = ref<InstanceType<typeof CreateDialog> | null>(null)
 // 导入弹窗
 const importDialogRef = ref<InstanceType<typeof ImportDialog> | null>(null)
+// 查看弹窗
+const previewDialogShow = ref(false)
+const previewInfo = ref({})
 
 const formData = ref<Record<string, any>>({
 	orderByColumn: 'createTime',
@@ -246,8 +255,25 @@ async function handleButtonClick(event: string, data: any) {
 async function tableEditClick(row, btn) {
 	if (btn.event === 'handlePreview') {
 		// 预览
+		previewDialogShow.value = true
+		const { data } = await previewTable(row.tableId)
+		previewInfo.value = data
 	} else if (btn.event === 'handleEditTable') {
 		// 修改
+		const editTablePage = router.getRoutes().find(v => v.name === 'GenEdit') as RouteLocationNormalizedLoaded | undefined
+
+		console.log('editTablePage', editTablePage)
+
+		if (editTablePage) {
+			tagsViewStore.addView({
+				...editTablePage,
+				path: `/tool/gen-edit/index/${row.tableId}`,
+				meta: {
+					...editTablePage.meta,
+					title: '修改[' + row.tableName + ']生成配置'
+				}
+			})
+		}
 		handleEditTable(row.tableId)
 	} else if (btn.event === 'handleDelete') {
 		// 删除
@@ -328,6 +354,12 @@ function handleGenTable(tableName: string) {
 		<ImportDialog
 			ref="importDialogRef"
 			@refresh="pageChange"
+		/>
+
+		<!-- 查看弹窗 -->
+		<PreviewDialog
+			v-model:show="previewDialogShow"
+			:preview-info="previewInfo"
 		/>
 	</div>
 </template>

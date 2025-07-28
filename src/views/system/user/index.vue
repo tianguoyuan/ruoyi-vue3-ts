@@ -1,4 +1,4 @@
-<script setup lang="ts"></script>
+<script setup lang="ts" name="User"></script>
 
 <template>
 	<div>用户管理</div>

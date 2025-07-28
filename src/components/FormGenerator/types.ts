@@ -1,3 +1,5 @@
+import type { FormRules } from 'element-plus'
+
 // 基础字段类型
 export interface BaseField {
 	type: string
@@ -21,6 +23,17 @@ export interface InputField extends BaseField {
 	maxlength?: number
 	showWordLimit?: boolean
 	readonly?: boolean
+}
+
+// 文本域
+export interface TextAreaField extends BaseField {
+	type: 'textarea'
+	placeholder?: string
+	clearable?: boolean
+	maxlength?: number
+	showWordLimit?: boolean
+	readonly?: boolean
+	rows?: number
 }
 
 // 数字输入框
@@ -307,6 +320,7 @@ export interface FormConfig {
 
 	fields: Array<
 		| InputField
+		| TextAreaField
 		| InputNumberField
 		| RadioField
 		| CheckboxField
@@ -329,6 +343,8 @@ export interface FormConfig {
 	leftButtons?: FormButton[]
 	/**是否自定义修改页面函数 */
 	customPageChange?: boolean
+
+	formRules?: FormRules
 }
 
 // 表格操作列

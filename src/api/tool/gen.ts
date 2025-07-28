@@ -61,3 +61,11 @@ export function importTable(data: { tables: string }): Promise<{ msg: string }> 
 		params: data
 	})
 }
+
+// 预览生成代码
+export function previewTable(tableId: string): Promise<{ data: Record<string, string> }> {
+	return request({
+		url: '/tool/gen/preview/' + tableId,
+		method: 'get'
+	})
+}

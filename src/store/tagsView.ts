@@ -4,11 +4,14 @@ import { ref } from 'vue'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export const useTagsViewStore = defineStore('tagsView', () => {
-	const cachedViews = ref<string[]>([])
-	const visitedViews = ref<RouteLocationNormalizedLoaded[]>([])
+	// const cachedViews = ref<string[]>([])
+	// const visitedViews = ref<RouteLocationNormalizedLoaded[]>([])
+	const cachedViews = useLocalStorage<string[]>('cachedViews', [])
+	const visitedViews = useLocalStorage<RouteLocationNormalizedLoaded[]>('visitedViews', [])
 
 	function addVisitedView(view: RouteLocationNormalizedLoaded) {
 		if (visitedViews.value.some(v => v.path === view.path)) return
+
 		visitedViews.value.push(
 			Object.assign({}, view, {
 				title: view.meta.title || 'no-name'

@@ -80,7 +80,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 		children: [
 			{
 				path: 'index',
-				name: 'demo',
+				name: 'Demo',
 				component: () => import('@/views/demo/index.vue'),
 				meta: {
 					title: '生成表单',
@@ -125,7 +125,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
 			{
 				path: 'index/:tableId(\\d+)',
 				component: () => import('@/views/tool/gen/editTable.vue'),
-				name: 'GenEdit',
+				name: 'GenEditIndex',
 				meta: {
 					title: '修改生成配置',
 					activeMenu: '/tool/gen'

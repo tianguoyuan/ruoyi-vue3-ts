@@ -1,4 +1,4 @@
-<script setup lang="ts"></script>
+<script setup lang="ts" name="Online"></script>
 
 <template>
 	<div>系统监控 / 在线用户</div>

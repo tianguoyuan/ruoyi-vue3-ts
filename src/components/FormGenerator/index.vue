@@ -20,7 +20,6 @@ const emit = defineEmits<{
 
 const formRef = ref<any>(null)
 const formData = ref<Record<string, any>>({})
-const formRules = ref<Record<string, any>>({})
 
 // 初始化表单数据
 function initFormData() {
@@ -106,16 +105,16 @@ function handleButtonClick(btn: any) {
 }
 
 // 监听外部传入的modelValue变化
-watch(
-	() => props.modelValue,
-	newVal => {
-		formData.value = {
-			...formData.value,
-			...newVal
-		}
-	},
-	{ deep: true }
-)
+// watch(
+// 	() => props.modelValue,
+// 	newVal => {
+// 		formData.value = {
+// 			...formData.value,
+// 			...newVal
+// 		}
+// 	},
+// 	{ deep: true }
+// )
 
 // 监听表单数据变化
 watch(
@@ -189,7 +188,7 @@ defineExpose({
 		<el-form
 			ref="formRef"
 			:model="formData"
-			:rules="formRules"
+			:rules="config.formRules"
 			:label-width="config.labelWidth || '120px'"
 			:label-position="config.labelPosition || 'right'"
 			:disabled="config.disabled"
@@ -234,6 +233,22 @@ defineExpose({
 									:show-word-limit="item.showWordLimit"
 									:disabled="item.disabled"
 									:readonly="item.readonly"
+								/>
+							</el-form-item>
+
+							<!-- 文本域 -->
+							<el-form-item
+								v-if="item.type === 'textarea'"
+								:label="item.label"
+								:prop="item.prop"
+								:rules="item.rules"
+							>
+								<el-input
+									v-model="formData[item.prop]"
+									type="textarea"
+									:placeholder="item.placeholder || `请输入${item.label}`"
+									:rows="item.rows || 2"
+									style="width: 100%"
 								/>
 							</el-form-item>
 
@@ -538,7 +553,7 @@ defineExpose({
 					</template>
 				</template>
 			</el-row>
-			<div class="flex justify-between">
+			<div class="flex justify-between formButtons">
 				<!-- 表单左侧操作按钮 -->
 				<div>
 					<div

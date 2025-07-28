@@ -1,10 +1,9 @@
-<script setup lang="ts">
+<script setup lang="ts" name="Index">
 import { useUserStore } from '@/store/user'
 import { checkPermission } from '@/utils/permission'
 
 const userStore = useUserStore()
-
-console.log('userStore', userStore)
+const msg = ref('')
 </script>
 
 <template>
@@ -24,6 +23,8 @@ console.log('userStore', userStore)
 		>
 			没有['system:user:resetPwd']权限
 		</el-button>
+
+		<el-input v-model="msg" />
 	</div>
 </template>
 

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="ts" setup name="Demo">
 import { ref } from 'vue'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import type { FormConfig } from '@/components/FormGenerator/types'
