@@ -1,4 +1,4 @@
-import type { FormRules } from 'element-plus'
+import type { CascaderOption, FormRules } from 'element-plus'
 
 // 基础字段类型
 export interface BaseField {
@@ -10,6 +10,7 @@ export interface BaseField {
 	disabled?: boolean
 	hidden?: boolean
 	span?: number // 栅格布局，占多少列
+	labelTip?: string
 }
 
 // 输入框
@@ -64,9 +65,10 @@ export interface CheckboxField extends BaseField {
 }
 
 // 选择器
+type ISelectOptions = { label: string; value: any; disabled?: boolean }
 export interface SelectField extends BaseField {
 	type: 'select'
-	options: Array<{ label: string; value: any; disabled?: boolean }>
+	options: Array<ISelectOptions> // | globalThis.Ref<ISelectOptions[]>
 	multiple?: boolean
 	filterable?: boolean
 	allowCreate?: boolean
@@ -80,7 +82,7 @@ export interface SelectField extends BaseField {
 // 级联选择器
 export interface CascaderField extends BaseField {
 	type: 'cascader'
-	options: any[]
+	options: CascaderOption[] // | globalThis.Ref<CascaderOption[]>
 	props?: Record<string, any>
 	showAllLevels?: boolean
 	collapseTags?: boolean

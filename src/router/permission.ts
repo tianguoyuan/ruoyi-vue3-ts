@@ -43,9 +43,9 @@ export function setupPermission(router: Router) {
 								replace: true
 							})
 						})
-						.catch(err => {
+						.catch(() => {
 							userStore.resetUserInfo()
-							ElMessage.error(err || '获取用户信息失败')
+							ElMessage.error('获取用户信息失败')
 							next({
 								path: '/login',
 								query: {

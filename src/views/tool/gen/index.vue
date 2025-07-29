@@ -260,7 +260,7 @@ async function tableEditClick(row, btn) {
 		previewInfo.value = data
 	} else if (btn.event === 'handleEditTable') {
 		// 修改
-		const editTablePage = router.getRoutes().find(v => v.name === 'GenEdit') as RouteLocationNormalizedLoaded | undefined
+		const editTablePage = router.getRoutes().find(v => v.name === 'GenEditIndex') as RouteLocationNormalizedLoaded | undefined
 
 		console.log('editTablePage', editTablePage)
 

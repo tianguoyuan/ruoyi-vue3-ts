@@ -77,3 +77,28 @@ export function downloadBlobFile(data: Blob, filename: string) {
 		window.URL.revokeObjectURL(url)
 	}
 }
+/**
+ * 递归构造树型结构数据
+ * @param list 扁平数据
+ * @param parentId 顶级父节点的值，通常为 0
+ * @param idKey id字段名，默认 'menuId'
+ * @param parentKey 父字段名，默认 'parentId'
+ * @param childrenKey 子节点字段名，默认 'children'
+ */
+export function buildTree<T extends Record<string, any>>(
+	list: T[],
+	parentId: number | string = 0,
+	idKey: string = 'menuId',
+	parentKey: string = 'parentId',
+	childrenKey: string = 'children'
+): T[] {
+	return list
+		.filter(item => item[parentKey] === parentId)
+		.map(item => {
+			const children = buildTree(list, item[idKey], idKey, parentKey, childrenKey)
+			return {
+				...item,
+				[childrenKey]: children.length ? children : []
+			}
+		})
+}

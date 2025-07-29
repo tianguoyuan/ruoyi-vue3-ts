@@ -3,11 +3,29 @@ import type { FormConfig } from '@/components/FormGenerator/types'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import { useUserStore } from '@/store/user'
 
+const props = defineProps<{
+	info: API.IGetGenTableRes['data']['info']
+}>()
+
 const router = useRouter()
-const userStore = useUserStore()
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
-const formData = ref({})
+const formData = ref<API.IGetGenTableRes['data']['info']>({
+	className: '',
+	functionAuthor: '',
+	remark: '',
+	tableComment: '',
+	tableName: ''
+})
+
+watch(
+	() => props.info,
+	value => {
+		formGeneratorRef.value?.setFormData(value)
+	},
+	{ immediate: true }
+)
+
 const formConfig = ref<FormConfig>({
 	labelWidth: '150px',
 	span: 6,
@@ -53,58 +71,56 @@ const formConfig = ref<FormConfig>({
 		tableName: [
 			{
 				required: true,
-				message: '请输入表名称'
+				message: '请输入表名称',
+				trigger: 'blur'
 			}
 		],
 		tableComment: [
 			{
 				required: true,
-				message: '请输入实体类名称'
+				message: '请输入实体类名称',
+				trigger: 'blur'
 			}
 		],
 		className: [
 			{
 				required: true,
-				message: '请输入表描述'
+				message: '请输入表描述',
+				trigger: 'blur'
 			}
 		],
 		functionAuthor: [
 			{
 				required: true,
-				message: '请输入作者'
-			}
-		],
-		remark: [
-			{
-				required: true,
-				message: '请输入备注'
+				message: '请输入作者',
+				trigger: 'blur'
 			}
 		]
+		// remark: [
+		// 	{
+		// 		required: true,
+		// 		message: '请输入备注',
+		// 		trigger: 'blur'
+		// 	}
+		// ]
 	},
-
-	buttons: [
-		{
-			label: '提交',
-			type: 'primary',
-			event: 'submit'
-		},
-		{
-			label: '返回',
-			event: 'back'
-		}
-	],
 	tableShow: false,
-	tableInitQueryRefuse: true
+	tableInitQueryRefuse: true,
+	hideDefaultButton: true
 })
 
-async function handleButtonClick(event: string) {
-	if (event === 'submit') {
-		await formGeneratorRef.value?.validate()
-		console.log('formData', formData.value)
-	} else if (event === 'back') {
-		router.back()
-	}
+function validate() {
+	return formGeneratorRef.value?.validate()
 }
+
+function getData() {
+	return formData.value
+}
+
+defineExpose({
+	validate,
+	getData
+})
 </script>
 
 <template>
@@ -112,7 +128,6 @@ async function handleButtonClick(event: string) {
 		ref="formGeneratorRef"
 		v-model="formData"
 		:config="formConfig"
-		@buttonClick="handleButtonClick"
 	/>
 </template>
 

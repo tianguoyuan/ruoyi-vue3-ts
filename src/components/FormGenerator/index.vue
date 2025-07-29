@@ -26,11 +26,24 @@ function initFormData() {
 	const data: Record<string, any> = {}
 	props.config.fields?.forEach(field => {
 		data[field.prop] = field.defaultValue !== undefined ? field.defaultValue : ''
+
+		if (!Object.prototype.hasOwnProperty.call(field, 'clearable')) {
+			// @ts-ignore
+			field.clearable = true
+		}
 	})
 	formData.value = {
 		...data,
 		...props.modelValue
 	}
+}
+
+function setFormData(value: Record<string, any>) {
+	Object.keys(formData.value).forEach(key => {
+		if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
+			formData.value[key] = value[key]
+		}
+	})
 }
 
 // 获取组件
@@ -105,6 +118,33 @@ function handleButtonClick(btn: any) {
 }
 
 // 监听外部传入的modelValue变化
+watch(
+	() => props.modelValue,
+	(newVal, oldVal) => {
+		// 避免无意义的更新
+		if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+			formData.value = {
+				...formData.value,
+				...newVal
+			}
+		}
+	},
+	{
+		deep: true,
+		immediate: true
+	}
+)
+
+// 监听表单数据变化
+watch(
+	formData,
+	(newVal, oldVal) => {
+		emit('update:modelValue', newVal)
+	},
+	{ deep: true }
+)
+
+// // 监听外部传入的modelValue变化
 // watch(
 // 	() => props.modelValue,
 // 	newVal => {
@@ -116,14 +156,14 @@ function handleButtonClick(btn: any) {
 // 	{ deep: true }
 // )
 
-// 监听表单数据变化
-watch(
-	formData,
-	newVal => {
-		emit('update:modelValue', newVal)
-	},
-	{ deep: true }
-)
+// // 监听表单数据变化
+// watch(
+// 	formData,
+// 	newVal => {
+// 		emit('update:modelValue', newVal)
+// 	},
+// 	{ deep: true }
+// )
 
 const tableData = ref([])
 const total = ref(0)
@@ -179,7 +219,9 @@ defineExpose({
 	resetPage,
 	clearValidate,
 	getFormData: () => formData.value,
-	queryTableData
+	queryTableData,
+
+	setFormData
 })
 </script>
 
@@ -222,6 +264,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-input
 									v-model="formData[item.prop]"
 									:placeholder="item.placeholder || `请输入${item.label}`"
@@ -243,12 +295,23 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-input
 									v-model="formData[item.prop]"
 									type="textarea"
 									:placeholder="item.placeholder || `请输入${item.label}`"
 									:rows="item.rows || 2"
 									style="width: 100%"
+									:clearable="item.clearable"
 								/>
 							</el-form-item>
 
@@ -259,6 +322,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-input-number
 									v-model="formData[item.prop]"
 									:min="item.min"
@@ -280,11 +353,21 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-radio-group v-model="formData[item.prop]">
 									<el-radio
 										v-for="option in item.options"
 										:key="option.value"
-										:label="option.value"
+										:value="option.value"
 										:border="item.border"
 										:disabled="option.disabled"
 									>
@@ -300,6 +383,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-checkbox-group v-model="formData[item.prop]">
 									<el-checkbox
 										v-for="option in item.options"
@@ -320,6 +413,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-select
 									v-model="formData[item.prop]"
 									:multiple="item.multiple"
@@ -350,6 +453,17 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
+								<!-- @ts-nocheck -->
 								<el-cascader
 									v-model="formData[item.prop]"
 									:options="item.options"
@@ -364,7 +478,7 @@ defineExpose({
 									style="width: 100%"
 								/>
 							</el-form-item>
-
+							<!-- @ts-check -->
 							<!-- 开关 -->
 							<el-form-item
 								v-if="item.type === 'switch'"
@@ -372,6 +486,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-switch
 									v-model="formData[item.prop]"
 									:active-value="item.activeValue || true"
@@ -389,6 +513,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-slider
 									v-model="formData[item.prop]"
 									:min="item.min"
@@ -411,6 +545,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-time-picker
 									v-model="formData[item.prop]"
 									:is-range="item.isRange"
@@ -435,6 +579,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-date-picker
 									v-model="formData[item.prop]"
 									:type="item.dateType || 'date'"
@@ -459,6 +613,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-date-picker
 									v-model="formData[item.prop]"
 									type="datetime"
@@ -478,6 +642,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-rate
 									v-model="formData[item.prop]"
 									:max="item.max || 5"
@@ -503,6 +677,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-color-picker
 									v-model="formData[item.prop]"
 									:show-alpha="item.showAlpha"
@@ -519,6 +703,16 @@ defineExpose({
 								:prop="item.prop"
 								:rules="item.rules"
 							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
 								<el-transfer
 									v-model="formData[item.prop]"
 									:data="item.data"
@@ -537,7 +731,13 @@ defineExpose({
 							</el-form-item>
 
 							<!-- 自定义插槽 -->
-							<el-form-item
+							<slot
+								v-if="item.type === 'slot'"
+								:name="item.slotName"
+								:data="formData"
+								:item="item"
+							/>
+							<!-- <el-form-item
 								v-if="item.type === 'slot'"
 								:label="item.label"
 								:prop="item.prop"
@@ -548,7 +748,7 @@ defineExpose({
 									:data="formData"
 									:item="item"
 								/>
-							</el-form-item>
+							</el-form-item> -->
 						</el-col>
 					</template>
 				</template>

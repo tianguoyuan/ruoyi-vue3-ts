@@ -66,7 +66,6 @@ class Request {
 		this.loadingInstance = ElLoading.service({
 			lock: true,
 			text: '加载中...',
-			spinner: 'el-icon-loading',
 			background: 'rgba(0, 0, 0, 0.7)'
 		})
 	}

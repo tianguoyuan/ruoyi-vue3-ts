@@ -1,4 +1,9 @@
 declare namespace API {
+	interface BaseRes {
+		code: number
+		msg: string
+	}
+
 	/** 注册 */
 	interface IRegister {
 		/** 账号 */
@@ -106,5 +111,25 @@ declare namespace API {
 	interface IGetDbListRes {
 		total: string
 		rows: any[]
+	}
+
+	interface IOptionselect {
+		data: { dictName: string; dictType: string }[]
+	}
+
+	interface IGetGenTableRes {
+		data: {
+			info: {
+				tableName: string
+				tableComment: string
+				className: string
+				functionAuthor: string
+				remark: string
+
+				tplWebType?: string
+			}
+			rows: any[]
+			tables: any[]
+		}
 	}
 }
