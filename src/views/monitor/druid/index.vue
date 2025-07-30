@@ -1,7 +1,9 @@
-<script setup lang="ts" name="Druid"></script>
+<script setup lang="ts" name="Druid">
+const url = ref(import.meta.env.VITE_API_URL + '/druid/login.html')
+</script>
 
 <template>
-	<div>系统监控 / 数据监控</div>
+	<IFrame v-model:src="url" />
 </template>
 
 <style scoped></style>

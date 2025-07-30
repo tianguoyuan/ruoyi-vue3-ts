@@ -165,7 +165,8 @@ class Request {
 			}
 		)
 	}
-	public request = <T>(
+	// 最好不要写 T = any
+	public request = <T = any>(
 		options: AxiosRequestConfig & { method: Lowercase<Method> },
 		loading?: boolean,
 		cancelToken?: boolean

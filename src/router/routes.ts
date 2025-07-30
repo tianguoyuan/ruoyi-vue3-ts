@@ -132,5 +132,24 @@ export const asyncRoutes: RouteRecordRaw[] = [
 				}
 			}
 		]
+	},
+	{
+		path: '/monitor/job-log',
+		component: Layout,
+		meta: {
+			hidden: true,
+			permissions: ['monitor:job:list']
+		},
+		children: [
+			{
+				path: 'index/:jobId(\\d+)',
+				component: () => import('@/views/monitor/job/log.vue'),
+				name: 'JobLog',
+				meta: {
+					title: '调度日志',
+					activeMenu: '/monitor/job'
+				}
+			}
+		]
 	}
 ]

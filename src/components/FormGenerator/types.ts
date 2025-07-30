@@ -326,6 +326,7 @@ export interface FormConfig {
 		sortOrders?: ('ascending' | 'descending')[]
 		showOverflowTooltip?: boolean
 		custom?: boolean
+		slotName?: string
 		format?: (v: string) => string
 		tableEditBtn?: {
 			label?: string

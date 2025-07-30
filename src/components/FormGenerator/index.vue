@@ -221,7 +221,11 @@ defineExpose({
 	getFormData: () => formData.value,
 	queryTableData,
 
-	setFormData
+	setFormData,
+	getPageParams: () => ({
+		pageNum: pageNum.value,
+		pageSize: pageSize.value
+	})
 })
 </script>
 
@@ -858,6 +862,14 @@ defineExpose({
 				>
 					<template #default="{ row }">
 						<span v-if="item.format">{{ item.format(row[item.prop]) }}</span>
+
+						<slot
+							v-if="item.slotName"
+							:name="item.slotName"
+							:row="row"
+							:value="row[item.prop]"
+						/>
+
 						<template v-if="item.custom">
 							<span
 								v-for="(btn, btnIndex) in item.tableEditBtn"

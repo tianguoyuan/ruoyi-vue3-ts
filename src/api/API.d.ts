@@ -137,4 +137,13 @@ declare namespace API {
 		ipaddr?: string
 		userName?: string
 	}
+
+	type IGetDictsRes = {
+		label: string
+		value: string
+		elTagType: string
+		elTagClass: string
+	}[]
+
+	type IGetServer = Record<string, any>
 }
