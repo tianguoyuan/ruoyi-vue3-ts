@@ -132,4 +132,9 @@ declare namespace API {
 			tables: any[]
 		}
 	}
+
+	interface IGetOnlineList {
+		ipaddr?: string
+		userName?: string
+	}
 }

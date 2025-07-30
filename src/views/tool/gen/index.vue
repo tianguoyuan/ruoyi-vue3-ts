@@ -162,6 +162,7 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '操作',
 			custom: true,
+			prop: '',
 			tableEditBtn: [
 				{
 					type: 'primary',
@@ -261,13 +262,13 @@ async function tableEditClick(row, btn) {
 	} else if (btn.event === 'handleEditTable') {
 		// 修改
 		const editTablePage = router.getRoutes().find(v => v.name === 'GenEditIndex') as RouteLocationNormalizedLoaded | undefined
-
-		console.log('editTablePage', editTablePage)
-
 		if (editTablePage) {
 			tagsViewStore.addView({
 				...editTablePage,
 				path: `/tool/gen-edit/index/${row.tableId}`,
+				query: {
+					pageNum: '1'
+				},
 				meta: {
 					...editTablePage.meta,
 					title: '修改[' + row.tableName + ']生成配置'

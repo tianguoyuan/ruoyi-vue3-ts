@@ -318,7 +318,26 @@ export interface FormConfig {
 	tableSelection?: (row: any, index: number) => boolean
 	/**显示序号 */
 	tableShowIndex?: boolean
-	tableHeader?: any
+	tableHeader?: {
+		prop: string
+		label: string
+		width?: string
+		sortable?: string
+		sortOrders?: ('ascending' | 'descending')[]
+		showOverflowTooltip?: boolean
+		custom?: boolean
+		format?: (v: string) => string
+		tableEditBtn?: {
+			label?: string
+			tip?: string
+			show?: boolean
+			type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
+			link?: boolean
+			icon?: string
+			disabled?: boolean
+			event: string
+		}[]
+	}[]
 
 	fields: Array<
 		| InputField

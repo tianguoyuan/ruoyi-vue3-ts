@@ -762,7 +762,7 @@ defineExpose({
 					>
 						<el-button
 							v-for="(btn, idx) in config.leftButtons"
-							v-show="btn.show || true"
+							v-show="btn.show === false ? false : true"
 							:key="idx"
 							:type="btn.type || ''"
 							:icon="btn.icon"
@@ -781,7 +781,7 @@ defineExpose({
 					<div class="flex justify-end w-full">
 						<el-button
 							v-for="(btn, idx) in config.buttons"
-							v-show="btn.show || true"
+							v-show="btn.show === false ? false : true"
 							:key="idx"
 							:type="btn.type || ''"
 							:icon="btn.icon"
@@ -835,13 +835,15 @@ defineExpose({
 					v-if="config.tableShowSelection"
 					type="selection"
 					:selectable="config.tableSelection"
-					:width="50"
+					:width="55"
+					align="center"
 				/>
 				<el-table-column
 					v-if="config.tableShowIndex"
 					type="index"
 					label="序号"
 					:width="55"
+					align="center"
 				/>
 				<el-table-column
 					v-for="(item, index) in config.tableHeader"
@@ -852,22 +854,34 @@ defineExpose({
 					:sortable="item.sortable"
 					:sort-orders="item.sortOrders || ['ascending', 'descending']"
 					:show-overflow-tooltip="item.showOverflowTooltip"
+					align="center"
 				>
-					<template
-						v-if="item.custom"
-						#default="{ row }"
-					>
-						<span
-							v-for="(btn, btnIndex) in item.tableEditBtn"
-							:key="btnIndex"
-						>
-							<el-tooltip
-								v-if="btn.tip"
-								:content="btn.tip"
-								placement="top"
+					<template #default="{ row }">
+						<span v-if="item.format">{{ item.format(row[item.prop]) }}</span>
+						<template v-if="item.custom">
+							<span
+								v-for="(btn, btnIndex) in item.tableEditBtn"
+								:key="btnIndex"
 							>
+								<el-tooltip
+									v-if="btn.tip"
+									:content="btn.tip"
+									placement="top"
+								>
+									<el-button
+										v-show="btn.show === false ? false : true"
+										:type="btn.type"
+										:link="btn.link"
+										:icon="btn.icon"
+										:disabled="btn.disabled"
+										@click="emit('tableEditClick', row, btn)"
+									>
+										{{ btn.label }}
+									</el-button>
+								</el-tooltip>
 								<el-button
-									v-show="btn.show || true"
+									v-else
+									v-show="btn.show === false ? false : true"
 									:type="btn.type"
 									:link="btn.link"
 									:icon="btn.icon"
@@ -876,19 +890,8 @@ defineExpose({
 								>
 									{{ btn.label }}
 								</el-button>
-							</el-tooltip>
-							<el-button
-								v-else
-								v-show="btn.show || true"
-								:type="btn.type"
-								:link="btn.link"
-								:icon="btn.icon"
-								:disabled="btn.disabled"
-								@click="emit('tableEditClick', row, btn)"
-							>
-								{{ btn.label }}
-							</el-button>
-						</span>
+							</span>
+						</template>
 					</template>
 				</el-table-column>
 			</el-table>
