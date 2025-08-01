@@ -43,14 +43,12 @@ export const useUserStore = defineStore('user', () => {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				type: 'warning'
-			})
-				.then(() => {
-					router.push({
-						path: '/system/user/profile',
-						query: { activeTab: 'resetPwd' }
-					})
+			}).then(() => {
+				router.push({
+					path: '/system/user/profile',
+					query: { activeTab: 'resetPwd' }
 				})
-				.catch(() => {})
+			})
 		}
 		/* 过期密码提示 */
 		if (!userResult.isDefaultModifyPwd && userResult.isPasswordExpired) {
@@ -58,14 +56,12 @@ export const useUserStore = defineStore('user', () => {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				type: 'warning'
-			})
-				.then(() => {
-					router.push({
-						path: '/system/user/profile',
-						query: { activeTab: 'resetPwd' }
-					})
+			}).then(() => {
+				router.push({
+					path: '/system/user/profile',
+					query: { activeTab: 'resetPwd' }
 				})
-				.catch(() => {})
+			})
 		}
 
 		return {

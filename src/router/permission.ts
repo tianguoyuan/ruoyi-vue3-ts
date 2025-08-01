@@ -7,6 +7,7 @@ import { to as apiTo } from 'await-to-js'
 import { ElMessage } from 'element-plus'
 import { usePermissionStoreWidthOut } from '@/store/permission'
 import { isExternal } from '@/utils/is'
+import { isReLogin } from '@/utils/request'
 
 export function setupPermission(router: Router) {
 	const whiteList = ['/login'] // no redirect whitelist
@@ -28,9 +29,11 @@ export function setupPermission(router: Router) {
 					next()
 					NProgress.done()
 				} else {
+					isReLogin.show = true
 					userStore
 						.getUserInfo()
 						.then(result => {
+							isReLogin.show = false
 							const { roles, routes } = result
 							// 前端过滤权限路由
 							// const accessedRoutes = permissionStore.generateRoutesByFront(roles)
@@ -45,7 +48,7 @@ export function setupPermission(router: Router) {
 						})
 						.catch(() => {
 							userStore.resetUserInfo()
-							ElMessage.error('获取用户信息失败')
+							ElMessage.error('无效的会话，或者会话已过期，请重新登录。')
 							next({
 								path: '/login',
 								query: {

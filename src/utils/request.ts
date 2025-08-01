@@ -5,6 +5,9 @@ import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
 import router from '@/router'
 import { useUserStoreWidthOut } from '@/store/user'
 
+// 是否显示重新登录
+export let isReLogin = { show: false }
+
 interface RequestState {
 	baseUrl: string
 }
@@ -43,6 +46,8 @@ class Request {
 	}
 	/** 登录过期, 重新登录 */
 	private errorAuthToast(msg: string) {
+		if (isReLogin.show) return
+		isReLogin.show = true
 		console.log('errorAuthToast', msg)
 		ElMessageBox.confirm('登录过期, 是否重新登录?', {
 			title: '系统提示',
@@ -51,12 +56,13 @@ class Request {
 			cancelButtonText: '取消'
 		})
 			.then(() => {
+				isReLogin.show = false
 				const userStore = useUserStoreWidthOut()
 				userStore.resetUserInfo()
 				router.replace('/login')
 			})
 			.catch(() => {
-				// catch error
+				isReLogin.show = false
 			})
 	}
 	private hideLoading() {
