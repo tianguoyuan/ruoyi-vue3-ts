@@ -57,6 +57,13 @@ export interface RadioField extends BaseField {
 	border?: boolean
 }
 
+// 单选框按钮
+export interface RadioButtonField extends BaseField {
+	type: 'radio-button'
+	options: Array<{ label: string; value: any; disabled?: boolean }>
+	border?: boolean
+}
+
 // 复选框
 export interface CheckboxField extends BaseField {
 	type: 'checkbox'
@@ -345,6 +352,7 @@ export interface FormConfig {
 		| TextAreaField
 		| InputNumberField
 		| RadioField
+		| RadioButtonField
 		| CheckboxField
 		| SelectField
 		| CascaderField

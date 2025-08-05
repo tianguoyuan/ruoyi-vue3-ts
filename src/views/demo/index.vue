@@ -140,10 +140,12 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '操作',
 			custom: true,
+			prop: '',
 			tableEditBtn: [
 				{
 					label: '编辑',
-					type: 'primary'
+					type: 'primary',
+					event: 'edit'
 				}
 			]
 		}
@@ -155,8 +157,6 @@ async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
 		const isPass = await formGeneratorRef.value?.validate()
 		if (!isPass) return
-		console.log('data', data)
-
 		formGeneratorRef.value?.queryTableData()
 	} else if (event === 'reset') {
 		console.log(' 重置表单')

@@ -209,7 +209,6 @@ const formConfig = ref<FormConfig>({
 async function handleButtonClick(event: string) {
 	if (event === 'submit') {
 		await formGeneratorRef.value?.validate()
-		console.log('formData', formData.value)
 	} else if (event === 'back') {
 		router.back()
 	}

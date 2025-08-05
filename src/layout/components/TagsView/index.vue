@@ -259,7 +259,7 @@ function handleScroll() {
 					display: inline-block;
 					width: 8px;
 					height: 8px;
-					margin-right: 2px;
+					margin-right: 6px;
 					content: '';
 					background: #ffffff;
 					border-radius: 50%;
@@ -299,7 +299,7 @@ function handleScroll() {
 			width: 16px;
 			height: 16px;
 			text-align: center;
-			vertical-align: -1px;
+			vertical-align: -0.15em;
 			border-radius: 50%;
 			transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 			transform-origin: 100% 50%;

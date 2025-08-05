@@ -131,6 +131,11 @@ class Request {
 				console.timeEnd(url)
 
 				if (response.data instanceof Blob) {
+					/**
+					 * @description 导出接口 文件名称请求头中获取
+					 * 系统工具-代码生成接口 /tool/gen/batchGenCode
+					 * content-disposition attachment; filename="ruoyi.zip"
+					 */
 					const disposition = response.headers['content-disposition']
 					let filename = ''
 					if (disposition) {

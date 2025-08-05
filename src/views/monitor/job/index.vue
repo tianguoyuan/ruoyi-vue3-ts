@@ -7,6 +7,7 @@ import { changeJobStatus, delJob, getListJob, jobExport, runJob } from '@/api/mo
 import { ElMessage } from 'element-plus'
 import { downloadBlobFile } from '@/utils'
 import PreviewDialog from './components/PreviewDialog.vue'
+import EditDialog from './components/EditDialog.vue'
 
 const router = useRouter()
 
@@ -189,6 +190,10 @@ const formConfig = ref<FormConfig>({
 const previewDialogShow = ref(false)
 const previewDialogId = ref('')
 
+// 新增修改弹窗
+const editDialogVisible = ref(false)
+const editId = ref('')
+
 function handleTableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleUpdate') {
@@ -224,6 +229,8 @@ function handleTableEditClick(row, btn) {
 function handleButtonClick(event: string) {
 	if (event === 'handleAdd') {
 		// 新增
+		editId.value = ''
+		editDialogVisible.value = true
 	} else if (event === 'handleUpdate') {
 		// 修改
 		if (selectionList.value.length) {
@@ -251,9 +258,12 @@ function handleButtonClick(event: string) {
 	}
 }
 
+const editDialogRef = ref<null | InstanceType<typeof EditDialog>>(null)
 // 修改
 function handleUpdate(val) {
 	console.log('修改', val)
+	editId.value = val.jobId + ''
+	editDialogVisible.value = true
 }
 // 删除
 function handleDelete(ids: string) {
@@ -268,7 +278,6 @@ function handleDelete(ids: string) {
 	}).then(() => {
 		delJob(ids).then(() => {
 			ElMessage.success('删除成功')
-
 			formGeneratorRef.value?.queryTableData()
 		})
 	})
@@ -300,9 +309,18 @@ function handleStatusChange(row) {
 		})
 }
 
+// 查询
+function queryList() {
+	formGeneratorRef.value?.queryTableData()
+}
+
 async function init() {
-	jobGroupOptions.value = await getDicts('sys_job_group')
-	statusOptions.value = await getDicts('sys_job_status')
+	getDicts('sys_job_group').then(data => {
+		jobGroupOptions.value = data
+	})
+	getDicts('sys_job_status').then(data => {
+		statusOptions.value = data
+	})
 }
 
 init()
@@ -339,6 +357,13 @@ init()
 		<PreviewDialog
 			v-model:previewDialogShow="previewDialogShow"
 			:preview-dialog-id="previewDialogId"
+		/>
+
+		<EditDialog
+			ref="editDialogRef"
+			v-model:visible="editDialogVisible"
+			:edit-id="editId"
+			@refresh="queryList"
 		/>
 	</div>
 </template>

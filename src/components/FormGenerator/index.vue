@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
 import type { FormConfig } from './types'
-import type { Sort } from 'element-plus'
+import type { FormInstance, Sort } from 'element-plus'
 
 const props = defineProps<{
 	config: FormConfig
@@ -11,14 +11,14 @@ const props = defineProps<{
 
 const emit = defineEmits<{
 	'update:modelValue': [value: Record<string, any>]
-	buttonClick: [value: string, value: any]
-	tableEditClick: [value: any, index: any]
+	buttonClick: [event: string, value: any]
+	tableEditClick: [row: any, index: any]
 	selectionChange: [value: Record<string, any>[]]
 	customPageChange: []
 	sortChange: [value: any]
 }>()
 
-const formRef = ref<any>(null)
+const formRef = ref<FormInstance | null>(null)
 const formData = ref<Record<string, any>>({})
 
 // 初始化表单数据
@@ -91,7 +91,7 @@ function getComponent(item: any) {
 // 表单验证
 async function validate() {
 	try {
-		await formRef.value.validate()
+		await formRef.value?.validate()
 		return true
 	} catch (error) {
 		return false
@@ -100,12 +100,16 @@ async function validate() {
 
 // 重置表单
 function resetFields() {
-	formRef.value.resetFields()
+	formRef.value?.resetFields()
 }
 
 // 清除验证
-function clearValidate(props: string | string[]) {
-	formRef.value.clearValidate(props)
+function clearValidate(props?: string | string[]) {
+	if (props) {
+		formRef.value?.clearValidate(props)
+	} else {
+		formRef.value?.clearValidate()
+	}
 }
 
 // 按钮点击事件
@@ -380,6 +384,36 @@ defineExpose({
 								</el-radio-group>
 							</el-form-item>
 
+							<!-- 单选框按钮 -->
+							<el-form-item
+								v-if="item.type === 'radio-button'"
+								:label="item.label"
+								:prop="item.prop"
+								:rules="item.rules"
+							>
+								<template #label>
+									<span>{{ item.label }}</span>
+									<el-tooltip
+										v-if="item.labelTip"
+										:content="item.labelTip"
+										placement="top"
+									>
+										<el-icon><question-filled /></el-icon>
+									</el-tooltip>
+								</template>
+								<el-radio-group v-model="formData[item.prop]">
+									<el-radio-button
+										v-for="option in item.options"
+										:key="option.value"
+										:value="option.value"
+										:border="item.border"
+										:disabled="option.disabled"
+									>
+										{{ option.label }}
+									</el-radio-button>
+								</el-radio-group>
+							</el-form-item>
+
 							<!-- 复选框 -->
 							<el-form-item
 								v-if="item.type === 'checkbox'"
@@ -401,7 +435,7 @@ defineExpose({
 									<el-checkbox
 										v-for="option in item.options"
 										:key="option.value"
-										:label="option.value"
+										:value="option.value"
 										:border="item.border"
 										:disabled="option.disabled"
 									>

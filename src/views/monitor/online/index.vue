@@ -101,7 +101,6 @@ function handleTableEditClick(row, btn) {
 		}).then(() => {
 			forceLogout(row.tokenId).then(res => {
 				ElMessage.success(res.msg)
-
 				formGeneratorRef.value?.queryTableData()
 			})
 		})
