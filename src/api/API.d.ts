@@ -84,6 +84,7 @@ declare namespace API {
 		pageSize: number
 		orderByColumn?: 'createTime'
 		isAsc?: 'ascending' | 'descending'
+		daterange?: string[]
 	}
 	interface IGenListRes {
 		total: number

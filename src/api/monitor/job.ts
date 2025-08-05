@@ -83,18 +83,18 @@ export function updateJob(data) {
 }
 
 // 查询调度日志列表
-export function listJobLog(query) {
-	let params = { ...query }
-	if (query.daterange) {
-		params['params[beginTime]'] = query.daterange[0]
-		params['params[endTime]'] = query.daterange[1]
+export function listJobLog(params) {
+	let apiParams = { ...params }
+	if (params.daterange) {
+		apiParams['params[beginTime]'] = params.daterange[0]
+		apiParams['params[endTime]'] = params.daterange[1]
 
-		delete params.daterange
+		delete apiParams.daterange
 	}
 	return request({
 		url: '/monitor/jobLog/list',
 		method: 'get',
-		params: params
+		params: apiParams
 	})
 }
 

@@ -66,7 +66,7 @@ const formConfig = ref<FormConfig>({
 		{
 			type: 'date-picker',
 			label: '创建时间',
-			prop: 'beginTime',
+			prop: 'daterange',
 			placeholder: '请选择创建时间',
 			dateType: 'daterange',
 			span: 8
@@ -133,8 +133,6 @@ const formConfig = ref<FormConfig>({
 
 	tableShow: true,
 	api: getGenList,
-	customPageChange: true,
-	tableInitQueryRefuse: true,
 	tableShowSelection: true,
 	tableShowIndex: true,
 	tableHeader: [
@@ -210,31 +208,22 @@ const formConfig = ref<FormConfig>({
 })
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
-function pageChange(otherParams = {}) {
-	formGeneratorRef.value?.queryTableData({
-		'params[beginTime]': formData.value.beginTime ? formData.value.beginTime[0] : undefined,
-		'params[endTime]': formData.value.beginTime ? formData.value.beginTime[1] : undefined,
-		beginTime: undefined,
-		...otherParams
-	})
+
+function queryList() {
+	formGeneratorRef.value?.queryTableData()
 }
-
-onMounted(() => {
-	pageChange()
-})
-
 // 表单按钮点击
 async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
 		// 查询
 		const isPass = await formGeneratorRef.value?.validate()
 		if (!isPass) return
-		pageChange()
+		queryList()
 	} else if (event === 'reset') {
 		// 重置表单
 		formGeneratorRef.value?.resetFields()
 		formGeneratorRef.value?.resetPage()
-		pageChange()
+		queryList()
 	} else if (event === 'handleGenTable') {
 		// 生成
 		handleGenTable(selectionList.value.map(v => v.tableName).join(','))
@@ -321,7 +310,7 @@ async function handleDelete(ids: string) {
 		type: 'success'
 	})
 
-	pageChange()
+	queryList()
 }
 
 // 生成代码
@@ -341,20 +330,19 @@ function handleGenTable(tableName: string) {
 			:default-sort="defaultSort"
 			@buttonClick="handleButtonClick"
 			@tableEditClick="tableEditClick"
-			@customPageChange="pageChange"
 			@selectionChange="selectionChange"
 		/>
 
 		<!-- 新增弹窗 -->
 		<CreateDialog
 			ref="createDialogRef"
-			@refresh="pageChange"
+			@refresh="queryList"
 		/>
 
 		<!-- 导入弹窗 -->
 		<ImportDialog
 			ref="importDialogRef"
-			@refresh="pageChange"
+			@refresh="queryList"
 		/>
 
 		<!-- 查看弹窗 -->

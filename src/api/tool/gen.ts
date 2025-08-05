@@ -2,10 +2,17 @@ import { request } from '@/utils/request'
 
 // 列表
 export function getGenList(params: API.IGenList): Promise<API.IGenListRes> {
+	let apiParams = { ...params }
+	if (params.daterange) {
+		apiParams['params[beginTime]'] = params.daterange[0]
+		apiParams['params[endTime]'] = params.daterange[1]
+
+		delete apiParams.daterange
+	}
 	return request({
 		url: '/tool/gen/list',
 		method: 'get',
-		params
+		params: apiParams
 	})
 }
 
