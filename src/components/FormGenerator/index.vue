@@ -12,7 +12,7 @@ const props = defineProps<{
 const emit = defineEmits<{
 	'update:modelValue': [value: Record<string, any>]
 	buttonClick: [event: string, value: any]
-	tableEditClick: [row: any, index: any]
+	tableEditClick: [row: any, btn: any]
 	selectionChange: [value: Record<string, any>[]]
 	customPageChange: []
 	sortChange: [value: any]
@@ -203,9 +203,9 @@ function handleSortChange(val) {
 	queryTableData()
 }
 
-function resetPage() {
-	pageNum.value = 1
-	pageSize.value = 10
+function resetPage(obj?: { pageNum?: number; pageSize?: number }) {
+	pageNum.value = obj?.pageNum ? obj?.pageNum : 1
+	pageSize.value = obj?.pageSize ? obj?.pageSize : 10
 }
 
 // 初始化
@@ -914,7 +914,7 @@ defineExpose({
 									placement="top"
 								>
 									<el-button
-										v-show="btn.show === false ? false : true"
+										v-show="typeof btn.show === 'function' ? btn.show(row) : typeof btn.show === 'boolean' ? btn.show : true"
 										:type="btn.type"
 										:link="btn.link"
 										:icon="btn.icon"
@@ -926,7 +926,7 @@ defineExpose({
 								</el-tooltip>
 								<el-button
 									v-else
-									v-show="btn.show === false ? false : true"
+									v-show="typeof btn.show === 'function' ? btn.show(row) : typeof btn.show === 'boolean' ? btn.show : true"
 									:type="btn.type"
 									:link="btn.link"
 									:icon="btn.icon"

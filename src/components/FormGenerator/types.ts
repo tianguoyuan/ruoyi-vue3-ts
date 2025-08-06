@@ -338,7 +338,7 @@ export interface FormConfig {
 		tableEditBtn?: {
 			label?: string
 			tip?: string
-			show?: boolean
+			show?: boolean | ((row: any) => boolean)
 			type?: 'primary' | 'success' | 'warning' | 'danger' | 'info' | 'text'
 			link?: boolean
 			icon?: string

@@ -39,7 +39,7 @@ export function setupPermission(router: Router) {
 							// const accessedRoutes = permissionStore.generateRoutesByFront(roles)
 							// 后端过滤权限路由
 							const accessedRoutes = permissionStore.generateRoutesByBackend(routes)
-							console.warn('项目路由', accessedRoutes)
+							console.log('项目路由', accessedRoutes)
 							accessedRoutes.forEach(route => !isExternal(route.path) && router.addRoute(route))
 							next({
 								...to,
