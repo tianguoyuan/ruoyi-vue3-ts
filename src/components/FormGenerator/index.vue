@@ -863,7 +863,6 @@ defineExpose({
 				ref="tableRef"
 				:data="tableData"
 				class="mt-3"
-				:max-height="500"
 				center
 				:default-sort="defaultSort"
 				@selectionChange="selectList => emit('selectionChange', selectList)"

@@ -181,6 +181,7 @@ async function handleButtonClick(event) {
 			confirmButtonText: '确定'
 		})
 		delJobLog(ids)
+		formGeneratorRef.value?.queryTableData()
 	} else if (event === 'handleClean') {
 		// 清空
 		await ElMessageBox({
