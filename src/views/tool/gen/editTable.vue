@@ -34,8 +34,8 @@ init()
 const baseInfoRef = ref<InstanceType<typeof BaseInfo> | null>(null)
 const genInfoRef = ref<InstanceType<typeof GenInfo> | null>(null)
 async function submitForm() {
-	Promise.all([baseInfoRef.value?.validate(), genInfoRef.value?.validate()]).then(data => {
-		if (data.every(v => !!v)) {
+	Promise.all([baseInfoRef.value?.validate(), genInfoRef.value?.validate()])
+		.then(() => {
 			const baseInfoData = baseInfoRef.value?.getData()
 			const genInfoData = genInfoRef.value?.getData()
 			const params = {
@@ -51,10 +51,10 @@ async function submitForm() {
 					pageBack()
 				}
 			})
-		} else {
+		})
+		.catch(() => {
 			ElMessage.error('表单校验未通过，请重新检查提交内容')
-		}
-	})
+		})
 }
 
 const tagsViewStore = useTagsViewStore()

@@ -216,8 +216,7 @@ function queryList() {
 async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
 		// 查询
-		const isPass = await formGeneratorRef.value?.validate()
-		if (!isPass) return
+		await formGeneratorRef.value?.validate()
 		queryList()
 	} else if (event === 'reset') {
 		// 重置表单

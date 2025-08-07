@@ -20,14 +20,19 @@ const router = useRouter()
 const menuTreeSelect = ref([])
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
-	genType: '0',
-	genPath: '',
 	tplCategory: '',
+	tplWebType: '',
+	packageName: '',
+	moduleName: '',
+	businessName: '',
+	functionName: '',
+	genType: '0',
+	parentMenuId: '',
+	genPath: '',
 	treeCode: '',
+	columns: [] as IColumns,
 	treeParentCode: '',
 	treeName: '',
-	columns: [] as IColumns,
-
 	subTableName: '',
 	subTableFkName: ''
 })
@@ -39,7 +44,12 @@ watch(
 		if (!obj.tplWebType) {
 			obj.tplWebType = 'element-plus'
 		}
-		formGeneratorRef.value?.setFormData(obj)
+
+		Object.keys(formData.value).forEach(key => {
+			if (Object.prototype.hasOwnProperty.call(obj, key)) {
+				formData.value[key] = obj[key]
+			}
+		})
 	},
 	{ immediate: true }
 )
@@ -147,7 +157,9 @@ const formConfig = ref<FormConfig>({
 			props: {
 				value: 'menuId',
 				label: 'menuName',
-				children: 'children'
+				children: 'children',
+				emitPath: false,
+				checkStrictly: true
 			},
 			span: 12,
 			labelTip: '分配到指定菜单下，例如 系统管理',

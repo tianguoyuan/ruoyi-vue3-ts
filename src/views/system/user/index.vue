@@ -8,6 +8,7 @@ import { getDicts } from '@/api/system/dict'
 import { ElMessage, type TreeInstance } from 'element-plus'
 import { downloadBlobFile } from '@/utils'
 import UserUpload from './components/UserUpload.vue'
+import EditUserDialog from './components/EditUserDialog.vue'
 
 const router = useRouter()
 
@@ -200,7 +201,7 @@ const deptName = ref('')
 const deptOptions = ref([])
 
 // 添加修改对话框 - 归属部门
-const enabledDeptOptions = ref(undefined)
+const enabledDeptOptions = ref([])
 
 /** 根据名称筛选部门树 */
 watch(deptName, val => {
@@ -229,6 +230,7 @@ function queryList() {
 function handleButtonClick(event) {
 	if (event === 'handleAdd') {
 		// 新增
+		handleUpdate('')
 	} else if (event === 'handleUpdate') {
 		// 修改
 		const id = selectionList.value[0]
@@ -252,10 +254,10 @@ function tableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleUpdate') {
 		// 修改
-		handleUpdate(row.userId)
+		handleUpdate(row.userId + '')
 	} else if (event === 'handleDelete') {
 		// 删除
-		handleDelete(row.userId)
+		handleDelete(row.userId + '')
 	} else if (event === 'handleResetPwd') {
 		// 重置密码
 		ElMessageBox.prompt(`请输入"${row.userName}"的新密码`, {
@@ -285,7 +287,7 @@ function tableEditClick(row, btn) {
 	}
 }
 
-async function handleDelete(ids) {
+async function handleDelete(ids: string) {
 	await ElMessageBox({
 		title: '提示',
 		type: 'warning',
@@ -298,8 +300,13 @@ async function handleDelete(ids) {
 	await delUser(ids)
 	queryList()
 }
-function handleUpdate(id) {}
 
+const addUserDialogVisible = ref(false)
+const addUserDialogId = ref('')
+function handleUpdate(id: string) {
+	addUserDialogId.value = id
+	addUserDialogVisible.value = true
+}
 function handleStatusChange(row) {
 	const preStatus = row.status === '0' ? '1' : '0'
 	const flagMsg = row.status === '0' ? '启用' : '停用'
@@ -400,6 +407,13 @@ init()
 		</el-splitter>
 		<UserUpload
 			v-model:visible="userUploadOpen"
+			@refresh="queryList"
+		/>
+
+		<EditUserDialog
+			v-model:visible="addUserDialogVisible"
+			:user-id="addUserDialogId"
+			:enabled-dept-options="enabledDeptOptions"
 			@refresh="queryList"
 		/>
 	</div>

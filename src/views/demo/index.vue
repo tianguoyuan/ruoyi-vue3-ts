@@ -155,8 +155,7 @@ const formConfig = ref<FormConfig>({
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 async function handleButtonClick(event: string, data: any) {
 	if (event === 'search') {
-		const isPass = await formGeneratorRef.value?.validate()
-		if (!isPass) return
+		await formGeneratorRef.value?.validate()
 		formGeneratorRef.value?.queryTableData()
 	} else if (event === 'reset') {
 		console.log(' 重置表单')

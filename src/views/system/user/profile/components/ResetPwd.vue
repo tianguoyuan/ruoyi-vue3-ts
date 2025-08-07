@@ -58,17 +58,14 @@ const formRules = ref({
 
 const formRef = ref<null | FormInstance>(null)
 /** 提交按钮 */
-function submit() {
+async function submit() {
 	if (!formRef.value) return
-	formRef.value.validate(valid => {
-		if (valid) {
-			updateUserPwd(formModel.value.oldPassword, formModel.value.newPassword).then(() => {
-				ElMessage({
-					message: '修改成功',
-					type: 'success'
-				})
-			})
-		}
+	await formRef.value.validate()
+	updateUserPwd(formModel.value.oldPassword, formModel.value.newPassword).then(() => {
+		ElMessage({
+			message: '修改成功',
+			type: 'success'
+		})
 	})
 }
 </script>

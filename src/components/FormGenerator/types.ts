@@ -90,7 +90,15 @@ export interface SelectField extends BaseField {
 export interface CascaderField extends BaseField {
 	type: 'cascader'
 	options: CascaderOption[] // | globalThis.Ref<CascaderOption[]>
-	props?: Record<string, any>
+	props?: {
+		value?: string
+		label?: string
+		children?: string
+		/**是否全路径Array false最后一个节点String */
+		emitPath?: boolean
+		/**是否可以选择父节点 */
+		checkStrictly?: boolean
+	}
 	showAllLevels?: boolean
 	collapseTags?: boolean
 	separator?: string

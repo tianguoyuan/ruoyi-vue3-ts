@@ -124,16 +124,6 @@ export function isHexColor(str: string) {
 	return /^#?([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(str)
 }
 
-/**
- * @description 是否为 email
- */
-export function validEmail(email: string) {
-	const reg =
-		// eslint-disable-next-line no-useless-escape
-		/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-	return reg.test(email)
-}
-
 /**是否为链接 */
 export function isExternal(path: string) {
 	return /^(https?:|mailto:|tel:)/.test(path)

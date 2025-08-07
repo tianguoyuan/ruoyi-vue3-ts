@@ -63,23 +63,20 @@ const emits = defineEmits<{
 const userStore = useUserStore()
 const formRef = ref<null | FormInstance>(null)
 /** 提交按钮 */
-function submit() {
+async function submit() {
 	if (!formRef.value) return
 
-	formRef.value.validate(valid => {
-		if (!valid) return
-
-		updateUserProfile(formModel.value).then(() => {
-			ElMessage({
-				message: '修改成功',
-				type: 'success'
-			})
-			emits('refreshInfo')
-			// nickName修改后, 在查询
-			if (props.userForm.nickName !== formModel.value.nickName) {
-				userStore.userInfoSimple()
-			}
+	await formRef.value.validate()
+	updateUserProfile(formModel.value).then(() => {
+		ElMessage({
+			message: '修改成功',
+			type: 'success'
 		})
+		emits('refreshInfo')
+		// nickName修改后, 在查询
+		if (props.userForm.nickName !== formModel.value.nickName) {
+			userStore.userInfoSimple()
+		}
 	})
 }
 </script>

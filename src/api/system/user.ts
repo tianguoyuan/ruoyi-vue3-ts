@@ -102,7 +102,7 @@ export function listUser(params) {
 }
 
 // 查询用户详细
-export function getUser(userId) {
+export function getUser(userId: string = '') {
 	return request({
 		url: '/system/user/' + userId,
 		method: 'get'

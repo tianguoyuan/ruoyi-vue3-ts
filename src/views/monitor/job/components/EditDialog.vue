@@ -169,8 +169,7 @@ async function handleButtonClick(event: string) {
 		emit('update:visible', false)
 	} else if (event === 'submit') {
 		// 提交
-		const isPass = await formGeneratorRef.value?.validate()
-		if (!isPass) return
+		await formGeneratorRef.value?.validate()
 		if (form.value.jobId !== undefined) {
 			updateJob(form.value).then(() => {
 				ElMessage.success('修改成功')

@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import type { FormConfig } from '@/components/FormGenerator/types'
 import FormGenerator from '@/components/FormGenerator/index.vue'
-import { useUserStore } from '@/store/user'
 
 const props = defineProps<{
 	info: API.IGetGenTableRes['data']['info']
 }>()
 
-const router = useRouter()
-
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref<API.IGetGenTableRes['data']['info']>({
+	tableName: '',
+	tableComment: '',
 	className: '',
 	functionAuthor: '',
-	remark: '',
-	tableComment: '',
-	tableName: ''
+	remark: ''
 })
 
 watch(
 	() => props.info,
 	value => {
-		formGeneratorRef.value?.setFormData(value)
+		Object.keys(formData.value).forEach(key => {
+			if (Object.prototype.hasOwnProperty.call(value, key)) {
+				formData.value[key] = value[key]
+			}
+		})
 	},
 	{ immediate: true }
 )
