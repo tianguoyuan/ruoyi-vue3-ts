@@ -19,7 +19,15 @@ const emit = defineEmits<{
 }>()
 
 const formRef = ref<FormInstance | null>(null)
-const formData = ref<Record<string, any>>({})
+
+const formData = computed({
+	get() {
+		return props.modelValue
+	},
+	set(val) {
+		emit('update:modelValue', val)
+	}
+})
 
 // 初始化表单数据
 function initFormData() {
@@ -36,14 +44,6 @@ function initFormData() {
 		...data,
 		...props.modelValue
 	}
-}
-
-function setFormData(value: Record<string, any>) {
-	Object.keys(formData.value).forEach(key => {
-		if (Object.prototype.hasOwnProperty.call(formData.value, key)) {
-			formData.value[key] = value[key]
-		}
-	})
 }
 
 // 获取组件
@@ -89,13 +89,8 @@ function getComponent(item: any) {
 }
 
 // 表单验证
-async function validate() {
-	try {
-		await formRef.value?.validate()
-		return true
-	} catch (error) {
-		return false
-	}
+function validate() {
+	return formRef.value?.validate()
 }
 
 // 重置表单
@@ -121,62 +116,13 @@ function handleButtonClick(btn: any) {
 	}
 }
 
-// 监听外部传入的modelValue变化
-watch(
-	() => props.modelValue,
-	(newVal, oldVal) => {
-		// 避免无意义的更新
-		if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-			formData.value = {
-				...formData.value,
-				...newVal
-			}
-		}
-	},
-	{
-		deep: true,
-		immediate: true
-	}
-)
-
-// 监听表单数据变化
-watch(
-	formData,
-	(newVal, oldVal) => {
-		emit('update:modelValue', newVal)
-	},
-	{ deep: true }
-)
-
-// // 监听外部传入的modelValue变化
-// watch(
-// 	() => props.modelValue,
-// 	newVal => {
-// 		formData.value = {
-// 			...formData.value,
-// 			...newVal
-// 		}
-// 	},
-// 	{ deep: true }
-// )
-
-// // 监听表单数据变化
-// watch(
-// 	formData,
-// 	newVal => {
-// 		emit('update:modelValue', newVal)
-// 	},
-// 	{ deep: true }
-// )
-
 const tableData = ref([])
 const total = ref(0)
 const pageNum = ref(1)
 const pageSize = ref(10)
 
 async function queryTableData(otherParams: Record<string, any> = {}) {
-	const isPass = await validate()
-	if (!isPass) return
+	await validate()
 	const params = {
 		...formData.value,
 		pageNum: pageNum.value,
@@ -222,10 +168,7 @@ defineExpose({
 	resetFields,
 	resetPage,
 	clearValidate,
-	getFormData: () => formData.value,
 	queryTableData,
-
-	setFormData,
 	getPageParams: () => ({
 		pageNum: pageNum.value,
 		pageSize: pageSize.value
@@ -293,6 +236,7 @@ defineExpose({
 									:show-word-limit="item.showWordLimit"
 									:disabled="item.disabled"
 									:readonly="item.readonly"
+									autocomplete="new-password"
 								/>
 							</el-form-item>
 
