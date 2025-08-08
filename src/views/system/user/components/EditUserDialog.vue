@@ -36,48 +36,13 @@ const initFormData = {
 	userName: '',
 	password: '',
 	sex: '',
-	status: '',
+	status: '0',
 	postIds: [],
 	roleIds: [],
 	remark: ''
 }
 const formData = ref({ ...initFormData })
 
-watch(
-	() => [props.visible, props.userId],
-	async ([visible, userId]) => {
-		if (!visible) return
-		// 每次打开清空
-		await nextTick()
-		formGeneratorRef.value?.clearValidate()
-		formData.value = { ...initFormData }
-
-		if (!userId && originInitPassword.value && !formData.value.password) {
-			formData.value.password = originInitPassword.value
-		}
-
-		getUser(userId + '').then(data => {
-			postIdsOptions.value = data.posts.map(v => ({
-				label: v.postName,
-				value: v.postId
-			}))
-			roleIdsOptions.value = data.roles.map(v => ({
-				label: v.roleName,
-				value: v.roleId
-			}))
-
-			if (data.data) {
-				Object.keys(formData.value).forEach(key => {
-					if (Object.prototype.hasOwnProperty.call(data.data, key)) {
-						formData.value[key] = data.data[key]
-					}
-				})
-			}
-			if (data.postIds) formData.value.postIds = data.postIds
-			if (data.roleIds) formData.value.roleIds = data.roleIds
-		})
-	}
-)
 const formConfig = ref<FormConfig>({
 	labelWidth: '80px',
 	span: 12,
@@ -175,8 +140,82 @@ const formConfig = ref<FormConfig>({
 			span: 24
 		}
 	],
-	formRules: {
-		userName: [
+	formRules: {},
+	buttons: [],
+	tableShow: false,
+	tableInitQueryRefuse: true
+})
+
+watch(
+	() => [props.visible, props.userId],
+	async ([visible, userId]) => {
+		if (!visible) return
+		setFormRules(userId)
+		// 每次打开清空
+		await nextTick()
+		formData.value = { ...initFormData }
+		// 动态rules 错误信息去除方法
+		setTimeout(() => {
+			formGeneratorRef.value?.clearValidate()
+		})
+
+		// 新增默认password
+		if (!userId && originInitPassword.value && !formData.value.password) {
+			formData.value.password = originInitPassword.value
+		}
+
+		getUser(userId + '').then(data => {
+			postIdsOptions.value = data.posts.map(v => ({
+				label: v.postName,
+				value: v.postId
+			}))
+			roleIdsOptions.value = data.roles.map(v => ({
+				label: v.roleName,
+				value: v.roleId
+			}))
+
+			if (data.data) {
+				Object.keys(formData.value).forEach(key => {
+					if (Object.prototype.hasOwnProperty.call(data.data, key)) {
+						formData.value[key] = data.data[key]
+					}
+				})
+			}
+			if (data.postIds) formData.value.postIds = data.postIds
+			if (data.roleIds) formData.value.roleIds = data.roleIds
+		})
+	}
+)
+
+function setFormRules(userId) {
+	const initRules = {
+		nickName: [
+			{
+				required: true,
+				message: '用户昵称不能为空',
+				trigger: 'blur'
+			}
+		],
+
+		email: [
+			{
+				pattern: validEmailReg,
+				message: '请输入正确的邮箱地址',
+				trigger: ['blur', 'change']
+			}
+		],
+		phonenumber: [
+			{
+				pattern: validPhoneReg,
+				message: '请输入正确的手机号码',
+				trigger: 'blur'
+			}
+		]
+	}
+	formConfig.value.formRules = { ...initRules }
+
+	if (!userId) {
+		formConfig.value.formRules.userName = [
 			{
 				required: true,
 				message: '用户名称不能为空',
@@ -188,15 +227,8 @@ const formConfig = ref<FormConfig>({
 				message: '用户名称长度必须介于 2 和 20 之间',
 				trigger: 'blur'
 			}
-		],
-		nickName: [
-			{
-				required: true,
-				message: '用户昵称不能为空',
-				trigger: 'blur'
-			}
-		],
-		password: [
+		]
+		formConfig.value.formRules.password = [
 			{
 				required: true,
 				message: '用户密码不能为空',
@@ -213,26 +245,11 @@ const formConfig = ref<FormConfig>({
 				message: '不能包含非法字符：< > " \' \\ |',
 				trigger: 'blur'
 			}
-		],
-		email: [
-			{
-				pattern: validEmailReg,
-				message: '请输入正确的邮箱地址',
-				trigger: ['blur', 'change']
-			}
-		],
-		phonenumber: [
-			{
-				pattern: validPhoneReg,
-				message: '请输入正确的手机号码',
-				trigger: 'blur'
-			}
 		]
-	},
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
-})
+	} else {
+		formConfig.value.formRules = { ...initRules }
+	}
+}
 
 async function submit() {
 	await formGeneratorRef.value?.validate()
@@ -254,7 +271,6 @@ function init() {
 	})
 	getDicts('sys_normal_disable').then(data => {
 		sysNormalDisable.value = data
-		formData.value.status = data[0]?.value
 	})
 
 	getConfigKey('sys.user.initPassword').then(data => {

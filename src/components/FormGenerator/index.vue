@@ -236,7 +236,7 @@ defineExpose({
 									:show-word-limit="item.showWordLimit"
 									:disabled="item.disabled"
 									:readonly="item.readonly"
-									autocomplete="new-password"
+									:autocomplete="item.showPassword ? 'new-password' : undefined"
 								/>
 							</el-form-item>
 
