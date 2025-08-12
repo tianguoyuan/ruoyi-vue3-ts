@@ -6,6 +6,7 @@ import { ElMessage, type TableInstance } from 'element-plus'
 
 const tagsStore = useTagsViewStore()
 const route = useRoute()
+const router = useRouter()
 
 const loading = ref(true)
 const total = ref(0)
@@ -48,6 +49,7 @@ function close() {
 		name: route.name as string
 	}
 	tagsStore.delView(obj)
+	router.back()
 }
 
 /** 提交按钮 */

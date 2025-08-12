@@ -124,3 +124,16 @@ export function deptTreeSelect(roleId) {
 		method: 'get'
 	})
 }
+
+// 导出
+export function roleExport(data) {
+	return request({
+		url: '/system/role/export',
+		method: 'post',
+		data,
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		responseType: 'blob'
+	})
+}

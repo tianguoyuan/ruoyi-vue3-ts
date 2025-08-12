@@ -172,5 +172,26 @@ export const asyncRoutes: RouteRecordRaw[] = [
 				}
 			}
 		]
+	},
+
+	// 角色管理-分配角色
+	{
+		path: '/system/role-auth',
+		component: Layout,
+		meta: {
+			hidden: true,
+			permissions: ['system:role:edit']
+		},
+		children: [
+			{
+				path: 'user/:roleId(\\d+)',
+				component: () => import('@/views/system/role/authUser.vue'),
+				name: 'AuthUser',
+				meta: {
+					title: '分配用户',
+					activeMenu: '/system/role'
+				}
+			}
+		]
 	}
 ]
