@@ -5,10 +5,20 @@ import { checkPermission } from '@/utils/permission'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
 import { getDicts } from '@/api/system/dict'
-import { changeRoleStatus, dataScope, delRole, deptTreeSelect, getRole, listRole, roleExport } from '@/api/system/role'
+import {
+	addRole,
+	changeRoleStatus,
+	dataScope,
+	delRole,
+	deptTreeSelect,
+	getRole,
+	listRole,
+	roleExport,
+	updateRole
+} from '@/api/system/role'
 import { downloadBlobFile } from '@/utils'
-import { roleMenuTreeselect, treeselect as menuTreeselect } from '@/api/system/menu'
 import type { TreeInstance } from 'element-plus'
+import { roleMenuTreeselect, treeselect } from '@/api/system/menu'
 
 const router = useRouter()
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
@@ -328,8 +338,6 @@ function tableEditClick(row, btn) {
 	}
 }
 
-function handleUpdate(id = '') {}
-
 async function handleDelete(ids: string) {
 	await ElMessageBox({
 		title: '提示',
@@ -366,6 +374,147 @@ function handleStatusChange(row) {
 			row.status = preStatus
 		})
 }
+/** 所有菜单节点数据 */
+function getMenuAllCheckedKeys() {
+	// 目前被选中的菜单节点
+	let checkedKeys = menuRef.value.getCheckedKeys()
+	// 半选中的菜单节点
+	let halfCheckedKeys = menuRef.value.getHalfCheckedKeys()
+	checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys)
+	return checkedKeys
+}
+
+const dialogVisible = ref(false)
+const dialogFormGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
+const dialogId = ref('')
+const initDialogFormData = {
+	menuCheckStrictly: true,
+	roleId: '',
+	menuIds: '',
+
+	roleName: '',
+	roleKey: '',
+	roleSort: 0,
+	status: '0',
+	remark: ''
+}
+const dialogFormData = ref({ ...initDialogFormData })
+const menuExpand = ref(false)
+const menuNodeAll = ref(false)
+
+const dialogFormConfig = ref<FormConfig>({
+	labelWidth: '100px',
+	span: 24,
+	formRules: {
+		roleName: [
+			{
+				required: true,
+				message: '请输入角色名称'
+			}
+		],
+		roleKey: [
+			{
+				required: true,
+				message: '请输入权限字符'
+			}
+		],
+		roleSort: [
+			{
+				required: true,
+				message: '请输入角色顺序'
+			}
+		]
+	},
+	fields: [
+		{
+			type: 'input',
+			label: '角色名称',
+			prop: 'roleName',
+			placeholder: '请输入角色名称'
+		},
+
+		{
+			type: 'input',
+			label: '权限字符',
+			prop: 'roleKey',
+			placeholder: '请输入权限字符'
+		},
+		{
+			type: 'input-number',
+			label: '角色顺序',
+			prop: 'roleSort',
+			min: 0,
+			controlsPosition: 'right'
+		},
+		{
+			type: 'radio',
+			label: '状态',
+			prop: 'status',
+			options: sysNormalDisable as unknown as any[]
+		},
+		{
+			type: 'slot',
+			slotName: 'expandedSlot',
+			prop: 'expanded',
+			label: '菜单权限'
+		},
+		{
+			type: 'textarea',
+			rows: 3,
+			label: '备注',
+			prop: 'remark',
+			placeholder: '请输入备注'
+		}
+	],
+	buttons: [],
+	tableShow: false,
+	tableInitQueryRefuse: true
+})
+
+// 新增|编辑
+async function handleUpdate(id = '') {
+	dialogVisible.value = true
+	await nextTick()
+	dialogFormData.value = { ...initDialogFormData }
+	setTimeout(() => dialogFormGeneratorRef.value?.clearValidate())
+
+	if (!id) {
+		const { data } = await treeselect()
+		menuOptions.value = data
+		return
+	} else {
+		const { checkedKeys, menus } = await roleMenuTreeselect(id)
+		menuOptions.value = menus
+		getRole(id).then(({ data }) => {
+			dialogFormData.value = data
+			dialogFormData.value.roleSort = Number(data.roleSort)
+
+			checkedKeys.forEach(v => menuRef.value.setChecked(v, true, false))
+		})
+	}
+}
+
+async function dialogCancel() {
+	dialogVisible.value = false
+}
+async function dialogSubmit() {
+	await dialogFormGeneratorRef.value?.validate()
+	if (dialogFormData.value.roleId) {
+		dialogFormData.value.menuIds = getMenuAllCheckedKeys()
+		updateRole(dialogFormData.value).then(response => {
+			ElMessage.success('修改成功')
+			dialogVisible.value = false
+			formGeneratorRef.value?.queryTableData()
+		})
+	} else {
+		dialogFormData.value.menuIds = getMenuAllCheckedKeys()
+		addRole(dialogFormData.value).then(response => {
+			ElMessage.success('新增成功')
+			dialogVisible.value = false
+			formGeneratorRef.value?.queryTableData()
+		})
+	}
+}
 
 function init() {
 	getDicts('sys_normal_disable').then(data => {
@@ -400,6 +549,7 @@ init()
 			v-model="dataScopeDialogVisible"
 			title="分配数据权限"
 			width="500px"
+			:close-on-click-modal="false"
 			@close="dataScopeDialogClose"
 		>
 			<ElForm :model="dataScopeDialogForm">
@@ -474,6 +624,66 @@ init()
 				<el-button
 					type="primary"
 					@click="dataScopeDialogSubmit"
+				>
+					确定
+				</el-button>
+			</template>
+		</ElDialog>
+
+		<!-- 新增|编辑弹窗 -->
+		<ElDialog
+			v-model="dialogVisible"
+			:title="dialogId ? '修改角色' : '添加角色'"
+			width="500px"
+			:close-on-click-modal="false"
+			@cancel="dialogCancel"
+		>
+			<FormGenerator
+				ref="dialogFormGeneratorRef"
+				v-model="dialogFormData"
+				:config="dialogFormConfig"
+			>
+				<template #expandedSlot>
+					<ElFormItem label="菜单权限">
+						<div>
+							<el-checkbox
+								v-model="menuExpand"
+								@change="handleCheckedTreeExpand($event, 'menu')"
+							>
+								展开/折叠
+							</el-checkbox>
+							<el-checkbox
+								v-model="menuNodeAll"
+								@change="handleCheckedTreeNodeAll($event, 'menu')"
+							>
+								全选/全不选
+							</el-checkbox>
+							<el-checkbox
+								v-model="dialogFormData.menuCheckStrictly"
+								@change="handleCheckedTreeConnect($event, 'menu')"
+							>
+								父子联动
+							</el-checkbox>
+							<el-tree
+								ref="menuRef"
+								class="tree-border"
+								:data="menuOptions"
+								show-checkbox
+								node-key="id"
+								:check-strictly="!dialogFormData.menuCheckStrictly"
+								empty-text="加载中，请稍候"
+								:props="{ label: 'label', children: 'children' }"
+							/>
+						</div>
+					</ElFormItem>
+				</template>
+			</FormGenerator>
+
+			<template #footer>
+				<el-button @click="dialogCancel">取消</el-button>
+				<el-button
+					type="primary"
+					@click="dialogSubmit"
 				>
 					确定
 				</el-button>

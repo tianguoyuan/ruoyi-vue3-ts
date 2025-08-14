@@ -121,6 +121,7 @@ const formConfig = ref<FormConfig>({
 })
 
 const visible = ref(false)
+const dialogFormGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const dialogSelectList = ref([])
 function dialogSelectionChange(v) {
 	dialogSelectList.value = v.map(item => item.userId)
@@ -203,6 +204,9 @@ function handleButtonClick(event: string) {
 	if (event === 'openSelectUser') {
 		// 添加用户
 		visible.value = true
+		nextTick(() => {
+			dialogFormGeneratorRef.value?.queryTableData()
+		})
 	} else if (event === 'cancelAuthUserAll') {
 		// 批量取消授权
 		const userIds = selectList.value.join(',')
