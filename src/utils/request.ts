@@ -53,7 +53,8 @@ class Request {
 			title: '系统提示',
 			type: 'warning',
 			confirmButtonText: '确定',
-			cancelButtonText: '取消'
+			cancelButtonText: '取消',
+			closeOnClickModal: false
 		})
 			.then(() => {
 				isReLogin.show = false

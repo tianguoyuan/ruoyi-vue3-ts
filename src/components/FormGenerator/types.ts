@@ -324,6 +324,8 @@ export interface FormConfig {
 
 	api?: (v: any) => Promise<any>
 	tableShow?: boolean
+	/**是否展开 */
+	tableExpandAll?: boolean
 	// 是否隐藏默认搜索重置
 	hideDefaultButton?: boolean
 	/**初始不查询 */
@@ -333,6 +335,17 @@ export interface FormConfig {
 	tableSelection?: (row: any, index: number) => boolean
 	/**显示序号 */
 	tableShowIndex?: boolean
+	/**接口列表key字段 */
+	tableApiResultKey?: string
+	tableTreeRowKey?: string
+	/**接口是否删除页码参数 */
+	removePageParams?: boolean
+	/**树状图配置 */
+	tableTreeProps?: {
+		hasChildren?: string
+		children?: string
+		checkStrictly?: boolean
+	}
 	tableHeader?: {
 		prop: string
 		label: string
@@ -343,6 +356,8 @@ export interface FormConfig {
 		custom?: boolean
 		slotName?: string
 		format?: (v: string) => string
+		/**表格是否居中对齐 */
+		align?: 'left' | 'center' | 'right'
 		tableEditBtn?: {
 			label?: string
 			tip?: string

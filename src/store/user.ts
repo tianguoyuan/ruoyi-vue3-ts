@@ -57,7 +57,8 @@ export const useUserStore = defineStore('user', () => {
 			ElMessageBox.confirm('您的密码已过期，请尽快修改密码！', '安全提示', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
-				type: 'warning'
+				type: 'warning',
+				closeOnClickModal: false
 			})
 				.then(() => {
 					router.push({

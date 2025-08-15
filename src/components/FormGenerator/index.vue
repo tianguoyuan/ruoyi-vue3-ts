@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
 import type { FormConfig } from './types'
-import type { FormInstance, Sort } from 'element-plus'
+import type { FormInstance, Sort, TableInstance } from 'element-plus'
 
+const tableRef = ref<null | TableInstance>(null)
 const props = defineProps<{
 	config: FormConfig
 	modelValue: Record<string, any>
@@ -123,16 +124,21 @@ const pageSize = ref(10)
 
 async function queryTableData(otherParams: Record<string, any> = {}) {
 	await validate()
+
 	const params = {
 		...formData.value,
-		pageNum: pageNum.value,
-		pageSize: pageSize.value,
 		...otherParams
 	}
+
+	if (!props.config.removePageParams) {
+		params.pageNum = pageNum.value
+		params.pageSize = pageSize.value
+	}
+
 	if (!props.config.api) return
 	const result = await props.config.api(params)
 
-	tableData.value = result.rows || []
+	tableData.value = result[props.config.tableApiResultKey || 'rows'] || []
 	total.value = result.total || 0
 }
 function pageChange() {
@@ -154,6 +160,17 @@ function resetPage(obj?: { pageNum?: number; pageSize?: number }) {
 	pageSize.value = obj?.pageSize ? obj?.pageSize : 10
 }
 
+const refreshTable = ref(true)
+watch(
+	() => props.config.tableExpandAll,
+	v => {
+		refreshTable.value = false
+		nextTick(() => {
+			refreshTable.value = true
+		})
+	}
+)
+
 // 初始化
 onMounted(() => {
 	initFormData()
@@ -172,7 +189,10 @@ defineExpose({
 	getPageParams: () => ({
 		pageNum: pageNum.value,
 		pageSize: pageSize.value
-	})
+	}),
+	getTableData() {
+		return tableData.value
+	}
 })
 </script>
 
@@ -804,11 +824,14 @@ defineExpose({
 
 		<div v-if="config.tableShow">
 			<el-table
+				v-if="refreshTable"
 				ref="tableRef"
 				:data="tableData"
 				class="mt-3"
-				center
 				:default-sort="defaultSort"
+				:tree-props="config.tableTreeProps"
+				:row-key="config.tableTreeRowKey"
+				:default-expand-all="config.tableExpandAll"
 				@selectionChange="selectList => emit('selectionChange', selectList)"
 				@sortChange="handleSortChange"
 			>
@@ -835,7 +858,7 @@ defineExpose({
 					:sortable="item.sortable"
 					:sort-orders="item.sortOrders || ['ascending', 'descending']"
 					:show-overflow-tooltip="item.showOverflowTooltip"
-					align="center"
+					:align="item.align || 'center'"
 				>
 					<template #default="{ row }">
 						<span v-if="item.format">{{ item.format(row[item.prop]) }}</span>
