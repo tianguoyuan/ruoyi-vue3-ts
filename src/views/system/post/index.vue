@@ -6,13 +6,14 @@ import dayjs from 'dayjs'
 import { getDicts } from '@/api/system/dict'
 import { downloadBlobFile } from '@/utils'
 import { listPost, postExport, delPost } from '@/api/system/post'
+import EditDialog from './components/EditDialog.vue'
 
 const router = useRouter()
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
 	deptId: ''
 })
-const selectionList = ref([])
+const selectionList = ref<string[]>([])
 const multiple = computed(() => !(selectionList.value.length >= 1))
 const single = computed(() => !(selectionList.value.length === 1))
 
@@ -43,7 +44,7 @@ const formConfig = ref<FormConfig>({
 		{
 			type: 'select',
 			label: '岗位状态',
-			prop: 'roleName',
+			prop: 'status',
 			placeholder: '请选择岗位状态',
 			options: sysNormalDisable as unknown as any[]
 		}
@@ -156,8 +157,11 @@ const formConfig = ref<FormConfig>({
 function handleButtonClick(event: string) {
 	if (event === 'handleAdd') {
 		// 新增
+		handleUpdate('')
 	} else if (event === 'handleUpdate') {
 		// 修改
+		const id = selectionList.value[0]
+		handleUpdate(id)
 	} else if (event === 'handleDelete') {
 		// 删除
 		const ids = selectionList.value.join(',')
@@ -175,9 +179,22 @@ function tableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleUpdate') {
 		// 修改
+		handleUpdate(row.postId)
 	} else if (event === 'handleDelete') {
 		// 删除
 		handleDelete(row.postId)
+	}
+}
+
+const dialogVIsible = ref(false)
+const dialogId = ref('')
+function handleUpdate(id: string) {
+	dialogVIsible.value = true
+	dialogId.value = id + ''
+	if (id) {
+		// 修改
+	} else {
+		// 新增
 	}
 }
 
@@ -192,6 +209,10 @@ async function handleDelete(ids: string) {
 	})
 	await delPost(ids)
 	ElMessage.success('删除成功')
+	formGeneratorRef.value?.queryTableData()
+}
+
+function queryList() {
 	formGeneratorRef.value?.queryTableData()
 }
 
@@ -220,5 +241,11 @@ init()
 				/>
 			</template>
 		</FormGenerator>
+
+		<EditDialog
+			:id="dialogId"
+			v-model:visible="dialogVIsible"
+			@refresh="queryList"
+		/>
 	</div>
 </template>
