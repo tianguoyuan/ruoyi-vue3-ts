@@ -142,8 +142,8 @@ declare namespace API {
 	type IGetDictsRes = {
 		label: string
 		value: string
-		elTagType: string
-		elTagClass: string
+		elTagType?: string
+		elTagClass?: string
 	}[]
 
 	type IGetServer = Record<string, any>

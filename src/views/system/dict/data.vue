@@ -3,42 +3,53 @@ import type { FormConfig } from '@/components/FormGenerator/types'
 import { checkPermission } from '@/utils/permission'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
-import { getDicts } from '@/api/system/dict'
+import { getDicts, optionselect } from '@/api/system/dict'
 import { downloadBlobFile } from '@/utils'
-import { listType, typeExport, delType, refreshCache } from '@/api/system/dictType'
-import EditDialog from './components/EditDialog.vue'
+import DataEditDialog from './components/DataEditDialog.vue'
+import { listData, dataExport, delData, getData } from '@/api/system/dictData'
+import { getType } from '@/api/system/dictType'
+import { useTagsViewStore } from '@/store/tagsView'
 
 const router = useRouter()
+const route = useRoute()
+const tagsStore = useTagsViewStore()
+
+const routeDictId = route.params.dictId as string
+const defaultDictType = ref('')
+
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
-	deptId: ''
+	dictType: ''
 })
 const selectionList = ref<string[]>([])
 const multiple = computed(() => !(selectionList.value.length >= 1))
 const single = computed(() => !(selectionList.value.length === 1))
 
 function selectionChange(v) {
-	selectionList.value = v.map(item => item.dictId)
+	selectionList.value = v.map(item => item.dictCode)
 }
 
 const sysNormalDisable = ref<API.IGetDictsRes>([])
+const typeOptions = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
 	labelWidth: '80px',
 	span: 6,
 	fields: [
 		{
-			type: 'input',
+			type: 'select',
 			label: '字典名称',
-			prop: 'dictName',
-			placeholder: '请输入字典名称'
+			prop: 'dictType',
+			placeholder: '请输入字典名称',
+			clearable: false,
+			options: typeOptions as unknown as any[]
 		},
 
 		{
 			type: 'input',
-			label: '字典类型',
-			prop: 'dictType',
-			placeholder: '请输入字典类型'
+			label: '字典标签',
+			prop: 'dictLabel',
+			placeholder: '请输入字典标签'
 		},
 
 		{
@@ -47,12 +58,6 @@ const formConfig = ref<FormConfig>({
 			prop: 'status',
 			placeholder: '请选择字典状态',
 			options: sysNormalDisable as unknown as any[]
-		},
-		{
-			type: 'date-picker',
-			label: '创建时间',
-			prop: 'dateRange',
-			placeholder: '请选择创建时间'
 		}
 	],
 	leftButtons: [
@@ -94,34 +99,51 @@ const formConfig = ref<FormConfig>({
 			show: checkPermission(['system:dict:export'])
 		},
 		{
-			label: '刷新缓存',
+			label: '关闭',
 			type: 'danger',
-			event: 'handleRefreshCache',
+			event: 'handleClose',
 			plain: true,
+			icon: 'Close'
+		}
+	],
+	buttons: [
+		{
+			type: 'primary',
+			icon: 'Search',
+			event: 'search',
+			label: '搜索'
+		},
+		{
 			icon: 'Refresh',
-			show: checkPermission(['system:dict:remove'])
+			event: 'reset',
+			label: '重置'
 		}
 	],
 
 	tableShow: true,
-	api: listType,
+	api: listData,
 	tableShowSelection: true,
+	tableInitQueryRefuse: true,
 	tableHeader: [
 		{
-			label: '字典编号',
-			prop: 'dictId',
+			label: '字典编码',
+			prop: 'dictCode',
 			showOverflowTooltip: true
 		},
 		{
-			label: '字典名称',
-			prop: 'dictName',
+			label: '字典标签',
+			prop: 'dictLabel',
+			showOverflowTooltip: true,
+			slotName: 'dictLabelSlot'
+		},
+		{
+			label: '字典键值',
+			prop: 'dictValue',
 			showOverflowTooltip: true
 		},
 		{
-			label: '字典类型',
-			prop: 'dictType',
-			slotName: 'dictTypeSlot',
-			showOverflowTooltip: true
+			label: '字典排序',
+			prop: 'dictSort'
 		},
 		{
 			label: '状态',
@@ -170,7 +192,13 @@ const formConfig = ref<FormConfig>({
 
 // 表单按钮
 async function handleButtonClick(event: string) {
-	if (event === 'handleAdd') {
+	if (event === 'search') {
+		queryList()
+	} else if (event === 'reset') {
+		formGeneratorRef.value?.resetFields()
+		formData.value.dictType = defaultDictType.value
+		queryList()
+	} else if (event === 'handleAdd') {
 		// 新增
 		handleUpdate('')
 	} else if (event === 'handleUpdate') {
@@ -184,12 +212,19 @@ async function handleButtonClick(event: string) {
 	} else if (event === 'handleExport') {
 		// 导出
 		const pageParams = formGeneratorRef.value?.getPageParams()
-		typeExport(pageParams).then(data => {
+		dataExport({
+			...pageParams,
+			dictType: formData.value.dictType
+		}).then(data => {
 			downloadBlobFile(data.data, data.filename ? data.filename : `role_${new Date().getTime()}.xlsx`)
 		})
-	} else if (event === 'handleRefreshCache') {
-		await refreshCache()
-		ElMessage.success('刷新成功')
+	} else if (event === 'handleClose') {
+		// 关闭页面
+		tagsStore.delView({
+			path: route.path,
+			name: route.name as string
+		})
+		router.replace('/system/dict')
 	}
 }
 // 表格按钮
@@ -197,10 +232,10 @@ async function tableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleUpdate') {
 		// 修改
-		handleUpdate(row.dictId)
+		handleUpdate(row.dictCode)
 	} else if (event === 'handleDelete') {
 		// 删除
-		handleDelete(row.dictId)
+		handleDelete(row.dictCode)
 	}
 }
 
@@ -209,11 +244,6 @@ const dialogId = ref('')
 function handleUpdate(id: string) {
 	dialogVIsible.value = true
 	dialogId.value = id + ''
-	if (id) {
-		// 修改
-	} else {
-		// 新增
-	}
 }
 
 async function handleDelete(ids: string) {
@@ -225,7 +255,7 @@ async function handleDelete(ids: string) {
 		cancelButtonText: '取消',
 		confirmButtonText: '确定'
 	})
-	await delType(ids)
+	await delData(ids)
 	ElMessage.success('删除成功')
 	formGeneratorRef.value?.queryTableData()
 }
@@ -237,6 +267,21 @@ function queryList() {
 function init() {
 	getDicts('sys_normal_disable').then(data => {
 		sysNormalDisable.value = data
+	})
+
+	/** 查询字典类型详细 */
+	getType(routeDictId).then(response => {
+		formData.value.dictType = response.data.dictType
+		defaultDictType.value = response.data.dictType
+		queryList()
+	})
+
+	/** 查询字典类型列表 */
+	optionselect().then(response => {
+		typeOptions.value = response.data.map(v => ({
+			label: v.dictName,
+			value: v.dictType
+		}))
 	})
 }
 init()
@@ -252,14 +297,19 @@ init()
 			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
 		>
-			<template #dictTypeSlot="{ row }">
-				<router-link
-					:to="'/system/dict-data/index/' + row.dictId"
-					class="link-type"
+			<template #dictLabelSlot="{ row }">
+				<span v-if="(row.listClass == '' || row.listClass == 'default') && (row.cssClass == '' || row.cssClass == null)">{{
+					row.dictLabel
+				}}</span>
+				<el-tag
+					v-else
+					:type="row.listClass == 'primary' ? '' : row.listClass"
+					:class="row.cssClass"
 				>
-					<span>{{ row.dictType }}</span>
-				</router-link>
+					{{ row.dictLabel }}
+				</el-tag>
 			</template>
+
 			<template #statusSlot="{ row }">
 				<DictTag
 					:options="sysNormalDisable"
@@ -268,9 +318,10 @@ init()
 			</template>
 		</FormGenerator>
 
-		<EditDialog
+		<DataEditDialog
 			:id="dialogId"
 			v-model:visible="dialogVIsible"
+			:dict-type="formData.dictType"
 			@refresh="queryList"
 		/>
 	</div>
