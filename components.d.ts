@@ -11,6 +11,7 @@ declare module 'vue' {
     BackToTop: typeof import('./src/components/BackToTop/index.vue')['default']
     Breadcrumb: typeof import('./src/layout/components/Navbar/Breadcrumb.vue')['default']
     DictTag: typeof import('./src/components/Dict/DictTag.vue')['default']
+    Editor: typeof import('./src/components/Editor/index.vue')['default']
     ElBacktop: typeof import('element-plus/es')['ElBacktop']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']

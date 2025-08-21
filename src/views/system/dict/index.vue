@@ -50,8 +50,9 @@ const formConfig = ref<FormConfig>({
 		},
 		{
 			type: 'date-picker',
+			dateType: 'daterange',
 			label: '创建时间',
-			prop: 'dateRange',
+			prop: 'daterange',
 			placeholder: '请选择创建时间'
 		}
 	],

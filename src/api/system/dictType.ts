@@ -1,11 +1,18 @@
 import { request } from '@/utils/request'
 
 // 查询字典类型列表
-export function listType(query) {
+export function listType(params) {
+	let apiParams = { ...params }
+	if (params.daterange) {
+		apiParams['params[beginTime]'] = params.daterange[0]
+		apiParams['params[endTime]'] = params.daterange[1]
+
+		delete apiParams.daterange
+	}
 	return request({
 		url: '/system/dict/type/list',
 		method: 'get',
-		params: query
+		params: apiParams
 	})
 }
 
