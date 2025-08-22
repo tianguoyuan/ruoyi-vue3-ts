@@ -2,12 +2,12 @@
 import axios from 'axios'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { getToken } from '@/utils/auth'
+import storage from '@/utils/storage'
 
 const quillEditorRef = ref()
 const uploadUrl = ref(import.meta.env.VITE_API_URL + '/common/upload') // 上传的图片服务器地址
 const headers = ref({
-	Authorization: 'Bearer ' + getToken()
+	Authorization: 'Bearer ' + storage.get('token')
 })
 
 const emits = defineEmits<{

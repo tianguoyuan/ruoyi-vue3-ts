@@ -143,6 +143,7 @@ export interface TimePickerField extends BaseField {
 	startPlaceholder?: string
 	endPlaceholder?: string
 	valueFormat?: string
+	defaultTime?: undefined | [Date, Date]
 }
 
 // 日期选择器
@@ -155,6 +156,8 @@ export interface DatePickerField extends BaseField {
 	rangeSeparator?: string
 	format?: string
 	valueFormat?: string
+	defaultTime?: undefined | [Date, Date]
+
 	clearable?: boolean
 	editable?: boolean
 	shortcuts?: Array<{ text: string; value: Date | [Date, Date] }>
@@ -166,6 +169,8 @@ export interface DateTimePickerField extends BaseField {
 	placeholder?: string
 	format?: string
 	valueFormat?: string
+	defaultTime?: undefined | [Date, Date]
+
 	clearable?: boolean
 	editable?: boolean
 }

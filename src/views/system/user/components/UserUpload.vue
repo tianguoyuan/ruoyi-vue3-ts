@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { USER_UPLOAD_URL, userImportTemplate } from '@/api/system/user'
 import { downloadBlobFile } from '@/utils'
-import { getToken } from '@/utils/auth'
+import storage from '@/utils/storage'
 import { ElAlert, type UploadInstance } from 'element-plus'
 
 const props = defineProps<{
@@ -24,7 +24,7 @@ const upload = ref({
 	// 是否更新已经存在的用户数据
 	updateSupport: false,
 	// 设置上传的请求头部
-	headers: { Authorization: 'Bearer ' + getToken() },
+	headers: { Authorization: 'Bearer ' + storage.get('token') },
 	// 上传的地址
 	url: USER_UPLOAD_URL
 })

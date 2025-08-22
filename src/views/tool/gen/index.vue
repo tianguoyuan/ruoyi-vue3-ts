@@ -25,11 +25,11 @@ const previewInfo = ref({})
 
 const formData = ref<Record<string, any>>({
 	orderByColumn: 'createTime',
-	isAsc: 'ascending'
+	isAsc: 'descending'
 })
 const defaultSort = {
 	prop: 'createTime',
-	order: 'ascending'
+	order: 'descending'
 } as Sort
 
 interface IListRow {

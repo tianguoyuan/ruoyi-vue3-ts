@@ -570,6 +570,7 @@ defineExpose({
 									:start-placeholder="item.startPlaceholder || '开始时间'"
 									:end-placeholder="item.endPlaceholder || '结束时间'"
 									:value-format="item.valueFormat"
+									:default-time="item.defaultTime"
 									style="width: 100%"
 								/>
 							</el-form-item>
