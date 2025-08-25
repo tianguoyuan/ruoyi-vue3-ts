@@ -144,7 +144,8 @@ const formConfig = ref<FormConfig>({
 			label: '操作日期',
 			prop: 'operTime',
 			sortable: 'custom',
-			format: v => dayjs(v).format('YYYY-MM-DD')
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
+			width: '160px'
 		},
 		{
 			label: '消耗时间',
@@ -198,15 +199,20 @@ async function handleButtonClick(event: string) {
 			...pageParams,
 			...formData.value
 		}).then(data => {
-			downloadBlobFile(data.data, data.filename ? data.filename : `config_${new Date().getTime()}.xlsx`)
+			downloadBlobFile(data.data, data.filename ? data.filename : `operlog_${new Date().getTime()}.xlsx`)
 		})
 	}
 }
+
+const dialogForm = ref<Record<string, any>>({})
+const dialogVisible = ref(false)
 // 表格按钮
 async function tableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleView') {
 		// 详细
+		dialogVisible.value = true
+		dialogForm.value = { ...row }
 	}
 }
 
@@ -228,6 +234,10 @@ function queryList() {
 	formGeneratorRef.value?.queryTableData()
 }
 
+function businessTypeFindLabel(val: string) {
+	return sysOperType.value.find(item => item.label === val)?.label
+}
+
 function init() {
 	getDicts('sys_oper_type').then(data => {
 		sysOperType.value = data
@@ -240,7 +250,10 @@ init()
 </script>
 
 <template>
-	<div class="p-3">
+	<div
+		id="operlog"
+		class="p-3"
+	>
 		<FormGenerator
 			ref="formGeneratorRef"
 			v-model="formData"
@@ -253,7 +266,7 @@ init()
 			<template #businessTypeSlot="{ row }">
 				<DictTag
 					:options="sysOperType"
-					:value="row.status"
+					:value="row.businessType"
 				/>
 			</template>
 			<template #statusSlot="{ row }">
@@ -263,5 +276,76 @@ init()
 				/>
 			</template>
 		</FormGenerator>
+
+		<!-- 操作日志详细 -->
+		<el-dialog
+			v-model="dialogVisible"
+			title="操作日志详细"
+			width="800px"
+			append-to-body
+			:close-on-click-modal="false"
+			class="dialogContainer"
+		>
+			<el-form
+				:model="dialogForm"
+				label-width="100px"
+			>
+				<el-row>
+					<el-col :span="12">
+						<el-form-item label="操作模块：">
+							{{ dialogForm.title }} / {{ businessTypeFindLabel(dialogForm.businessType) }}
+						</el-form-item>
+						<el-form-item label="登录信息：">
+							{{ dialogForm.operName }} / {{ dialogForm.operIp }} / {{ dialogForm.operLocation }}
+						</el-form-item>
+					</el-col>
+					<el-col :span="12">
+						<el-form-item label="请求地址：">{{ dialogForm.operUrl }}</el-form-item>
+						<el-form-item label="请求方式：">{{ dialogForm.requestMethod }}</el-form-item>
+					</el-col>
+					<el-col :span="24">
+						<el-form-item label="操作方法：">{{ dialogForm.method }}</el-form-item>
+					</el-col>
+					<el-col :span="24">
+						<el-form-item label="请求参数：">
+							<div class="overflow-auto">{{ dialogForm.operParam }}</div>
+						</el-form-item>
+					</el-col>
+					<el-col :span="24">
+						<el-form-item label="返回参数：">{{ dialogForm.jsonResult }}</el-form-item>
+					</el-col>
+					<el-col :span="8">
+						<el-form-item label="操作状态：">
+							<div v-if="dialogForm.status === 0">正常</div>
+							<div v-else-if="dialogForm.status === 1">失败</div>
+						</el-form-item>
+					</el-col>
+					<el-col :span="8">
+						<el-form-item label="消耗时间：">{{ dialogForm.costTime }}毫秒</el-form-item>
+					</el-col>
+					<el-col :span="8">
+						<el-form-item label="操作时间：">{{ dayjs(dialogForm.operTime).format('YYYY-MM-DD hh:mm:ss') }}</el-form-item>
+					</el-col>
+					<el-col :span="24">
+						<el-form-item
+							v-if="dialogForm.status === 1"
+							label="异常信息："
+						>
+							{{ dialogForm.errorMsg }}
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
+			<template #footer>
+				<div class="dialog-footer">
+					<el-button @click="dialogVisible = false">关 闭</el-button>
+				</div>
+			</template>
+		</el-dialog>
 	</div>
 </template>
+<style lang="scss" scoped>
+::v-deep(.el-form-item__label) {
+	font-weight: 700;
+}
+</style>
