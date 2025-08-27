@@ -2,7 +2,7 @@
 import { getDicts } from '@/api/system/dict'
 import type { FormConfig } from '@/components/FormGenerator/types'
 import FormGenerator from '@/components/FormGenerator/index.vue'
-import { addDept, getDept, updateDept } from '@/api/system/dep'
+import { addDept, getDept, updateDept } from '@/api/system/dept'
 
 const props = defineProps<{
 	visible: boolean

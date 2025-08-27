@@ -4,7 +4,7 @@ import FormGenerator from '@/components/FormGenerator/index.vue'
 import { checkPermission } from '@/utils/permission'
 import { getDicts } from '@/api/system/dict'
 import dayjs from 'dayjs'
-import { delDept, getDept, listDept } from '@/api/system/dep'
+import { delDept, getDept, listDept } from '@/api/system/dept'
 import EditDialog from './components/EditDialog.vue'
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
@@ -160,12 +160,12 @@ async function tableEditClick(row, btn) {
 // 新增编辑弹窗
 const editDialogVisible = ref(false)
 const editDialogOptions = ref<API.IGetDictsRes>([])
-const editDIalogParentId = ref('')
+const editDialogParentId = ref('')
 const editDIalogFlag = ref<'add' | 'edit'>('add')
 const editDIalogDeptId = ref('')
 async function handleUpdate(id: string, flag: 'add' | 'edit', deptId?: string) {
 	editDialogOptions.value = formGeneratorRef.value?.getTableData() || []
-	editDIalogParentId.value = id + ''
+	editDialogParentId.value = id + ''
 	editDIalogFlag.value = flag
 	editDialogVisible.value = true
 
@@ -205,7 +205,7 @@ init()
 		<EditDialog
 			v-model:visible="editDialogVisible"
 			:options="editDialogOptions"
-			:parent-id="editDIalogParentId"
+			:parent-id="editDialogParentId"
 			:flag="editDIalogFlag"
 			:dept-id="editDIalogDeptId"
 			@refresh="queryList"

@@ -10,9 +10,6 @@ export function listDept(query) {
 			params: query
 		}).then(data => {
 			const list = buildTree(data.data, 0, 'deptId', 'parentId', 'children')
-
-			console.log('list', list)
-
 			resolve({ rows: list })
 		})
 	})

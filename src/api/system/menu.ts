@@ -1,11 +1,22 @@
+import { buildTree } from '@/utils'
 import { request } from '@/utils/request'
 
 // 查询菜单列表
 export function listMenu(query) {
-	return request({
-		url: '/system/menu/list',
-		method: 'get',
-		params: query
+	// return request({
+	// 	url: '/system/menu/list',
+	// 	method: 'get',
+	// 	params: query
+	// })
+	return new Promise(resolve => {
+		request({
+			url: '/system/menu/list',
+			method: 'get',
+			params: query
+		}).then(data => {
+			const list = buildTree(data.data, 0, 'menuId', 'parentId', 'children')
+			resolve({ rows: list })
+		})
 	})
 }
 

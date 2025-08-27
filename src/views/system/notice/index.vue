@@ -174,10 +174,10 @@ async function tableEditClick(row, btn) {
 	}
 }
 
-const dialogVIsible = ref(false)
+const dialogVisible = ref(false)
 const dialogId = ref('')
 function handleUpdate(id: string) {
-	dialogVIsible.value = true
+	dialogVisible.value = true
 	dialogId.value = id + ''
 }
 
@@ -236,7 +236,7 @@ init()
 
 		<EditDialog
 			:id="dialogId"
-			v-model:visible="dialogVIsible"
+			v-model:visible="dialogVisible"
 			@refresh="queryList"
 		/>
 	</div>
