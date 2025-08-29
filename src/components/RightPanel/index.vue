@@ -2,7 +2,7 @@
 import { useSettingsStore } from '@/store/settings'
 import { addClass, removeClass } from '@/utils'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-
+import { Close, Setting } from '@element-plus/icons-vue'
 const props = defineProps({
 	clickNotClose: Boolean,
 	buttonTop: {
@@ -78,56 +78,50 @@ function insertToBody() {
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: -1;
+	background: rgb(0 0 0 / 20%);
 	opacity: 0;
 	transition: opacity 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-	background: rgba(0, 0, 0, 0.2);
-	z-index: -1;
 }
-
 .rightPanel {
-	width: 100%;
-	max-width: 260px;
-	height: 100vh;
 	position: fixed;
 	top: 0;
 	right: 0;
-	box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.05);
+	z-index: 40000;
+	width: 100%;
+	max-width: 260px;
+	height: 100vh;
+	background: #ffffff;
+	box-shadow: 0 0 15px 0 rgb(0 0 0 / 5%);
 	transition: all 0.25s cubic-bezier(0.7, 0.3, 0.1, 1);
 	transform: translate(100%);
-	background: #fff;
-	z-index: 40000;
 }
-
 .show {
 	transition: all 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-
 	.rightPanel-background {
 		z-index: 20000;
-		opacity: 1;
 		width: 100%;
 		height: 100%;
+		opacity: 1;
 	}
-
 	.rightPanel {
 		transform: translate(0);
 	}
 }
-
 .handle-button {
-	width: 48px;
-	height: 48px;
 	position: absolute;
 	left: -48px;
-	text-align: center;
-	border-radius: 6px 0 0 6px !important;
 	z-index: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	color: #ffffff;
+	text-align: center;
 	pointer-events: auto;
 	cursor: pointer;
-	color: #fff;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	border-radius: 6px 0 0 6px !important;
 	i {
 		font-size: 24px;
 	}

@@ -2,6 +2,7 @@
 import { ref, watch, onMounted } from 'vue'
 import type { FormConfig } from './types'
 import type { FormInstance, Sort, TableInstance } from 'element-plus'
+import { QuestionFilled } from '@element-plus/icons-vue'
 
 const tableRef = ref<null | TableInstance>(null)
 const props = defineProps<{
@@ -242,7 +243,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-input
@@ -274,7 +275,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-input
@@ -301,7 +302,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-input-number
@@ -332,7 +333,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-radio-group v-model="formData[item.prop]">
@@ -362,7 +363,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-radio-group v-model="formData[item.prop]">
@@ -392,7 +393,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-checkbox-group v-model="formData[item.prop]">
@@ -422,7 +423,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-select
@@ -462,7 +463,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<!-- @ts-nocheck -->
@@ -495,7 +496,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-switch
@@ -522,7 +523,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-slider
@@ -554,7 +555,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-time-picker
@@ -589,7 +590,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-date-picker
@@ -623,7 +624,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-date-picker
@@ -652,7 +653,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-rate
@@ -687,7 +688,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-color-picker
@@ -713,7 +714,7 @@ defineExpose({
 										:content="item.labelTip"
 										placement="top"
 									>
-										<el-icon><question-filled /></el-icon>
+										<el-icon><QuestionFilled /></el-icon>
 									</el-tooltip>
 								</template>
 								<el-transfer

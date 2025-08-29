@@ -15,7 +15,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import IconsResolver from 'unplugin-icons/resolver'
+// import IconsResolver from 'unplugin-icons/resolver'
 import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
 
 /**
@@ -68,9 +68,9 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 			imports: ['vue', '@vueuse/core', 'pinia', 'vue-router', 'vue-i18n'],
 			resolvers: [
 				// 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-				ElementPlusResolver(),
+				ElementPlusResolver()
 				// 自动导入图标组件
-				IconsResolver({})
+				// IconsResolver({})
 			],
 			eslintrc: {
 				// 是否自动生成 eslint 规则，建议生成之后设置 false
@@ -88,12 +88,12 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 		Components({
 			resolvers: [
 				// 自动导入 Element Plus 组件
-				ElementPlusResolver(),
+				ElementPlusResolver()
 				// 自动注册图标组件
-				IconsResolver({
-					// element-plus图标库，其他图标库 https://icon-sets.iconify.design/
-					enabledCollections: ['ep']
-				})
+				// IconsResolver({
+				// 	// element-plus图标库，其他图标库 https://icon-sets.iconify.design/
+				// 	enabledCollections: ['ep']
+				// })
 			],
 			// 指定自定义组件位置(默认:src/components)
 			dirs: ['src/components'],

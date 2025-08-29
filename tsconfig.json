@@ -4,7 +4,7 @@
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"moduleResolution": "Node",
-		"types": ["vite/client", "unplugin-icons/types/vue", "element-plus/global"],
+		"types": ["vite/client", "unplugin-icons/types/vue", "element-plus/global", "vite-plugin-svg-icons/client"],
 
 		/* Strict Type-Checking Options */
 		"strict": true /* Enable all strict type-checking options. */,

@@ -5,6 +5,7 @@ import ScrollPane from './ScrollPane.vue'
 import { useTagsViewStore } from '@/store/tagsView'
 import { usePermissionStore } from '@/store/permission'
 import type { _RouterLinkI, RouteLocationNormalizedLoaded, RouteLocationRaw, RouteRecordRaw, RouterLinkProps } from 'vue-router'
+import { Close } from '@element-plus/icons-vue'
 
 const visible = ref(false)
 const top = ref(0)

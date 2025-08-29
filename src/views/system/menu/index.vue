@@ -4,7 +4,7 @@ import FormGenerator from '@/components/FormGenerator/index.vue'
 import { checkPermission } from '@/utils/permission'
 import { getDicts } from '@/api/system/dict'
 import dayjs from 'dayjs'
-import { delMenu, getMenu, listMenu } from '@/api/system/menu'
+import { delMenu, listMenu } from '@/api/system/menu'
 import EditDialog from './components/EditDialog.vue'
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
@@ -153,10 +153,10 @@ async function tableEditClick(row, btn) {
 	const { event } = btn
 	if (event === 'handleUpdate') {
 		// 修改
-		handleUpdate(row.parentId, 'edit', row.menuId)
+		handleUpdate(row, 'edit')
 	} else if (event === 'handleAdd') {
 		// 新增
-		handleUpdate(row.parentId, 'add')
+		handleUpdate(row, 'addChild')
 	} else if (event === 'handleDelete') {
 		// 删除
 		await ElMessageBox({
@@ -176,10 +176,29 @@ async function tableEditClick(row, btn) {
 
 // 新增编辑弹窗
 const dialogVisible = ref(false)
-const dialogParentId = ref('')
-async function handleUpdate(id: string, flag: 'add' | 'edit', menuId?: string) {
+const dialogParentId = ref(0)
+const dialogId = ref<number | null>(null)
+export type IDialogFlag = 'add' | 'addChild' | 'edit' | ''
+const dialogFlag = ref<IDialogFlag>('add')
+async function handleUpdate(row, flag: IDialogFlag) {
+	if (flag === 'add') {
+		// 新增弹窗
+		dialogParentId.value = 0
+		dialogId.value = null
+	} else if (row && flag === 'addChild') {
+		// 新增子菜单
+		dialogParentId.value = row.menuId
+		dialogId.value = null
+	} else if (row && flag === 'edit') {
+		// 修改菜单
+		dialogParentId.value = row.parentId
+		dialogId.value = row.menuId
+	}
+
+	dialogFlag.value = ''
 	dialogVisible.value = true
-	dialogParentId.value = id + ''
+	await nextTick()
+	dialogFlag.value = flag
 }
 function queryList() {
 	formGeneratorRef.value?.queryTableData()
@@ -215,8 +234,10 @@ init()
 		</FormGenerator>
 
 		<EditDialog
-			:id="dialogParentId"
+			:id="dialogId"
 			v-model:visible="dialogVisible"
+			:parent-id="dialogParentId"
+			:flag="dialogFlag"
 			@refresh="queryList"
 		/>
 	</div>

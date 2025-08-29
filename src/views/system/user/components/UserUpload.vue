@@ -3,6 +3,7 @@ import { USER_UPLOAD_URL, userImportTemplate } from '@/api/system/user'
 import { downloadBlobFile } from '@/utils'
 import storage from '@/utils/storage'
 import { ElAlert, type UploadInstance } from 'element-plus'
+import { UploadFilled } from '@element-plus/icons-vue'
 
 const props = defineProps<{
 	visible: boolean
@@ -80,7 +81,7 @@ function submitFileForm() {
 			:auto-upload="false"
 			drag
 		>
-			<el-icon class="el-icon--upload"><upload-filled /></el-icon>
+			<el-icon class="el-icon--upload"><UploadFilled /></el-icon>
 			<div class="el-upload__text">将文件拖到此处，或<em> 点击上传</em></div>
 			<template #tip>
 				<div class="el-upload__tip text-center">

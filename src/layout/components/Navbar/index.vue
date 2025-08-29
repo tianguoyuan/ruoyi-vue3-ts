@@ -77,7 +77,6 @@ async function logout() {
 						/>
 						<span class="pl-2 text-3.5">{{ username }}</span>
 					</div>
-					<!-- <el-icon class="ml-1"><CaretBottom /></el-icon> -->
 				</div>
 				<template #dropdown>
 					<ElDropdownMenu>

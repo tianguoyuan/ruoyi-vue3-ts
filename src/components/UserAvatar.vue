@@ -3,6 +3,7 @@ import { VueCropper } from 'vue-cropper'
 import { uploadAvatar } from '@/api/system/user'
 import { useUserStore } from '@/store/user'
 import { ElMessage } from 'element-plus'
+import { Upload } from '@element-plus/icons-vue'
 import 'vue-cropper/dist/index.css'
 
 const userStore = useUserStore()

@@ -9,9 +9,13 @@ import 'virtual:uno.css'
 import '@/styles/index.scss'
 import { setupElementUI } from '@/plugins/elementUI'
 // 本地SVG图标
+import svgIds from 'virtual:svg-icons-names'
 import 'virtual:svg-icons-register'
+
 // 过渡动画
 import 'animate.css'
+
+console.log('svgIds', svgIds)
 
 async function bootstrap() {
 	const app = createApp(App)

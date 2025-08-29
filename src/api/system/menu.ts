@@ -2,7 +2,7 @@ import { buildTree } from '@/utils'
 import { request } from '@/utils/request'
 
 // 查询菜单列表
-export function listMenu(query) {
+export function listMenu(query?: any) {
 	// return request({
 	// 	url: '/system/menu/list',
 	// 	method: 'get',
@@ -17,7 +17,7 @@ export function listMenu(query) {
 			const list = buildTree(data.data, 0, 'menuId', 'parentId', 'children')
 			resolve({ rows: list })
 		})
-	})
+	}) as Promise<{ rows: any[] }>
 }
 
 // 查询菜单详细

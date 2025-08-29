@@ -4,6 +4,7 @@ import FormGenerator from '@/components/FormGenerator/index.vue'
 import { useUserStore } from '@/store/user'
 import { listMenu } from '@/api/tool/genEdit'
 import { buildTree } from '@/utils'
+import { QuestionFilled } from '@element-plus/icons-vue'
 
 type IColumns = {
 	columnName: string
@@ -292,7 +293,7 @@ defineExpose({
 						content="填写磁盘绝对路径，若不填写，则生成到当前Web项目下"
 						placement="top"
 					>
-						<el-icon><question-filled /></el-icon>
+						<el-icon><QuestionFilled /></el-icon>
 					</el-tooltip>
 				</template>
 				<el-input v-model="formData.genPath">
@@ -328,7 +329,7 @@ defineExpose({
 									content="树显示的编码字段名， 如：dept_id"
 									placement="top"
 								>
-									<el-icon><question-filled /></el-icon>
+									<el-icon><QuestionFilled /></el-icon>
 								</el-tooltip>
 							</template>
 							<el-select
@@ -352,7 +353,7 @@ defineExpose({
 									content="树显示的父编码字段名， 如：parent_Id"
 									placement="top"
 								>
-									<el-icon><question-filled /></el-icon>
+									<el-icon><QuestionFilled /></el-icon>
 								</el-tooltip>
 							</template>
 							<el-select
@@ -378,7 +379,7 @@ defineExpose({
 									content="树节点的显示名称字段名， 如：dept_name"
 									placement="top"
 								>
-									<el-icon><question-filled /></el-icon>
+									<el-icon><QuestionFilled /></el-icon>
 								</el-tooltip>
 							</template>
 							<el-select
@@ -408,7 +409,7 @@ defineExpose({
 									content="关联子表的表名， 如：sys_user"
 									placement="top"
 								>
-									<el-icon><question-filled /></el-icon>
+									<el-icon><QuestionFilled /></el-icon>
 								</el-tooltip>
 							</template>
 							<el-select
@@ -433,7 +434,7 @@ defineExpose({
 									content="子表关联的外键名， 如：user_id"
 									placement="top"
 								>
-									<el-icon><question-filled /></el-icon>
+									<el-icon><QuestionFilled /></el-icon>
 								</el-tooltip>
 							</template>
 							<el-select
