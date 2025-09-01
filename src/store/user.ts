@@ -35,7 +35,8 @@ export const useUserStore = defineStore('user', () => {
 
 	async function getUserInfo() {
 		const [userResult, routesResult] = await Promise.all([userInfoSimple(), getRouters()])
-		userInfo.value.routes = routesResult.data || []
+		const backendRoutes = routesResult.data || []
+		userInfo.value.routes = movePropertiesToMeta(backendRoutes)
 
 		/* 初始密码提示 */
 		if (userResult.isDefaultModifyPwd) {
@@ -102,4 +103,49 @@ export const useUserStore = defineStore('user', () => {
 
 export function useUserStoreWidthOut() {
 	return useUserStore(store)
+}
+
+/**
+ * 将路由节点中的 alwaysShow 和 hidden 属性移动到 meta 对象中
+ * @param {Array|Object} routes 要处理的路由配置，可以是数组或单个对象
+ * @returns {Array|Object} 处理后的路由配置
+ */
+export function movePropertiesToMeta(routes) {
+	// 如果是数组，递归处理每个元素
+	if (Array.isArray(routes)) {
+		return routes.map(route => movePropertiesToMeta(route))
+	}
+
+	// 如果是对象，进行处理
+	if (typeof routes === 'object' && routes !== null) {
+		// 创建新的对象，避免直接修改原对象
+		const newRoute = { ...routes }
+
+		// 确保 meta 对象存在
+		if (!newRoute.meta) {
+			newRoute.meta = {}
+		}
+
+		// 移动 hidden 属性
+		if ('hidden' in newRoute) {
+			newRoute.meta.hidden = newRoute.hidden
+			delete newRoute.hidden
+		}
+
+		// 移动 alwaysShow 属性
+		if ('alwaysShow' in newRoute) {
+			newRoute.meta.alwaysShow = newRoute.alwaysShow
+			delete newRoute.alwaysShow
+		}
+
+		// 递归处理子路由
+		if (newRoute.children && Array.isArray(newRoute.children)) {
+			newRoute.children = movePropertiesToMeta(newRoute.children)
+		}
+
+		return newRoute
+	}
+
+	// 如果不是数组也不是对象，直接返回
+	return routes
 }

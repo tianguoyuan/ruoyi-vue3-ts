@@ -17,6 +17,8 @@ import 'animate.css'
 
 console.log('svgIds', svgIds)
 
+console.log('环境变量 import.meta.env', import.meta.env)
+
 async function bootstrap() {
 	const app = createApp(App)
 	// element-ui

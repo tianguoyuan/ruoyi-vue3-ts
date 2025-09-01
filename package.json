@@ -20,9 +20,9 @@
 	},
 	"scripts": {
 		"serve": "vite",
-		"serve:dev": "vite --mode development",
+		"serve:staging": "vite --mode staging",
 		"serve:prod": "vite --mode production",
-		"build:dev": "vue-tsc && vite build --mode development",
+		"build:staging": "vue-tsc && vite build --mode staging",
 		"build:prod": "vue-tsc && vite build --mode production",
 		"preview": "vite preview",
 		"prepare": "husky install",

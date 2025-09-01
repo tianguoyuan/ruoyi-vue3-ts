@@ -74,7 +74,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 		component: Layout,
 		meta: {
 			title: 'demo',
-			icon: 'project',
+			icon: 'download',
 			alwaysShow: true
 		},
 		children: [
@@ -84,7 +84,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 				component: () => import('@/views/demo/index.vue'),
 				meta: {
 					title: '生成表单',
-					icon: 'project'
+					icon: 'log'
 				}
 			}
 		]
