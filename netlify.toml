@@ -1,0 +1,17 @@
+
+[build]
+  # 构建命令，例如使用 Next.js 或者其它静态站点生成器
+  command = "build:prod"
+  # 发布目录，表示构建后的文件将被发布到此目录
+  publish = "dist/"
+
+[[headers]]
+  # 示例：为所有的 .html 文件设置缓存控制
+  for = "/**.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+[[redirects]]
+  from = "/prod-api/*"
+  to = "https://vue.ruoyi.vip/prod-api/:splat"
+  status = 200
+  force = true

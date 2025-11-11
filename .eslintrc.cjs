@@ -52,7 +52,7 @@ module.exports = {
 		'@typescript-eslint/no-non-null-assertion': 'off', // 不允许使用后缀运算符的非空断言(!)
 		'@typescript-eslint/explicit-module-boundary-types': 'off', // 要求导出函数和类的公共类方法的显式返回和参数类型
 		'@typescript-eslint/consistent-type-imports': 'error', // 使用 import type 语法来导入类型
-
+		'no-extra-semi': 'off', // 忽略分号检查
 		// vue (https://eslint.vuejs.org/rules/)
 		'vue/html-closing-bracket-newline': 'off', //html标签闭合
 		'vue/html-indent': 'off', //缩进规范

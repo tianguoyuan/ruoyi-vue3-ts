@@ -177,18 +177,18 @@ async function tableEditClick(row, btn) {
 // 新增编辑弹窗
 const dialogVisible = ref(false)
 const dialogParentId = ref(0)
-const dialogId = ref<number | null>(null)
+const dialogId = ref<number | undefined>(undefined)
 export type IDialogFlag = 'add' | 'addChild' | 'edit' | ''
 const dialogFlag = ref<IDialogFlag>('add')
 async function handleUpdate(row, flag: IDialogFlag) {
 	if (flag === 'add') {
 		// 新增弹窗
 		dialogParentId.value = 0
-		dialogId.value = null
+		dialogId.value = undefined
 	} else if (row && flag === 'addChild') {
 		// 新增子菜单
 		dialogParentId.value = row.menuId
-		dialogId.value = null
+		dialogId.value = undefined
 	} else if (row && flag === 'edit') {
 		// 修改菜单
 		dialogParentId.value = row.parentId

@@ -37,8 +37,8 @@ watch(
 )
 
 const formModel = ref({
-	username: '',
-	password: '',
+	username: 'admin',
+	password: 'admin123',
 	rememberMe: false,
 	code: '',
 	uuid: ''
