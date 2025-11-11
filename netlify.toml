@@ -1,7 +1,7 @@
 
 [build]
   # 构建命令，例如使用 Next.js 或者其它静态站点生成器
-  command = "build:prod"
+  command = "npm run build:prod"
   # 发布目录，表示构建后的文件将被发布到此目录
   publish = "dist/"
 
