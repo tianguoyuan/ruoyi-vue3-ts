@@ -19,8 +19,8 @@ interface Props {
 	// 当前的值
 	value: number | string | (number | string)[]
 	// 当未找到匹配的数据时，显示value
-	showValue: boolean
-	separator: string
+	showValue?: boolean
+	separator?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
