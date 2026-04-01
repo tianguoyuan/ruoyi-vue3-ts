@@ -81,9 +81,13 @@ class Request {
 			this.queueUrl--
 		}
 		this.cancelTokenList = this.cancelTokenList.filter(cancel => url !== cancel.url)
-		if (!this.queueUrl) {
-			this.hideLoading()
-		}
+
+		setTimeout(() => {
+			!this.queueUrl && this.hideLoading()
+		}, 600)
+		// if (!this.queueUrl) {
+		// 	this.hideLoading()
+		// }
 	}
 	private interceptors(options: InterceptorsState) {
 		const { instance, url, loading, cancelToken } = options
