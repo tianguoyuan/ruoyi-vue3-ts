@@ -2,7 +2,7 @@
 import svgIds from 'virtual:svg-icons-names'
 
 const props = defineProps<{
-	activeIcon: string
+	activeIcon?: string
 }>()
 
 const svgIdsList = svgIds.map(v => v.replace('icon-', ''))
