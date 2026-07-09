@@ -77,7 +77,7 @@ function handleArray(array) {
 					:class="item.elTagClass"
 					>{{ item.label + ' ' }}</span
 				>
-				<el-tag
+				<ElTag
 					v-else
 					:key="item.value + ''"
 					:disable-transitions="true"
@@ -86,7 +86,7 @@ function handleArray(array) {
 					:class="item.elTagClass"
 				>
 					{{ item.label + ' ' }}
-				</el-tag>
+				</ElTag>
 			</template>
 		</template>
 		<template v-if="unmatch && showValue">

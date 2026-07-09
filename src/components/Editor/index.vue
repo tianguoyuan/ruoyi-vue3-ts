@@ -189,7 +189,7 @@ function insertImage(file) {
 
 <template>
 	<div>
-		<el-upload
+		<ElUpload
 			v-if="type == 'url'"
 			:action="uploadUrl"
 			:before-upload="handleBeforeUpload"
@@ -204,7 +204,7 @@ function insertImage(file) {
 				ref="uploadRef"
 				class="editor-img-uploader"
 			/>
-		</el-upload>
+		</ElUpload>
 	</div>
 	<div class="editor">
 		<QuillEditor

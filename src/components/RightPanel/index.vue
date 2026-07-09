@@ -64,8 +64,8 @@ function insertToBody() {
 				:style="{ top: props.buttonTop + 'px', 'background-color': theme }"
 				@click.stop="show = !show"
 			>
-				<el-icon v-if="show"><Close /></el-icon>
-				<el-icon v-else><Setting /></el-icon>
+				<ElIcon v-if="show"><Close /></ElIcon>
+				<ElIcon v-else><Setting /></ElIcon>
 			</div>
 			<div class="rightPanel-items">
 				<slot />

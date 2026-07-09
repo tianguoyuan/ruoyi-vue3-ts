@@ -536,7 +536,7 @@ init()
 			@selectionChange="selectionChange"
 		>
 			<template #statusSlot="{ row }">
-				<el-switch
+				<ElSwitch
 					v-model="row.status"
 					active-value="0"
 					inactive-value="1"
@@ -589,25 +589,25 @@ init()
 					v-show="dataScopeDialogForm.dataScope === '2'"
 					label="数据权限"
 				>
-					<el-checkbox
+					<ElCheckbox
 						v-model="deptExpand"
 						@change="handleCheckedTreeExpand($event, 'dept')"
 					>
 						展开/折叠
-					</el-checkbox>
-					<el-checkbox
+					</ElCheckbox>
+					<ElCheckbox
 						v-model="deptNodeAll"
 						@change="handleCheckedTreeNodeAll($event, 'dept')"
 					>
 						全选/全不选
-					</el-checkbox>
-					<el-checkbox
+					</ElCheckbox>
+					<ElCheckbox
 						v-model="dataScopeDialogForm.deptCheckStrictly"
 						@change="handleCheckedTreeConnect($event, 'dept')"
 					>
 						父子联动
-					</el-checkbox>
-					<el-tree
+					</ElCheckbox>
+					<ElTree
 						ref="deptRef"
 						class="tree-border"
 						:data="deptOptions"
@@ -621,13 +621,13 @@ init()
 				</ElFormItem>
 			</ElForm>
 			<template #footer>
-				<el-button @click="dataScopeDialogClose">取消</el-button>
-				<el-button
+				<ElButton @click="dataScopeDialogClose">取消</ElButton>
+				<ElButton
 					type="primary"
 					@click="dataScopeDialogSubmit"
 				>
 					确定
-				</el-button>
+				</ElButton>
 			</template>
 		</ElDialog>
 
@@ -647,25 +647,25 @@ init()
 				<template #expandedSlot>
 					<ElFormItem label="菜单权限">
 						<div>
-							<el-checkbox
+							<ElCheckbox
 								v-model="menuExpand"
 								@change="handleCheckedTreeExpand($event, 'menu')"
 							>
 								展开/折叠
-							</el-checkbox>
-							<el-checkbox
+							</ElCheckbox>
+							<ElCheckbox
 								v-model="menuNodeAll"
 								@change="handleCheckedTreeNodeAll($event, 'menu')"
 							>
 								全选/全不选
-							</el-checkbox>
-							<el-checkbox
+							</ElCheckbox>
+							<ElCheckbox
 								v-model="dialogFormData.menuCheckStrictly"
 								@change="handleCheckedTreeConnect($event, 'menu')"
 							>
 								父子联动
-							</el-checkbox>
-							<el-tree
+							</ElCheckbox>
+							<ElTree
 								ref="menuRef"
 								class="tree-border"
 								:data="menuOptions"
@@ -681,13 +681,13 @@ init()
 			</FormGenerator>
 
 			<template #footer>
-				<el-button @click="dialogCancel">取消</el-button>
-				<el-button
+				<ElButton @click="dialogCancel">取消</ElButton>
+				<ElButton
 					type="primary"
 					@click="dialogSubmit"
 				>
 					确定
-				</el-button>
+				</ElButton>
 			</template>
 		</ElDialog>
 	</div>

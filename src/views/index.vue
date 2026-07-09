@@ -9,21 +9,21 @@ const msg = ref('')
 	<div class="p-3">
 		<div>dashboard</div>
 
-		<el-button
+		<ElButton
 			v-if="checkPermission(['system:user:resetPwd'])"
 			type="primary"
 		>
 			system:user:resetPwd
-		</el-button>
+		</ElButton>
 
-		<el-button
+		<ElButton
 			v-else
 			type="danger"
 		>
 			没有['system:user:resetPwd']权限
-		</el-button>
+		</ElButton>
 
-		<el-input v-model="msg" />
+		<ElInput v-model="msg" />
 	</div>
 </template>
 <style scoped></style>

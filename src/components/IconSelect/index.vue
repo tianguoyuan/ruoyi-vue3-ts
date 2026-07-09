@@ -34,7 +34,7 @@ defineExpose({
 
 <template>
 	<div class="icon-body">
-		<el-input
+		<ElInput
 			v-model="iconName"
 			class="icon-search"
 			clearable
@@ -43,7 +43,7 @@ defineExpose({
 			@input="filterIcons"
 		>
 			<template #suffix><i class="el-icon-search el-input__icon" /></template>
-		</el-input>
+		</ElInput>
 		<div class="icon-list">
 			<div class="list-container">
 				<div

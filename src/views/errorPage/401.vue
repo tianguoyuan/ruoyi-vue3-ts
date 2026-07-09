@@ -17,15 +17,15 @@ function back() {
 
 <template>
 	<div class="errPage-container">
-		<el-button
+		<ElButton
 			icon="el-icon-arrow-left"
 			class="pan-back-btn"
 			@click="back"
 		>
 			返回
-		</el-button>
-		<el-row>
-			<el-col :span="12">
+		</ElButton>
+		<ElRow>
+			<ElCol :span="12">
 				<h1 class="text-jumbo text-ginormous">Oops!</h1>
 				gif来源
 				<a
@@ -52,17 +52,17 @@ function back() {
 						>
 					</li>
 				</ul>
-			</el-col>
-			<el-col :span="12">
+			</ElCol>
+			<ElCol :span="12">
 				<img
 					:src="errImg"
 					width="313"
 					height="428"
 					alt="Girl has dropped her ice cream."
 				/>
-			</el-col>
-		</el-row>
-		<el-dialog
+			</ElCol>
+		</ElRow>
+		<ElDialog
 			v-model:visible="dialogVisible"
 			title="随便看"
 		>
@@ -70,7 +70,7 @@ function back() {
 				:src="ewizardClap"
 				class="pan-img"
 			/>
-		</el-dialog>
+		</ElDialog>
 	</div>
 </template>
 

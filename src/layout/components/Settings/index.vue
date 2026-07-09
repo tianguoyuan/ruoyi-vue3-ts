@@ -57,7 +57,7 @@ const watermarkEnabled = computed({
 
 			<div class="drawer-item">
 				<span>Open Tags-View</span>
-				<el-switch
+				<ElSwitch
 					v-model="tagsView"
 					class="drawer-switch"
 				/>
@@ -65,7 +65,7 @@ const watermarkEnabled = computed({
 
 			<div class="drawer-item">
 				<span>Fixed Header</span>
-				<el-switch
+				<ElSwitch
 					v-model="fixedHeader"
 					class="drawer-switch"
 				/>
@@ -73,7 +73,7 @@ const watermarkEnabled = computed({
 
 			<div class="drawer-item">
 				<span>Sidebar Logo</span>
-				<el-switch
+				<ElSwitch
 					v-model="sidebarLogo"
 					class="drawer-switch"
 				/>
@@ -81,7 +81,7 @@ const watermarkEnabled = computed({
 
 			<div class="drawer-item">
 				<span>watermarkEnabled</span>
-				<el-switch
+				<ElSwitch
 					v-model="watermarkEnabled"
 					class="drawer-switch"
 				/>

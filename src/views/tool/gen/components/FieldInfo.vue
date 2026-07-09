@@ -18,242 +18,242 @@ init()
 </script>
 
 <template>
-	<el-table
+	<ElTable
 		ref="dragTable"
 		:data="props.columns"
 		row-key="columnId"
 	>
-		<el-table-column
+		<ElTableColumn
 			label="序号"
 			type="index"
 			min-width="5%"
 			class-name="allowDrag"
 		/>
-		<el-table-column
+		<ElTableColumn
 			label="字段列名"
 			prop="columnName"
 			min-width="10%"
 			:show-overflow-tooltip="true"
 			class-name="allowDrag"
 		/>
-		<el-table-column
+		<ElTableColumn
 			label="字段描述"
 			min-width="10%"
 		>
 			<template #default="scope">
-				<el-input v-model="scope.row.columnComment" />
+				<ElInput v-model="scope.row.columnComment" />
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="物理类型"
 			prop="columnType"
 			min-width="10%"
 			:show-overflow-tooltip="true"
 		/>
-		<el-table-column
+		<ElTableColumn
 			label="Java类型"
 			min-width="11%"
 		>
 			<template #default="scope">
-				<el-select v-model="scope.row.javaType">
-					<el-option
+				<ElSelect v-model="scope.row.javaType">
+					<ElOption
 						label="Long"
 						value="Long"
 					/>
-					<el-option
+					<ElOption
 						label="String"
 						value="String"
 					/>
-					<el-option
+					<ElOption
 						label="Integer"
 						value="Integer"
 					/>
-					<el-option
+					<ElOption
 						label="Double"
 						value="Double"
 					/>
-					<el-option
+					<ElOption
 						label="BigDecimal"
 						value="BigDecimal"
 					/>
-					<el-option
+					<ElOption
 						label="Date"
 						value="Date"
 					/>
-					<el-option
+					<ElOption
 						label="Boolean"
 						value="Boolean"
 					/>
-				</el-select>
+				</ElSelect>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="java属性"
 			min-width="10%"
 		>
 			<template #default="scope">
-				<el-input v-model="scope.row.javaField" />
+				<ElInput v-model="scope.row.javaField" />
 			</template>
-		</el-table-column>
+		</ElTableColumn>
 
-		<el-table-column
+		<ElTableColumn
 			label="插入"
 			min-width="5%"
 		>
 			<template #default="scope">
-				<el-checkbox
+				<ElCheckbox
 					v-model="scope.row.isInsert"
 					true-value="1"
 					false-value="0"
 				/>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="编辑"
 			min-width="5%"
 		>
 			<template #default="scope">
-				<el-checkbox
+				<ElCheckbox
 					v-model="scope.row.isEdit"
 					true-value="1"
 					false-value="0"
 				/>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="列表"
 			min-width="5%"
 		>
 			<template #default="scope">
-				<el-checkbox
+				<ElCheckbox
 					v-model="scope.row.isList"
 					true-value="1"
 					false-value="0"
 				/>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="查询"
 			min-width="5%"
 		>
 			<template #default="scope">
-				<el-checkbox
+				<ElCheckbox
 					v-model="scope.row.isQuery"
 					true-value="1"
 					false-value="0"
 				/>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="查询方式"
 			min-width="10%"
 		>
 			<template #default="scope">
-				<el-select v-model="scope.row.queryType">
-					<el-option
+				<ElSelect v-model="scope.row.queryType">
+					<ElOption
 						label="="
 						value="EQ"
 					/>
-					<el-option
+					<ElOption
 						label="!="
 						value="NE"
 					/>
-					<el-option
+					<ElOption
 						label=">"
 						value="GT"
 					/>
-					<el-option
+					<ElOption
 						label=">="
 						value="GTE"
 					/>
-					<el-option
+					<ElOption
 						label="<"
 						value="LT"
 					/>
-					<el-option
+					<ElOption
 						label="<="
 						value="LTE"
 					/>
-					<el-option
+					<ElOption
 						label="LIKE"
 						value="LIKE"
 					/>
-					<el-option
+					<ElOption
 						label="BETWEEN"
 						value="BETWEEN"
 					/>
-				</el-select>
+				</ElSelect>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="必填"
 			min-width="5%"
 		>
 			<template #default="scope">
-				<el-checkbox
+				<ElCheckbox
 					v-model="scope.row.isRequired"
 					true-value="1"
 					false-value="0"
 				/>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="显示类型"
 			min-width="12%"
 		>
 			<template #default="scope">
-				<el-select v-model="scope.row.htmlType">
-					<el-option
+				<ElSelect v-model="scope.row.htmlType">
+					<ElOption
 						label="文本框"
 						value="input"
 					/>
-					<el-option
+					<ElOption
 						label="文本域"
 						value="textarea"
 					/>
-					<el-option
+					<ElOption
 						label="下拉框"
 						value="select"
 					/>
-					<el-option
+					<ElOption
 						label="单选框"
 						value="radio"
 					/>
-					<el-option
+					<ElOption
 						label="复选框"
 						value="checkbox"
 					/>
-					<el-option
+					<ElOption
 						label="日期控件"
 						value="datetime"
 					/>
-					<el-option
+					<ElOption
 						label="图片上传"
 						value="imageUpload"
 					/>
-					<el-option
+					<ElOption
 						label="文件上传"
 						value="fileUpload"
 					/>
-					<el-option
+					<ElOption
 						label="富文本控件"
 						value="editor"
 					/>
-				</el-select>
+				</ElSelect>
 			</template>
-		</el-table-column>
-		<el-table-column
+		</ElTableColumn>
+		<ElTableColumn
 			label="字典类型"
 			min-width="12%"
 		>
 			<template #default="scope">
-				<el-select
+				<ElSelect
 					v-model="scope.row.dictType"
 					clearable
 					filterable
 					placeholder="请选择"
 				>
-					<el-option
+					<ElOption
 						v-for="dict in dictOptions"
 						:key="dict.dictType"
 						:label="dict.dictName"
@@ -261,11 +261,11 @@ init()
 					>
 						<span style="float: left">{{ dict.dictName }}</span>
 						<span style="float: right; font-size: 13px; color: #8492a6">{{ dict.dictType }}</span>
-					</el-option>
-				</el-select>
+					</ElOption>
+				</ElSelect>
 			</template>
-		</el-table-column>
-	</el-table>
+		</ElTableColumn>
+	</ElTable>
 </template>
 
 <style scoped></style>

@@ -135,13 +135,13 @@ init()
 			</template>
 		</FormGenerator>
 		<template #footer>
-			<el-button @click="emits('update:visible', false)">取消</el-button>
-			<el-button
+			<ElButton @click="emits('update:visible', false)">取消</ElButton>
+			<ElButton
 				type="primary"
 				@click="submit"
 			>
 				确定
-			</el-button>
+			</ElButton>
 		</template>
 	</ElDialog>
 </template>

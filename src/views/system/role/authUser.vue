@@ -296,14 +296,14 @@ init()
 			</FormGenerator>
 
 			<template #footer>
-				<el-button @click="dialogCancel">取消</el-button>
-				<el-button
+				<ElButton @click="dialogCancel">取消</ElButton>
+				<ElButton
 					type="primary"
 					:disabled="!dialogSelectList.length"
 					@click="dialogSubmit"
 				>
 					确定
-				</el-button>
+				</ElButton>
 			</template>
 		</ElDialog>
 	</div>

@@ -14,15 +14,15 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-	<el-config-provider
+	<ElConfigProvider
 		:locale="locale"
 		:size="size"
 	>
-		<el-watermark
+		<ElWatermark
 			:z-index="9999"
 			:content="settingsStore.settings.watermarkEnabled ? settingsStore.settings.watermarkContent : ''"
 		>
 			<RouterView />
-		</el-watermark>
-	</el-config-provider>
+		</ElWatermark>
+	</ElConfigProvider>
 </template>

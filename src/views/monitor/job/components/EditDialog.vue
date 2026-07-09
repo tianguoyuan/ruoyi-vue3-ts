@@ -198,7 +198,7 @@ init()
 
 <template>
 	<!-- 任务日志详细 -->
-	<el-dialog
+	<ElDialog
 		:model-value="props.visible"
 		:title="props.editId ? '修改任务' : '添加任务'"
 		width="800px"
@@ -213,31 +213,31 @@ init()
 			@buttonClick="handleButtonClick"
 		>
 			<template #cronExpressionSlot>
-				<el-form-item
+				<ElFormItem
 					label="cron表达式"
 					prop="cronExpression"
 				>
-					<el-input
+					<ElInput
 						v-model="form.cronExpression"
 						placeholder="请输入cron执行表达式"
 						clearable
 					>
 						<template #append>
-							<el-button
+							<ElButton
 								type="primary"
 								@click="handleShowCron"
 							>
 								生成表达式
 								<i class="el-icon-time el-icon--right" />
-							</el-button>
+							</ElButton>
 						</template>
-					</el-input>
-				</el-form-item>
+					</ElInput>
+				</ElFormItem>
 			</template>
 		</FormGenerator>
-	</el-dialog>
+	</ElDialog>
 
-	<el-dialog
+	<ElDialog
 		v-model="cronDialogVisible"
 		width="700px"
 	>
@@ -247,7 +247,7 @@ init()
 			@hide="cronDialogVisible = false"
 			@fill="crontabFill"
 		/>
-	</el-dialog>
+	</ElDialog>
 </template>
 
 <style scoped></style>

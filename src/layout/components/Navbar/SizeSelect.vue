@@ -28,16 +28,16 @@ function handleCommand(command: ISizeEnumType) {
 			size="18px"
 		/>
 		<template #dropdown>
-			<ElDropdown-menu>
-				<ElDropdown-item
+			<ElDropdownMenu>
+				<ElDropdownItem
 					v-for="item in sizeOptions"
 					:key="item['label']"
 					:command="item['value']"
 					:disabled="item['disabled']"
 				>
 					{{ item['label'] }}
-				</ElDropdown-item>
-			</ElDropdown-menu>
+				</ElDropdownItem>
+			</ElDropdownMenu>
 		</template>
 	</ElDropdown>
 </template>

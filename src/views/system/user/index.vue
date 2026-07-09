@@ -361,10 +361,10 @@ init()
 
 <template>
 	<div class="p-3">
-		<el-splitter>
-			<el-splitter-panel size="16%">
+		<ElSplitter>
+			<ElSplitterPanel size="16%">
 				<div class="mr-3">
-					<el-input
+					<ElInput
 						v-model="deptName"
 						placeholder="请输入部门名称"
 						clearable
@@ -372,7 +372,7 @@ init()
 						style="margin-bottom: 20px"
 					/>
 
-					<el-tree
+					<ElTree
 						ref="deptTreeRef"
 						:data="deptOptions"
 						:props="{ label: 'label', children: 'children' }"
@@ -384,8 +384,8 @@ init()
 						@nodeClick="handleNodeClick"
 					/>
 				</div>
-			</el-splitter-panel>
-			<el-splitter-panel :min="200">
+			</ElSplitterPanel>
+			<ElSplitterPanel :min="200">
 				<div class="px-3">
 					<FormGenerator
 						ref="formGeneratorRef"
@@ -396,7 +396,7 @@ init()
 						@selectionChange="selectionChange"
 					>
 						<template #statusSlot="{ row }">
-							<el-switch
+							<ElSwitch
 								v-model="row.status"
 								active-value="0"
 								inactive-value="1"
@@ -405,8 +405,8 @@ init()
 						</template>
 					</FormGenerator>
 				</div>
-			</el-splitter-panel>
-		</el-splitter>
+			</ElSplitterPanel>
+		</ElSplitter>
 		<UserUpload
 			v-model:visible="userUploadOpen"
 			@refresh="queryList"

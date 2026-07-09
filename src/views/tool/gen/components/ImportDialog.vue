@@ -79,7 +79,7 @@ defineExpose({
 </script>
 
 <template>
-	<el-dialog
+	<ElDialog
 		v-model="dialogVisible"
 		title="导入表"
 		width="800"
@@ -94,16 +94,16 @@ defineExpose({
 		/>
 		<template #footer>
 			<div class="dialog-footer">
-				<el-button
+				<ElButton
 					type="primary"
 					@click="submit"
 				>
 					确定
-				</el-button>
-				<el-button @click="dialogVisible = false"> 取消 </el-button>
+				</ElButton>
+				<ElButton @click="dialogVisible = false"> 取消 </ElButton>
 			</div>
 		</template>
-	</el-dialog>
+	</ElDialog>
 </template>
 
 <style scoped></style>

@@ -69,12 +69,12 @@ getList()
 
 <template>
 	<div class="app-container">
-		<el-row :gutter="10">
-			<el-col
+		<ElRow :gutter="10">
+			<ElCol
 				:span="24"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<Monitor style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">基本信息</span>
@@ -202,14 +202,14 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="12"
 				class="card-box mt-2.5"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<PieChart style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">命令统计</span>
@@ -220,14 +220,14 @@ getList()
 							style="height: 420px"
 						/>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="12"
 				class="card-box mt-2.5"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<Odometer style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">内存信息</span>
@@ -238,8 +238,8 @@ getList()
 							style="height: 420px"
 						/>
 					</div>
-				</el-card>
-			</el-col>
-		</el-row>
+				</ElCard>
+			</ElCol>
+		</ElRow>
 	</div>
 </template>

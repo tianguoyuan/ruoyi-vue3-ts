@@ -303,13 +303,13 @@ init()
 				<span v-if="(row.listClass == '' || row.listClass == 'default') && (row.cssClass == '' || row.cssClass == null)">{{
 					row.dictLabel
 				}}</span>
-				<el-tag
+				<ElTag
 					v-else
 					:type="row.listClass == 'primary' ? '' : row.listClass"
 					:class="row.cssClass"
 				>
 					{{ row.dictLabel }}
-				</el-tag>
+				</ElTag>
 			</template>
 
 			<template #statusSlot="{ row }">

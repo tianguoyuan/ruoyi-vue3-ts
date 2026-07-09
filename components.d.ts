@@ -64,7 +64,7 @@ declare module 'vue' {
     ElWatermark: typeof import('element-plus/es')['ElWatermark']
     FormGenerator: typeof import('./src/components/FormGenerator/index.vue')['default']
     IconSelect: typeof import('./src/components/IconSelect/index.vue')['default']
-    IFrame: typeof import('./src/components/iFrame/index.vue')['default']
+    IFrame: typeof import('./src/components/IFrame/index.vue')['default']
     RightPanel: typeof import('./src/components/RightPanel/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

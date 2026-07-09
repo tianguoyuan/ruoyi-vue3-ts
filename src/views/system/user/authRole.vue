@@ -91,44 +91,44 @@ init()
 <template>
 	<div class="app-container">
 		<h4 class="text-4 color-#6379bb border-b border-#ddd border-b-solid pb-1 mb-6">基本信息</h4>
-		<el-form
+		<ElForm
 			:model="form"
 			label-width="80px"
 		>
-			<el-row>
-				<el-col
+			<ElRow>
+				<ElCol
 					:span="8"
 					:offset="2"
 				>
-					<el-form-item
+					<ElFormItem
 						label="用户昵称"
 						prop="nickName"
 					>
-						<el-input
+						<ElInput
 							v-model="form.nickName"
 							disabled
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					:span="8"
 					:offset="2"
 				>
-					<el-form-item
+					<ElFormItem
 						label="登录账号"
 						prop="userName"
 					>
-						<el-input
+						<ElInput
 							v-model="form.userName"
 							disabled
 						/>
-					</el-form-item>
-				</el-col>
-			</el-row>
-		</el-form>
+					</ElFormItem>
+				</ElCol>
+			</ElRow>
+		</ElForm>
 
 		<h4 class="text-4 color-#6379bb border-b border-#ddd border-b-solid pb-1 mb-6">角色信息</h4>
-		<el-table
+		<ElTable
 			ref="roleRef"
 			v-loading="loading"
 			:row-key="getRowKey"
@@ -136,7 +136,7 @@ init()
 			@rowClick="clickRow"
 			@selectionChange="handleSelectionChange"
 		>
-			<el-table-column
+			<ElTableColumn
 				label="序号"
 				width="55"
 				type="index"
@@ -145,29 +145,29 @@ init()
 				<template #default="scope">
 					<span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
-			</el-table-column>
-			<el-table-column
+			</ElTableColumn>
+			<ElTableColumn
 				type="selection"
 				:reserve-selection="true"
 				:selectable="checkSelectable"
 				width="55"
 			/>
-			<el-table-column
+			<ElTableColumn
 				label="角色编号"
 				align="center"
 				prop="roleId"
 			/>
-			<el-table-column
+			<ElTableColumn
 				label="角色名称"
 				align="center"
 				prop="roleName"
 			/>
-			<el-table-column
+			<ElTableColumn
 				label="权限字符"
 				align="center"
 				prop="roleKey"
 			/>
-			<el-table-column
+			<ElTableColumn
 				label="创建时间"
 				align="center"
 				prop="createTime"
@@ -176,11 +176,11 @@ init()
 				<template #default="scope">
 					<span>{{ dayjs(scope.row.createTime).format('YYYY-MM-DD hh:mm:ss') }}</span>
 				</template>
-			</el-table-column>
-		</el-table>
+			</ElTableColumn>
+		</ElTable>
 
 		<div class="overflow-hidden">
-			<el-pagination
+			<ElPagination
 				v-show="total > 0"
 				v-model:current-page="pageNum"
 				v-model:page-size="pageSize"
@@ -192,13 +192,13 @@ init()
 		</div>
 
 		<div class="mt-7 text-center">
-			<el-button
+			<ElButton
 				type="primary"
 				@click="submitForm()"
 			>
 				提交
-			</el-button>
-			<el-button @click="close()">返回</el-button>
+			</ElButton>
+			<ElButton @click="close()">返回</ElButton>
 		</div>
 	</div>
 </template>

@@ -83,52 +83,52 @@ async function submit() {
 </script>
 
 <template>
-	<el-form
+	<ElForm
 		ref="formRef"
 		:model="formModel"
 		:rules="formRules"
 		label-width="80px"
 	>
-		<el-form-item
+		<ElFormItem
 			label="用户昵称"
 			prop="nickName"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.nickName"
 				maxlength="30"
 			/>
-		</el-form-item>
-		<el-form-item
+		</ElFormItem>
+		<ElFormItem
 			label="手机号码"
 			prop="phonenumber"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.phonenumber"
 				maxlength="11"
 			/>
-		</el-form-item>
-		<el-form-item
+		</ElFormItem>
+		<ElFormItem
 			label="邮箱"
 			prop="email"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.email"
 				maxlength="50"
 			/>
-		</el-form-item>
-		<el-form-item label="性别">
-			<el-radio-group v-model="formModel.sex">
-				<el-radio value="0">男</el-radio>
-				<el-radio value="1">女</el-radio>
-			</el-radio-group>
-		</el-form-item>
-		<el-form-item>
-			<el-button
+		</ElFormItem>
+		<ElFormItem label="性别">
+			<ElRadioGroup v-model="formModel.sex">
+				<ElRadio value="0">男</ElRadio>
+				<ElRadio value="1">女</ElRadio>
+			</ElRadioGroup>
+		</ElFormItem>
+		<ElFormItem>
+			<ElButton
 				type="primary"
 				@click="submit"
 			>
 				保存
-			</el-button>
-		</el-form-item>
-	</el-form>
+			</ElButton>
+		</ElFormItem>
+	</ElForm>
 </template>

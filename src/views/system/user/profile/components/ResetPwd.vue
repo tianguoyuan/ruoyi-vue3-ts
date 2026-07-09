@@ -72,52 +72,52 @@ async function submit() {
 </script>
 
 <template>
-	<el-form
+	<ElForm
 		ref="formRef"
 		:model="formModel"
 		:rules="formRules"
 		label-width="80px"
 	>
-		<el-form-item
+		<ElFormItem
 			label="旧密码"
 			prop="oldPassword"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.oldPassword"
 				placeholder="请输入旧密码"
 				type="password"
 				show-password
 			/>
-		</el-form-item>
-		<el-form-item
+		</ElFormItem>
+		<ElFormItem
 			label="新密码"
 			prop="newPassword"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.newPassword"
 				placeholder="请输入新密码"
 				type="password"
 				show-password
 			/>
-		</el-form-item>
-		<el-form-item
+		</ElFormItem>
+		<ElFormItem
 			label="确认密码"
 			prop="confirmPassword"
 		>
-			<el-input
+			<ElInput
 				v-model="formModel.confirmPassword"
 				placeholder="请确认新密码"
 				type="password"
 				show-password
 			/>
-		</el-form-item>
-		<el-form-item>
-			<el-button
+		</ElFormItem>
+		<ElFormItem>
+			<ElButton
 				type="primary"
 				@click="submit"
 			>
 				保存
-			</el-button>
-		</el-form-item>
-	</el-form>
+			</ElButton>
+		</ElFormItem>
+	</ElForm>
 </template>

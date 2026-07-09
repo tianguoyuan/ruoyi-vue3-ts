@@ -108,7 +108,7 @@ function closeDialog() {
 			title="点击上传头像"
 			class="h-full w-full rounded-full"
 		/>
-		<el-dialog
+		<ElDialog
 			v-model="open"
 			:title="title"
 			width="800px"
@@ -116,8 +116,8 @@ function closeDialog() {
 			@opened="modalOpened"
 			@close="closeDialog"
 		>
-			<el-row>
-				<el-col
+			<ElRow>
+				<ElCol
 					:xs="24"
 					:md="12"
 					:style="{ height: '350px' }"
@@ -134,8 +134,8 @@ function closeDialog() {
 						:output-type="options.outputType"
 						@realTime="realTime"
 					/>
-				</el-col>
-				<el-col
+				</ElCol>
+				<ElCol
 					:xs="24"
 					:md="12"
 					:style="{ height: '350px' }"
@@ -146,75 +146,75 @@ function closeDialog() {
 							:style="options.previews.img"
 						/>
 					</div>
-				</el-col>
-			</el-row>
+				</ElCol>
+			</ElRow>
 			<br />
-			<el-row>
-				<el-col
+			<ElRow>
+				<ElCol
 					:lg="2"
 					:md="2"
 				>
-					<el-upload
+					<ElUpload
 						action="#"
 						:http-request="undefined"
 						:show-file-list="false"
 						:before-upload="beforeUpload"
 					>
-						<el-button>
+						<ElButton>
 							选择
-							<el-icon class="el-icon--right"><Upload /></el-icon>
-						</el-button>
-					</el-upload>
-				</el-col>
-				<el-col
+							<ElIcon class="el-icon--right"><Upload /></ElIcon>
+						</ElButton>
+					</ElUpload>
+				</ElCol>
+				<ElCol
 					:lg="{ span: 1, offset: 2 }"
 					:md="2"
 				>
-					<el-button
+					<ElButton
 						icon="Plus"
 						@click="changeScale(1)"
 					/>
-				</el-col>
-				<el-col
+				</ElCol>
+				<ElCol
 					:lg="{ span: 1, offset: 1 }"
 					:md="2"
 				>
-					<el-button
+					<ElButton
 						icon="Minus"
 						@click="changeScale(-1)"
 					/>
-				</el-col>
-				<el-col
+				</ElCol>
+				<ElCol
 					:lg="{ span: 1, offset: 1 }"
 					:md="2"
 				>
-					<el-button
+					<ElButton
 						icon="RefreshLeft"
 						@click="rotateLeft()"
 					/>
-				</el-col>
-				<el-col
+				</ElCol>
+				<ElCol
 					:lg="{ span: 1, offset: 1 }"
 					:md="2"
 				>
-					<el-button
+					<ElButton
 						icon="RefreshRight"
 						@click="rotateRight()"
 					/>
-				</el-col>
-				<el-col
+				</ElCol>
+				<ElCol
 					:lg="{ span: 2, offset: 6 }"
 					:md="2"
 				>
-					<el-button
+					<ElButton
 						type="primary"
 						@click="uploadImg()"
 					>
 						提 交
-					</el-button>
-				</el-col>
-			</el-row>
-		</el-dialog>
+					</ElButton>
+				</ElCol>
+			</ElRow>
+		</ElDialog>
 	</div>
 </template>
 

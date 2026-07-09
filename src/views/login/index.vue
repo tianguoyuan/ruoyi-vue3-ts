@@ -174,7 +174,7 @@ getCookie()
 								@keyup.enter="submit"
 							>
 								<template #prefix>
-									<svg-icon
+									<SvgIcon
 										icon-class="validCode"
 										size="14"
 									/>

@@ -259,53 +259,53 @@ init()
 		</FormGenerator>
 
 		<!-- 调度日志详细 -->
-		<el-dialog
+		<ElDialog
 			v-model="open"
 			title="调度日志详细"
 			width="700px"
 			append-to-body
 		>
-			<el-form
+			<ElForm
 				:model="form"
 				label-width="100px"
 			>
-				<el-row>
-					<el-col :span="12">
-						<el-form-item label="日志序号：">{{ form.jobLogId }}</el-form-item>
-						<el-form-item label="任务名称：">{{ form.jobName }}</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="任务分组：">{{ form.jobGroup }}</el-form-item>
-						<el-form-item label="执行时间：">{{ form.createTime }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="调用方法：">{{ form.invokeTarget }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="日志信息：">{{ form.jobMessage }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="执行状态：">
+				<ElRow>
+					<ElCol :span="12">
+						<ElFormItem label="日志序号：">{{ form.jobLogId }}</ElFormItem>
+						<ElFormItem label="任务名称：">{{ form.jobName }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="12">
+						<ElFormItem label="任务分组：">{{ form.jobGroup }}</ElFormItem>
+						<ElFormItem label="执行时间：">{{ form.createTime }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="调用方法：">{{ form.invokeTarget }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="日志信息：">{{ form.jobMessage }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="执行状态：">
 							<div v-if="form.status == 0">正常</div>
 							<div v-else-if="form.status == 1">失败</div>
-						</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem
 							v-if="form.status == 1"
 							label="异常信息："
 						>
 							{{ form.exceptionInfo }}
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
+						</ElFormItem>
+					</ElCol>
+				</ElRow>
+			</ElForm>
 			<template #footer>
 				<div class="dialog-footer">
-					<el-button @click="open = false">关 闭</el-button>
+					<ElButton @click="open = false">关 闭</ElButton>
 				</div>
 			</template>
-		</el-dialog>
+		</ElDialog>
 	</div>
 </template>
 

@@ -48,40 +48,40 @@ defineExpose({
 </script>
 
 <template>
-	<el-dialog
+	<ElDialog
 		v-model="dialogVisible"
 		title="创建表"
 		width="800"
 		:close-on-click-modal="false"
 	>
-		<el-form
+		<ElForm
 			ref="formRef"
 			:model="formModel"
 			:rules="formRules"
 			label-position="top"
 		>
-			<el-form-item
+			<ElFormItem
 				label="创建表语句(支持多个建表语句)："
 				prop="content"
 			>
-				<el-input
+				<ElInput
 					v-model="formModel.content"
 					type="textarea"
 					:rows="10"
 					placeholder="请输入文本"
 				/>
-			</el-form-item>
-		</el-form>
+			</ElFormItem>
+		</ElForm>
 		<template #footer>
 			<div class="dialog-footer">
-				<el-button
+				<ElButton
 					type="primary"
 					@click="submit"
 				>
 					确定
-				</el-button>
-				<el-button @click="dialogVisible = false"> 取消 </el-button>
+				</ElButton>
+				<ElButton @click="dialogVisible = false"> 取消 </ElButton>
 			</div>
 		</template>
-	</el-dialog>
+	</ElDialog>
 </template>

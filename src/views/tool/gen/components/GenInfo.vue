@@ -287,32 +287,32 @@ defineExpose({
 			v-if="formData.genType === '1'"
 			#slotGenPath
 		>
-			<el-form-item prop="genPath">
+			<ElFormItem prop="genPath">
 				<template #label>
 					自定义路径
-					<el-tooltip
+					<ElTooltip
 						content="填写磁盘绝对路径，若不填写，则生成到当前Web项目下"
 						placement="top"
 					>
-						<el-icon><QuestionFilled /></el-icon>
-					</el-tooltip>
+						<ElIcon><QuestionFilled /></ElIcon>
+					</ElTooltip>
 				</template>
-				<el-input v-model="formData.genPath">
+				<ElInput v-model="formData.genPath">
 					<template #append>
-						<el-dropdown>
-							<el-button type="primary">
+						<ElDropdown>
+							<ElButton type="primary">
 								最近路径快速选择
 								<i class="el-icon-arrow-down el-icon--right" />
-							</el-button>
+							</ElButton>
 							<template #dropdown>
-								<el-dropdown-menu>
-									<el-dropdown-item @click="formData.genPath = '/'">恢复默认的生成基础路径</el-dropdown-item>
-								</el-dropdown-menu>
+								<ElDropdownMenu>
+									<ElDropdownItem @click="formData.genPath = '/'">恢复默认的生成基础路径</ElDropdownItem>
+								</ElDropdownMenu>
 							</template>
-						</el-dropdown>
+						</ElDropdown>
 					</template>
-				</el-input>
-			</el-form-item>
+				</ElInput>
+			</ElFormItem>
 		</template>
 
 		<template
@@ -321,137 +321,137 @@ defineExpose({
 		>
 			<template v-if="formData.tplCategory === 'tree'">
 				<div class="mx-5 text-4 border-b border-solid border-gray color-#6379bb">其它信息</div>
-				<el-row class="pt-5">
-					<el-col :span="12">
-						<el-form-item>
+				<ElRow class="pt-5">
+					<ElCol :span="12">
+						<ElFormItem>
 							<template #label>
 								树编码字段
-								<el-tooltip
+								<ElTooltip
 									content="树显示的编码字段名， 如：dept_id"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 							</template>
-							<el-select
+							<ElSelect
 								v-model="formData.treeCode"
 								placeholder="请选择"
 							>
-								<el-option
+								<ElOption
 									v-for="(column, index) in formData.columns"
 									:key="index"
 									:label="column.columnName + '：' + column.columnComment"
 									:value="column.columnName"
 								/>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item>
+							</ElSelect>
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="12">
+						<ElFormItem>
 							<template #label>
 								树父编码字段
-								<el-tooltip
+								<ElTooltip
 									content="树显示的父编码字段名， 如：parent_Id"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 							</template>
-							<el-select
+							<ElSelect
 								v-model="formData.treeParentCode"
 								placeholder="请选择"
 							>
-								<el-option
+								<ElOption
 									v-for="(column, index) in formData.columns"
 									:key="index"
 									:label="column.columnName + '：' + column.columnComment"
 									:value="column.columnName"
 								/>
-							</el-select>
-						</el-form-item>
-					</el-col>
-				</el-row>
-				<el-row>
-					<el-col :span="12">
-						<el-form-item>
+							</ElSelect>
+						</ElFormItem>
+					</ElCol>
+				</ElRow>
+				<ElRow>
+					<ElCol :span="12">
+						<ElFormItem>
 							<template #label>
 								树名称字段
-								<el-tooltip
+								<ElTooltip
 									content="树节点的显示名称字段名， 如：dept_name"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 							</template>
-							<el-select
+							<ElSelect
 								v-model="formData.treeName"
 								placeholder="请选择"
 							>
-								<el-option
+								<ElOption
 									v-for="(column, index) in formData.columns"
 									:key="index"
 									:label="column.columnName + '：' + column.columnComment"
 									:value="column.columnName"
 								/>
-							</el-select>
-						</el-form-item>
-					</el-col>
-				</el-row>
+							</ElSelect>
+						</ElFormItem>
+					</ElCol>
+				</ElRow>
 			</template>
 
 			<template v-if="formData.tplCategory === 'sub'">
 				<div class="mx-5 text-4 border-b border-solid border-gray color-#6379bb">关联信息</div>
-				<el-row class="pt-5">
-					<el-col :span="12">
-						<el-form-item>
+				<ElRow class="pt-5">
+					<ElCol :span="12">
+						<ElFormItem>
 							<template #label>
 								关联子表的表名
-								<el-tooltip
+								<ElTooltip
 									content="关联子表的表名， 如：sys_user"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 							</template>
-							<el-select
+							<ElSelect
 								v-model="formData.subTableName"
 								placeholder="请选择"
 								@change="() => (formData.subTableFkName = '')"
 							>
-								<el-option
+								<ElOption
 									v-for="(table, index) in tables"
 									:key="index"
 									:label="table.tableName + '：' + table.tableComment"
 									:value="table.tableName"
 								/>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item>
+							</ElSelect>
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="12">
+						<ElFormItem>
 							<template #label>
 								子表关联的外键名
-								<el-tooltip
+								<ElTooltip
 									content="子表关联的外键名， 如：user_id"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 							</template>
-							<el-select
+							<ElSelect
 								v-model="formData.subTableFkName"
 								placeholder="请选择"
 							>
-								<el-option
+								<ElOption
 									v-for="(column, index) in subColumns"
 									:key="index"
 									:label="column.columnName + '：' + column.columnComment"
 									:value="column.columnName"
 								/>
-							</el-select>
-						</el-form-item>
-					</el-col>
-				</el-row>
+							</ElSelect>
+						</ElFormItem>
+					</ElCol>
+				</ElRow>
 			</template>
 		</template>
 	</FormGenerator>

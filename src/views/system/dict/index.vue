@@ -256,12 +256,12 @@ init()
 			@selectionChange="selectionChange"
 		>
 			<template #dictTypeSlot="{ row }">
-				<router-link
+				<RouterLink
 					:to="'/system/dict-data/index/' + row.dictId"
 					class="link-type"
 				>
 					<span>{{ row.dictType }}</span>
-				</router-link>
+				</RouterLink>
 			</template>
 			<template #statusSlot="{ row }">
 				<DictTag

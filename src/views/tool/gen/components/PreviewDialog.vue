@@ -28,24 +28,24 @@ function copyTextSuccess(val) {
 		:close-on-click-modal="false"
 		@update:modelValue="v => emit('update:show', v)"
 	>
-		<el-tabs v-model="activeName">
-			<el-tab-pane
+		<ElTabs v-model="activeName">
+			<ElTabPane
 				v-for="(val, key, index) in previewInfo"
 				:key="index"
 				:label="key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))"
 				:name="index"
 			>
-				<el-link
+				<ElLink
 					underline="always"
 					icon="DocumentCopy"
 					style="float: right"
 					@click="copyTextSuccess(val)"
 				>
 					&nbsp;复制
-				</el-link>
+				</ElLink>
 				<pre>{{ val }}</pre>
-			</el-tab-pane>
-		</el-tabs>
+			</ElTabPane>
+		</ElTabs>
 	</ElDialog>
 </template>
 

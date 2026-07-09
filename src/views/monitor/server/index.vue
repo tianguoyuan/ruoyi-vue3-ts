@@ -21,12 +21,12 @@ getList()
 
 <template>
 	<div class="p-5">
-		<el-row :gutter="10">
-			<el-col
+		<ElRow :gutter="10">
+			<ElCol
 				:span="12"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<Cpu style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">CPU</span>
@@ -90,14 +90,14 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="12"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<Tickets style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">内存</span>
@@ -196,14 +196,14 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="24"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<Monitor style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">服务器信息</span>
@@ -257,14 +257,14 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="24"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<CoffeeCup style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">Java虚拟机信息</span>
@@ -375,14 +375,14 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col
+			<ElCol
 				:span="24"
 				class="card-box"
 			>
-				<el-card>
+				<ElCard>
 					<template #header>
 						<MessageBox style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">磁盘状态</span>
@@ -438,9 +438,9 @@ getList()
 							</tbody>
 						</table>
 					</div>
-				</el-card>
-			</el-col>
-		</el-row>
+				</ElCard>
+			</ElCol>
+		</ElRow>
 	</div>
 </template>
 

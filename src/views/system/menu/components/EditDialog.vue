@@ -147,16 +147,16 @@ init()
 		width="680px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>
-		<el-form
+		<ElForm
 			ref="menuRef"
 			:model="form"
 			:rules="rules"
 			label-width="100px"
 		>
-			<el-row>
-				<el-col :span="24">
-					<el-form-item label="上级菜单">
-						<el-tree-select
+			<ElRow>
+				<ElCol :span="24">
+					<ElFormItem label="上级菜单">
+						<ElTreeSelect
 							v-model="form.parentId"
 							:data="menuOptions"
 							:props="{ value: 'menuId', label: 'menuName', children: 'children' }"
@@ -164,303 +164,303 @@ init()
 							placeholder="选择上级菜单"
 							check-strictly
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col :span="24">
-					<el-form-item
+					</ElFormItem>
+				</ElCol>
+				<ElCol :span="24">
+					<ElFormItem
 						label="菜单类型"
 						prop="menuType"
 					>
-						<el-radio-group v-model="form.menuType">
-							<el-radio value="M">目录</el-radio>
-							<el-radio value="C">菜单</el-radio>
-							<el-radio value="F">按钮</el-radio>
-						</el-radio-group>
-					</el-form-item>
-				</el-col>
-				<el-col
+						<ElRadioGroup v-model="form.menuType">
+							<ElRadio value="M">目录</ElRadio>
+							<ElRadio value="C">菜单</ElRadio>
+							<ElRadio value="F">按钮</ElRadio>
+						</ElRadioGroup>
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType != 'F'"
 					:span="12"
 				>
-					<el-form-item
+					<ElFormItem
 						label="菜单图标"
 						prop="icon"
 					>
-						<el-popover
+						<ElPopover
 							placement="bottom-start"
 							:width="540"
 							trigger="click"
 						>
 							<template #reference>
-								<el-input
+								<ElInput
 									v-model="form.icon"
 									placeholder="点击选择图标"
 									readonly
 									@blur="showSelectIcon"
 								>
 									<template #prefix>
-										<svg-icon
+										<SvgIcon
 											v-if="form.icon"
 											:icon-class="form.icon"
 											class="el-input__icon"
 											style="width: 16px; height: 32px"
 										/>
-										<el-icon
+										<ElIcon
 											v-else
 											style="width: 16px; height: 32px"
 										>
 											<Search />
-										</el-icon>
+										</ElIcon>
 									</template>
-								</el-input>
+								</ElInput>
 							</template>
 							<IconSelect
 								ref="iconSelectRef"
 								:active-icon="form.icon"
 								@selected="selected"
 							/>
-						</el-popover>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12">
-					<el-form-item
+						</ElPopover>
+					</ElFormItem>
+				</ElCol>
+				<ElCol :span="12">
+					<ElFormItem
 						label="显示排序"
 						prop="orderNum"
 					>
-						<el-input-number
+						<ElInputNumber
 							v-model="form.orderNum"
 							controls-position="right"
 							:min="0"
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12">
-					<el-form-item
+					</ElFormItem>
+				</ElCol>
+				<ElCol :span="12">
+					<ElFormItem
 						label="菜单名称"
 						prop="menuName"
 					>
-						<el-input
+						<ElInput
 							v-model="form.menuName"
 							placeholder="请输入菜单名称"
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType == 'C'"
 					:span="12"
 				>
-					<el-form-item prop="routeName">
+					<ElFormItem prop="routeName">
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="默认不填则和路由地址相同：如地址为：`user`，则名称为`User`（注意：因为router会删除名称相同路由，为避免名字的冲突，特殊情况下请自定义，保证唯一性）"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								路由名称
 							</span>
 						</template>
-						<el-input
+						<ElInput
 							v-model="form.routeName"
 							placeholder="请输入路由名称"
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType != 'F'"
 					:span="12"
 				>
-					<el-form-item>
+					<ElFormItem>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="选择是外链则路由地址需要以`http(s)://`开头"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon> </el-tooltip
+									<ElIcon><QuestionFilled /></ElIcon> </ElTooltip
 								>是否外链
 							</span>
 						</template>
-						<el-radio-group v-model="form.isFrame">
-							<el-radio value="0">是</el-radio>
-							<el-radio value="1">否</el-radio>
-						</el-radio-group>
-					</el-form-item>
-				</el-col>
-				<el-col
+						<ElRadioGroup v-model="form.isFrame">
+							<ElRadio value="0">是</ElRadio>
+							<ElRadio value="1">否</ElRadio>
+						</ElRadioGroup>
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType != 'F'"
 					:span="12"
 				>
-					<el-form-item prop="path">
+					<ElFormItem prop="path">
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								路由地址
 							</span>
 						</template>
-						<el-input
+						<ElInput
 							v-model="form.path"
 							placeholder="请输入路由地址"
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType == 'C'"
 					:span="12"
 				>
-					<el-form-item prop="component">
+					<ElFormItem prop="component">
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="访问的组件路径，如：`system/user/index`，默认在`views`目录下"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								组件路径
 							</span>
 						</template>
-						<el-input
+						<ElInput
 							v-model="form.component"
 							placeholder="请输入组件路径"
 						/>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType != 'M'"
 					:span="12"
 				>
-					<el-form-item>
-						<el-input
+					<ElFormItem>
+						<ElInput
 							v-model="form.perms"
 							placeholder="请输入权限标识"
 							maxlength="100"
 						/>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								权限字符
 							</span>
 						</template>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType == 'C'"
 					:span="12"
 				>
-					<el-form-item>
-						<el-input
+					<ElFormItem>
+						<ElInput
 							v-model="form.query"
 							placeholder="请输入路由参数"
 							maxlength="255"
 						/>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="访问路由的默认传递参数，如：`{'id': 1, 'name': 'ry'}`"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								路由参数
 							</span>
 						</template>
-					</el-form-item>
-				</el-col>
-				<el-col
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType == 'C'"
 					:span="12"
 				>
-					<el-form-item>
+					<ElFormItem>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								是否缓存
 							</span>
 						</template>
-						<el-radio-group v-model="form.isCache">
-							<el-radio value="0">缓存</el-radio>
-							<el-radio value="1">不缓存</el-radio>
-						</el-radio-group>
-					</el-form-item>
-				</el-col>
-				<el-col
+						<ElRadioGroup v-model="form.isCache">
+							<ElRadio value="0">缓存</ElRadio>
+							<ElRadio value="1">不缓存</ElRadio>
+						</ElRadioGroup>
+					</ElFormItem>
+				</ElCol>
+				<ElCol
 					v-if="form.menuType != 'F'"
 					:span="12"
 				>
-					<el-form-item>
+					<ElFormItem>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								显示状态
 							</span>
 						</template>
-						<el-radio-group v-model="form.visible">
-							<el-radio
+						<ElRadioGroup v-model="form.visible">
+							<ElRadio
 								v-for="dict in sysShowHide"
 								:key="dict.value"
 								:value="dict.value"
 							>
 								{{ dict.label }}
-							</el-radio>
-						</el-radio-group>
-					</el-form-item>
-				</el-col>
-				<el-col :span="12">
-					<el-form-item>
+							</ElRadio>
+						</ElRadioGroup>
+					</ElFormItem>
+				</ElCol>
+				<ElCol :span="12">
+					<ElFormItem>
 						<template #label>
 							<span>
-								<el-tooltip
+								<ElTooltip
 									content="选择停用则路由将不会出现在侧边栏，也不能被访问"
 									placement="top"
 								>
-									<el-icon><QuestionFilled /></el-icon>
-								</el-tooltip>
+									<ElIcon><QuestionFilled /></ElIcon>
+								</ElTooltip>
 								菜单状态
 							</span>
 						</template>
-						<el-radio-group v-model="form.status">
-							<el-radio
+						<ElRadioGroup v-model="form.status">
+							<ElRadio
 								v-for="dict in sysNormalDisable"
 								:key="dict.value"
 								:value="dict.value"
 							>
 								{{ dict.label }}
-							</el-radio>
-						</el-radio-group>
-					</el-form-item>
-				</el-col>
-			</el-row>
-		</el-form>
+							</ElRadio>
+						</ElRadioGroup>
+					</ElFormItem>
+				</ElCol>
+			</ElRow>
+		</ElForm>
 		<template #footer>
-			<el-button @click="emits('update:visible', false)">取消</el-button>
-			<el-button
+			<ElButton @click="emits('update:visible', false)">取消</ElButton>
+			<ElButton
 				type="primary"
 				@click="submit"
 			>
 				确定
-			</el-button>
+			</ElButton>
 		</template>
 	</ElDialog>
 </template>

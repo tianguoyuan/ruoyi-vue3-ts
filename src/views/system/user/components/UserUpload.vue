@@ -63,14 +63,14 @@ function submitFileForm() {
 </script>
 
 <template>
-	<el-dialog
+	<ElDialog
 		:model-value="props.visible"
 		title="用户导入"
 		width="400px"
 		append-to-body
 		@update:modelValue="v => emits('update:visible', v)"
 	>
-		<el-upload
+		<ElUpload
 			ref="uploadRef"
 			:limit="1"
 			accept=".xlsx, .xls"
@@ -82,41 +82,41 @@ function submitFileForm() {
 			:auto-upload="false"
 			drag
 		>
-			<el-icon class="el-icon--upload"><UploadFilled /></el-icon>
+			<ElIcon class="el-icon--upload"><UploadFilled /></ElIcon>
 			<div class="el-upload__text">将文件拖到此处，或<em> 点击上传</em></div>
 			<template #tip>
 				<div class="el-upload__tip text-center">
 					<div class="el-upload__tip">
-						<el-checkbox
+						<ElCheckbox
 							v-model="upload.updateSupport"
 							class="align-middle"
 						/>
 						<span class="align-middle ml-1">是否更新已经存在的用户数据</span>
 					</div>
 					<span>仅允许导入xls、xlsx格式文件。</span>
-					<el-link
+					<ElLink
 						type="primary"
 						underline="always"
 						style="font-size: 12px; vertical-align: baseline"
 						@click="importTemplate"
 					>
 						下载模板
-					</el-link>
+					</ElLink>
 				</div>
 			</template>
-		</el-upload>
+		</ElUpload>
 		<template #footer>
 			<div class="dialog-footer">
-				<el-button
+				<ElButton
 					type="primary"
 					@click="submitFileForm"
 				>
 					确 定
-				</el-button>
-				<el-button @click="emits('update:visible', false)">取 消</el-button>
+				</ElButton>
+				<ElButton @click="emits('update:visible', false)">取 消</ElButton>
 			</div>
 		</template>
-	</el-dialog>
+	</ElDialog>
 </template>
 
 <style scoped></style>

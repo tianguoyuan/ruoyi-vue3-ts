@@ -72,7 +72,7 @@ export default [
 			'vue/no-deprecated-model-definition': ['error', { allowVue3Compat: true }],
 			'vue/custom-event-name-casing': ['error', 'camelCase'],
 			'vue/component-options-name-casing': ['error', 'PascalCase'],
-			'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: true, ignores: [] }],
+			'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false, ignores: [] }],
 			'vue/this-in-template': 'error',
 			'vue/html-self-closing': [
 				'error',

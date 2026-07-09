@@ -347,7 +347,7 @@ init()
 			</template>
 			<!-- table-状态 -->
 			<template #slotStatus="{ row }">
-				<el-switch
+				<ElSwitch
 					v-model="row.status"
 					active-value="0"
 					inactive-value="1"

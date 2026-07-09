@@ -186,7 +186,7 @@ function handleScroll() {
 			class="tags-view-wrapper"
 			@scroll="handleScroll"
 		>
-			<router-link
+			<RouterLink
 				v-for="tag in visitedViews"
 				ref="tag"
 				:key="tag.path"
@@ -204,7 +204,7 @@ function handleScroll() {
 				>
 					<Close />
 				</ElIcon>
-			</router-link>
+			</RouterLink>
 		</ScrollPane>
 		<ul
 			v-show="visible"

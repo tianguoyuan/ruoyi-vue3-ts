@@ -138,36 +138,36 @@ function onRadioChange() {
 </script>
 
 <template>
-	<el-form>
-		<el-form-item>
-			<el-radio
+	<ElForm>
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="1"
 			>
 				周，允许的通配符[, - * ? / L #]
-			</el-radio>
-		</el-form-item>
+			</ElRadio>
+		</ElFormItem>
 
-		<el-form-item>
-			<el-radio
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="2"
 			>
 				不指定
-			</el-radio>
-		</el-form-item>
+			</ElRadio>
+		</ElFormItem>
 
-		<el-form-item>
-			<el-radio
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="3"
 			>
 				周期从
-				<el-select
+				<ElSelect
 					v-model="cycle01"
 					clearable
 				>
-					<el-option
+					<ElOption
 						v-for="(item, index) of weekList"
 						:key="index"
 						:label="item.value"
@@ -175,14 +175,14 @@ function onRadioChange() {
 						:disabled="item.key === 7"
 					>
 						{{ item.value }}
-					</el-option>
-				</el-select>
+					</ElOption>
+				</ElSelect>
 				-
-				<el-select
+				<ElSelect
 					v-model="cycle02"
 					clearable
 				>
-					<el-option
+					<ElOption
 						v-for="(item, index) of weekList"
 						:key="index"
 						:label="item.value"
@@ -190,64 +190,64 @@ function onRadioChange() {
 						:disabled="item.key <= cycle01"
 					>
 						{{ item.value }}
-					</el-option>
-				</el-select>
-			</el-radio>
-		</el-form-item>
+					</ElOption>
+				</ElSelect>
+			</ElRadio>
+		</ElFormItem>
 
-		<el-form-item>
-			<el-radio
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="4"
 			>
 				第
-				<el-input-number
+				<ElInputNumber
 					v-model="average01"
 					:min="1"
 					:max="4"
 				/>
 				周的
-				<el-select
+				<ElSelect
 					v-model="average02"
 					clearable
 				>
-					<el-option
+					<ElOption
 						v-for="item in weekList"
 						:key="item.key"
 						:label="item.value"
 						:value="item.key"
 					/>
-				</el-select>
-			</el-radio>
-		</el-form-item>
+				</ElSelect>
+			</ElRadio>
+		</ElFormItem>
 
-		<el-form-item>
-			<el-radio
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="5"
 			>
 				本月最后一个
-				<el-select
+				<ElSelect
 					v-model="weekday"
 					clearable
 				>
-					<el-option
+					<ElOption
 						v-for="item in weekList"
 						:key="item.key"
 						:label="item.value"
 						:value="item.key"
 					/>
-				</el-select>
-			</el-radio>
-		</el-form-item>
+				</ElSelect>
+			</ElRadio>
+		</ElFormItem>
 
-		<el-form-item>
-			<el-radio
+		<ElFormItem>
+			<ElRadio
 				v-model="radioValue"
 				:value="6"
 			>
 				指定
-				<el-select
+				<ElSelect
 					v-model="checkboxList"
 					class="multiselect"
 					clearable
@@ -255,16 +255,16 @@ function onRadioChange() {
 					multiple
 					:multiple-limit="6"
 				>
-					<el-option
+					<ElOption
 						v-for="item in weekList"
 						:key="item.key"
 						:label="item.value"
 						:value="item.key"
 					/>
-				</el-select>
-			</el-radio>
-		</el-form-item>
-	</el-form>
+				</ElSelect>
+			</ElRadio>
+		</ElFormItem>
+	</ElForm>
 </template>
 
 <style lang="scss" scoped>

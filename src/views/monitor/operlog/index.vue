@@ -279,7 +279,7 @@ init()
 		</FormGenerator>
 
 		<!-- 操作日志详细 -->
-		<el-dialog
+		<ElDialog
 			v-model="dialogVisible"
 			title="操作日志详细"
 			width="800px"
@@ -287,62 +287,62 @@ init()
 			:close-on-click-modal="false"
 			class="dialogContainer"
 		>
-			<el-form
+			<ElForm
 				:model="dialogForm"
 				label-width="100px"
 			>
-				<el-row>
-					<el-col :span="12">
-						<el-form-item label="操作模块：">
+				<ElRow>
+					<ElCol :span="12">
+						<ElFormItem label="操作模块：">
 							{{ dialogForm.title }} / {{ businessTypeFindLabel(dialogForm.businessType) }}
-						</el-form-item>
-						<el-form-item label="登录信息：">
+						</ElFormItem>
+						<ElFormItem label="登录信息：">
 							{{ dialogForm.operName }} / {{ dialogForm.operIp }} / {{ dialogForm.operLocation }}
-						</el-form-item>
-					</el-col>
-					<el-col :span="12">
-						<el-form-item label="请求地址：">{{ dialogForm.operUrl }}</el-form-item>
-						<el-form-item label="请求方式：">{{ dialogForm.requestMethod }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="操作方法：">{{ dialogForm.method }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="请求参数：">
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="12">
+						<ElFormItem label="请求地址：">{{ dialogForm.operUrl }}</ElFormItem>
+						<ElFormItem label="请求方式：">{{ dialogForm.requestMethod }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="操作方法：">{{ dialogForm.method }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="请求参数：">
 							<div class="overflow-auto">{{ dialogForm.operParam }}</div>
-						</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item label="返回参数：">{{ dialogForm.jsonResult }}</el-form-item>
-					</el-col>
-					<el-col :span="8">
-						<el-form-item label="操作状态：">
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem label="返回参数：">{{ dialogForm.jsonResult }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="8">
+						<ElFormItem label="操作状态：">
 							<div v-if="dialogForm.status === 0">正常</div>
 							<div v-else-if="dialogForm.status === 1">失败</div>
-						</el-form-item>
-					</el-col>
-					<el-col :span="8">
-						<el-form-item label="消耗时间：">{{ dialogForm.costTime }}毫秒</el-form-item>
-					</el-col>
-					<el-col :span="8">
-						<el-form-item label="操作时间：">{{ dayjs(dialogForm.operTime).format('YYYY-MM-DD hh:mm:ss') }}</el-form-item>
-					</el-col>
-					<el-col :span="24">
-						<el-form-item
+						</ElFormItem>
+					</ElCol>
+					<ElCol :span="8">
+						<ElFormItem label="消耗时间：">{{ dialogForm.costTime }}毫秒</ElFormItem>
+					</ElCol>
+					<ElCol :span="8">
+						<ElFormItem label="操作时间：">{{ dayjs(dialogForm.operTime).format('YYYY-MM-DD hh:mm:ss') }}</ElFormItem>
+					</ElCol>
+					<ElCol :span="24">
+						<ElFormItem
 							v-if="dialogForm.status === 1"
 							label="异常信息："
 						>
 							{{ dialogForm.errorMsg }}
-						</el-form-item>
-					</el-col>
-				</el-row>
-			</el-form>
+						</ElFormItem>
+					</ElCol>
+				</ElRow>
+			</ElForm>
 			<template #footer>
 				<div class="dialog-footer">
-					<el-button @click="dialogVisible = false">关 闭</el-button>
+					<ElButton @click="dialogVisible = false">关 闭</ElButton>
 				</div>
 			</template>
-		</el-dialog>
+		</ElDialog>
 	</div>
 </template>
 <style lang="scss" scoped>

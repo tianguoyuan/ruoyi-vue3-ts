@@ -72,11 +72,11 @@ function pageBack() {
 
 <template>
 	<div class="p-3 relative h-full">
-		<el-tabs
+		<ElTabs
 			v-model="activeName"
 			class="demo-tabs"
 		>
-			<el-tab-pane
+			<ElTabPane
 				label="基本信息"
 				name="0"
 			>
@@ -84,16 +84,16 @@ function pageBack() {
 					ref="baseInfoRef"
 					:info="info"
 				/>
-			</el-tab-pane>
+			</ElTabPane>
 
-			<el-tab-pane
+			<ElTabPane
 				label="字段信息"
 				name="1"
 			>
 				<FieldInfo :columns="columns" />
-			</el-tab-pane>
+			</ElTabPane>
 
-			<el-tab-pane
+			<ElTabPane
 				label="生成信息"
 				name="2"
 			>
@@ -102,16 +102,16 @@ function pageBack() {
 					:info="info"
 					:tables="tables"
 				/>
-			</el-tab-pane>
-		</el-tabs>
+			</ElTabPane>
+		</ElTabs>
 		<div class="text-center m-auto py-3 shadow-2xl">
-			<el-button
+			<ElButton
 				type="primary"
 				@click="submitForm()"
 			>
 				提交
-			</el-button>
-			<el-button @click="pageBack()">返回</el-button>
+			</ElButton>
+			<ElButton @click="pageBack()">返回</ElButton>
 		</div>
 	</div>
 </template>

@@ -59,9 +59,9 @@ getUserProfile()
 
 <template>
 	<div class="m-3">
-		<el-row>
-			<el-col :span="6">
-				<el-card class="min-w-70">
+		<ElRow>
+			<ElCol :span="6">
+				<ElCard class="min-w-70">
 					<template #header>
 						<div class="card-header">
 							<span>个人信息</span>
@@ -85,18 +85,18 @@ getUserProfile()
 						</div>
 						<div>{{ item.value }}</div>
 					</div>
-				</el-card>
-			</el-col>
+				</ElCard>
+			</ElCol>
 
-			<el-col :span="18">
-				<el-card class="ml-3">
+			<ElCol :span="18">
+				<ElCard class="ml-3">
 					<template #header>
 						<div class="card-header">
 							<span>基本资料</span>
 						</div>
 					</template>
-					<el-tabs v-model="selectedTab">
-						<el-tab-pane
+					<ElTabs v-model="selectedTab">
+						<ElTabPane
 							label="基本资料"
 							name="userinfo"
 						>
@@ -104,16 +104,16 @@ getUserProfile()
 								:user-form="userForm"
 								@refreshInfo="getUserProfile"
 							/>
-						</el-tab-pane>
-						<el-tab-pane
+						</ElTabPane>
+						<ElTabPane
 							label="修改密码"
 							name="resetPwd"
 						>
 							<ResetPwd />
-						</el-tab-pane>
-					</el-tabs>
-				</el-card>
-			</el-col>
-		</el-row>
+						</ElTabPane>
+					</ElTabs>
+				</ElCard>
+			</ElCol>
+		</ElRow>
 	</div>
 </template>

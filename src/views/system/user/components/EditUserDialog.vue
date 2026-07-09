@@ -296,18 +296,18 @@ init()
 		/>
 
 		<template #footer>
-			<el-button
+			<ElButton
 				plain
 				@click="emits('update:visible', false)"
 			>
 				取消
-			</el-button>
-			<el-button
+			</ElButton>
+			<ElButton
 				type="primary"
 				@click="submit"
 			>
 				确定
-			</el-button>
+			</ElButton>
 		</template>
 	</ElDialog>
 </template>
