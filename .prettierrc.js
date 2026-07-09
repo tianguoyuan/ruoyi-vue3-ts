@@ -1,6 +1,6 @@
 // @see: https://www.prettier.cn
 
-module.exports = {
+export default {
 	// 超过最大值换行
 	printWidth: 130,
 	// 缩进字节数

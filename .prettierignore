@@ -9,7 +9,7 @@
 /public/*
 README.md
 .editorconfig
-.prettierrc
+.prettierrc.js
 .prettierignore
 pnpm-lock.yaml
 stats.html

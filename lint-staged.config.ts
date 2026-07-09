@@ -1,4 +1,6 @@
-module.exports = {
+import type { Configuration } from 'lint-staged'
+
+const config: Configuration = {
 	'*.{js,ts}': ['eslint --fix', 'prettier --write'],
 	'*.{cjs,json}': ['prettier --write'],
 	'*.{vue,html}': ['eslint --fix', 'prettier --write', 'stylelint --fix'],
@@ -6,3 +8,5 @@ module.exports = {
 	'*.md': ['prettier --write'],
 	'*.svg': ['svgo']
 }
+
+export default config

@@ -9,7 +9,7 @@ import parserVue from 'vue-eslint-parser'
 import globals from 'globals'
 
 export default [
-	{ ignores: ['**/*.cjs', 'eslint.config.js', '**/dist/**'] },
+	{ ignores: ['eslint.config.js', '**/dist/**', '*.cjs'] },
 	js.configs.recommended,
 	...pluginVue.configs['flat/essential'],
 	...pluginVue.configs['flat/strongly-recommended'],

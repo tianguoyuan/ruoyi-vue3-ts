@@ -38,7 +38,10 @@
 		"vite.config.ts",
 		"auto-imports.d.ts",
 		"components.d.ts",
-		"mock/**/*.ts"
+		"mock/**/*.ts",
+		"commitlint.config.ts",
+		"lint-staged.config.ts",
+		"postcss.config.ts"
 	],
 	"exclude": ["node_modules", "dist", "**/*.js"]
 }

@@ -1,6 +1,8 @@
-module.exports = {
+import autoprefixer from 'autoprefixer'
+
+export default {
 	plugins: [
-		require('autoprefixer')
+		autoprefixer
 		// require('postcss-px-to-viewport')({
 		// 	unitToConvert: 'px', // 要转化的单位
 		// 	viewportWidth: 375, // UI设计稿的宽度
