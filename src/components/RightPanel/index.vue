@@ -5,11 +5,11 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useSettingsStore } from '@/store/settings'
 import { addClass, removeClass } from '@/utils'
 const props = defineProps({
-	clickNotClose: Boolean,
 	buttonTop: {
-		type: Number,
-		default: 250
-	}
+		default: 250,
+		type: Number
+	},
+	clickNotClose: Boolean
 })
 
 const settingsStore = useSettingsStore()
@@ -54,8 +54,8 @@ function insertToBody() {
 <template>
 	<div
 		ref="rightPanelRef"
-		:class="{ show: show }"
 		class="rightPanel-container"
+		:class="{ show: show }"
 	>
 		<div class="rightPanel-background" />
 		<div class="rightPanel">

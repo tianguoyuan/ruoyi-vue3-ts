@@ -18,11 +18,11 @@ const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const initFormData = {
-	postName: '',
 	postCode: '',
+	postName: '',
 	postSort: 0,
-	status: '0',
-	remark: ''
+	remark: '',
+	status: '0'
 }
 const formData = ref({ ...initFormData })
 
@@ -40,66 +40,66 @@ watch(
 	}
 )
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			label: '岗位名称',
+			placeholder: '请输入岗位名称',
+			prop: 'postName',
+			type: 'input'
+		},
+
+		{
+			label: '岗位编码',
+			placeholder: '请输入岗位编码',
+			prop: 'postCode',
+			type: 'input'
+		},
+		{
+			label: '岗位顺序',
+			min: 0,
+			placeholder: '请输入岗位顺序',
+			prop: 'postSort',
+			type: 'input-number'
+		},
+		{
+			label: '岗位状态',
+			options: sysNormalDisable as unknown as any[],
+			prop: 'status',
+			type: 'radio'
+		},
+		{
+			label: '备注',
+			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 3,
+			type: 'textarea'
+		}
+	],
 	formRules: {
-		postName: [
-			{
-				required: true,
-				message: '请输入岗位名称'
-			}
-		],
 		postCode: [
 			{
-				required: true,
-				message: '请输入岗位编码'
+				message: '请输入岗位编码',
+				required: true
+			}
+		],
+		postName: [
+			{
+				message: '请输入岗位名称',
+				required: true
 			}
 		],
 		postSort: [
 			{
-				required: true,
-				message: '请输入岗位顺序'
+				message: '请输入岗位顺序',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '岗位名称',
-			prop: 'postName',
-			placeholder: '请输入岗位名称'
-		},
-
-		{
-			type: 'input',
-			label: '岗位编码',
-			prop: 'postCode',
-			placeholder: '请输入岗位编码'
-		},
-		{
-			type: 'input-number',
-			label: '岗位顺序',
-			prop: 'postSort',
-			min: 0,
-			placeholder: '请输入岗位顺序'
-		},
-		{
-			type: 'radio',
-			label: '岗位状态',
-			prop: 'status',
-			options: sysNormalDisable as unknown as any[]
-		},
-		{
-			type: 'textarea',
-			rows: 3,
-			label: '备注',
-			prop: 'remark',
-			placeholder: '请输入备注'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 async function submit() {
@@ -122,9 +122,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="id ? '修改岗位' : '添加岗位'"
-		:close-on-click-modal="false"
 		width="500px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>

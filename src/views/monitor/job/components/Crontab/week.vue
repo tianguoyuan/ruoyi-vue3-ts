@@ -1,21 +1,21 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps({
+	check: {
+		default: () => {},
+		type: Function
+	},
 	cron: {
-		type: Object,
 		default: () => ({
-			second: '*',
-			min: '*',
-			hour: '*',
 			day: '*',
+			hour: '*',
+			min: '*',
 			month: '*',
+			second: '*',
 			week: '?',
 			year: ''
-		})
-	},
-	check: {
-		type: Function,
-		default: () => {}
+		}),
+		type: Object
 	}
 })
 const radioValue = ref(2)
@@ -170,9 +170,9 @@ function onRadioChange() {
 					<ElOption
 						v-for="(item, index) of weekList"
 						:key="index"
+						:disabled="item.key === 7"
 						:label="item.value"
 						:value="item.key"
-						:disabled="item.key === 7"
 					>
 						{{ item.value }}
 					</ElOption>
@@ -185,9 +185,9 @@ function onRadioChange() {
 					<ElOption
 						v-for="(item, index) of weekList"
 						:key="index"
+						:disabled="item.key <= cycle01"
 						:label="item.value"
 						:value="item.key"
-						:disabled="item.key <= cycle01"
 					>
 						{{ item.value }}
 					</ElOption>
@@ -203,8 +203,8 @@ function onRadioChange() {
 				第
 				<ElInputNumber
 					v-model="average01"
-					:min="1"
 					:max="4"
+					:min="1"
 				/>
 				周的
 				<ElSelect
@@ -251,9 +251,9 @@ function onRadioChange() {
 					v-model="checkboxList"
 					class="multiselect"
 					clearable
-					placeholder="可多选"
 					multiple
-					:multiple-limit="6"
+					:multipleLimit="6"
+					placeholder="可多选"
 				>
 					<ElOption
 						v-for="item in weekList"

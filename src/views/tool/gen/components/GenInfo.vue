@@ -22,21 +22,21 @@ const router = useRouter()
 const menuTreeSelect = ref([])
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
+	businessName: '',
+	columns: [] as IColumns,
+	functionName: '',
+	genPath: '',
+	genType: '0',
+	moduleName: '',
+	packageName: '',
+	parentMenuId: '',
+	subTableFkName: '',
+	subTableName: '',
 	tplCategory: '',
 	tplWebType: '',
-	packageName: '',
-	moduleName: '',
-	businessName: '',
-	functionName: '',
-	genType: '0',
-	parentMenuId: '',
-	genPath: '',
 	treeCode: '',
-	columns: [] as IColumns,
-	treeParentCode: '',
 	treeName: '',
-	subTableName: '',
-	subTableFkName: ''
+	treeParentCode: ''
 })
 
 watch(
@@ -57,15 +57,9 @@ watch(
 )
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '150px',
-	span: 6,
 	fields: [
 		{
-			type: 'select',
 			label: '生成模板',
-			prop: 'tplCategory',
-			placeholder: '请选择生成模板',
-			span: 12,
 			options: [
 				{
 					label: '单表（增删改查）',
@@ -79,14 +73,14 @@ const formConfig = ref<FormConfig>({
 					label: '主子表（增删改查）',
 					value: 'sub'
 				}
-			]
+			],
+			placeholder: '请选择生成模板',
+			prop: 'tplCategory',
+			span: 12,
+			type: 'select'
 		},
 		{
-			type: 'select',
 			label: '前端类型',
-			prop: 'tplWebType',
-			placeholder: '请选择前端类型',
-			span: 12,
 			options: [
 				{
 					label: 'Vue2 Element UI 模版',
@@ -96,51 +90,52 @@ const formConfig = ref<FormConfig>({
 					label: 'Vue3 Element Plus 模版',
 					value: 'element-plus'
 				}
-			]
+			],
+			placeholder: '请选择前端类型',
+			prop: 'tplWebType',
+			span: 12,
+			type: 'select'
 		},
 		{
-			type: 'input',
 			label: '生成包路径',
-			prop: 'packageName',
+			labelTip: '生成在哪个java包下，例如 com.ruoyi.system',
 			placeholder: '请输入生成包路径',
+			prop: 'packageName',
 			span: 12,
-			labelTip: '生成在哪个java包下，例如 com.ruoyi.system'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '生成模块名',
-			prop: 'moduleName',
+			labelTip: '可理解为子系统名，例如 system',
 			placeholder: '请输入生成模块名',
+			prop: 'moduleName',
 			span: 12,
-			labelTip: '可理解为子系统名，例如 system'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '生成业务名',
-			prop: 'businessName',
+			labelTip: '可理解为功能英文名，例如 user',
 			placeholder: '请输入生成业务名',
+			prop: 'businessName',
 			span: 12,
-			labelTip: '可理解为功能英文名，例如 user'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '生成功能名',
-			prop: 'functionName',
+			labelTip: '用作类描述，例如 用户',
 			placeholder: '请输入生成功能名',
+			prop: 'functionName',
 			span: 12,
-			labelTip: '用作类描述，例如 用户'
+			type: 'input'
 		},
 
 		{
-			type: 'radio',
-			label: '生成代码方式',
-			prop: 'genType',
-			span: 12,
-			labelTip: '默认为zip压缩包下载，也可以自定义生成路径',
 			defaultValue: '0',
+			label: '生成代码方式',
+			labelTip: '默认为zip压缩包下载，也可以自定义生成路径',
 			options: [
 				{
 					label: 'zip压缩包',
@@ -150,74 +145,79 @@ const formConfig = ref<FormConfig>({
 					label: '自定义路径',
 					value: '1'
 				}
-			]
+			],
+			prop: 'genType',
+			span: 12,
+			type: 'radio'
 		},
 		{
-			type: 'cascader',
 			label: '上级菜单',
+			labelTip: '分配到指定菜单下，例如 系统管理',
+			options: menuTreeSelect as any,
 			prop: 'parentMenuId',
 			props: {
-				value: 'menuId',
-				label: 'menuName',
+				checkStrictly: true,
 				children: 'children',
 				emitPath: false,
-				checkStrictly: true
+				label: 'menuName',
+				value: 'menuId'
 			},
 			span: 12,
-			labelTip: '分配到指定菜单下，例如 系统管理',
-			options: menuTreeSelect as any
+			type: 'cascader'
 		},
 		{
-			type: 'slot',
 			label: '自定义路径',
 			prop: 'genPath',
 			slotName: 'slotGenPath',
-			span: 24
+			span: 24,
+			type: 'slot'
 		},
 		{
-			type: 'slot',
 			label: '其他信息',
 			prop: '',
 			slotName: 'slotTplCategory',
-			span: 24
+			span: 24,
+			type: 'slot'
 		}
 	],
 	formRules: {
-		tableName: [
-			{
-				required: true,
-				message: '请选择生成模板',
-				trigger: 'blur'
-			}
-		],
-		packageName: [
-			{
-				required: true,
-				message: '请输入生成包路径'
-			}
-		],
-		moduleName: [
-			{
-				required: true,
-				message: '请输入生成模块名'
-			}
-		],
 		businessName: [
 			{
-				required: true,
-				message: '请输入生成业务名'
+				message: '请输入生成业务名',
+				required: true
 			}
 		],
 		functionName: [
 			{
+				message: '请输入生成功能名',
+				required: true
+			}
+		],
+		moduleName: [
+			{
+				message: '请输入生成模块名',
+				required: true
+			}
+		],
+		packageName: [
+			{
+				message: '请输入生成包路径',
+				required: true
+			}
+		],
+		tableName: [
+			{
+				message: '请选择生成模板',
 				required: true,
-				message: '请输入生成功能名'
+				trigger: 'blur'
 			}
 		]
 	},
-	tableShow: false,
+	hideDefaultButton: true,
+	labelWidth: '150px',
+	span: 6,
 	tableInitQueryRefuse: true,
-	hideDefaultButton: true
+	tableShow: false
 })
 
 async function handleButtonClick(event: string) {
@@ -271,8 +271,8 @@ function getData() {
 }
 
 defineExpose({
-	validate,
-	getData
+	getData,
+	validate
 })
 </script>
 

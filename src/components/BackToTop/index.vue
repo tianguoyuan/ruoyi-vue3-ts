@@ -2,9 +2,9 @@
 
 <template>
 	<ElBacktop
-		:visibility-height="100"
-		:right="20"
 		:bottom="100"
+		:right="20"
+		:visibilityHeight="100"
 	/>
 </template>
 

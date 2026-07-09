@@ -23,7 +23,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
  * @param viteEnv
  */
 export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOption[])[] {
-	const { VITE_GLOB_APP_TITLE, VITE_REPORT, VITE_PWA, VITE_MOCK_DEV_SERVER } = viteEnv
+	const { VITE_GLOB_APP_TITLE, VITE_MOCK_DEV_SERVER, VITE_PWA, VITE_REPORT } = viteEnv
 
 	return [
 		VueDevTools(),
@@ -41,11 +41,11 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 		createCompression(viteEnv),
 		// 注入变量到 html 文件
 		createHtmlPlugin({
-			minify: true,
-			viteNext: true,
 			inject: {
 				data: { title: VITE_GLOB_APP_TITLE }
-			}
+			},
+			minify: true,
+			viteNext: true
 		}),
 		// 使用 svg 图标
 		createSvgIconsPlugin({
@@ -57,13 +57,22 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 		// 是否生成包预览，分析依赖包大小做优化处理
 		VITE_REPORT &&
 			(visualizer({
+				brotliSize: true,
 				filename: 'stats.html',
-				gzipSize: true,
-				brotliSize: true
+				gzipSize: true
 			}) as PluginOption),
 		// unocss
 		UnoCSS(),
 		AutoImport({
+			// 指定自动导入函数TS类型声明文件路径 (false:关闭自动生成)
+			dts: true,
+			eslintrc: {
+				// 是否自动生成 eslint 规则，建议生成之后设置 false
+				enabled: true,
+				// 指定自动导入函数 eslint 规则的文件
+				filepath: './.eslintrc-auto-import.json',
+				globalsPropValue: true
+			},
 			// 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
 			imports: ['vue', '@vueuse/core', 'pinia', 'vue-router', 'vue-i18n'],
 			resolvers: [
@@ -72,20 +81,15 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 				// 自动导入图标组件
 				// IconsResolver({})
 			],
-			eslintrc: {
-				// 是否自动生成 eslint 规则，建议生成之后设置 false
-				enabled: true,
-				// 指定自动导入函数 eslint 规则的文件
-				filepath: './.eslintrc-auto-import.json',
-				globalsPropValue: true
-			},
 			// 是否在 vue 模板中自动导入
-			vueTemplate: true,
-			// 指定自动导入函数TS类型声明文件路径 (false:关闭自动生成)
-			dts: true
+			vueTemplate: true
 			// dts: "src/types/auto-imports.d.ts",
 		}),
 		Components({
+			// 指定自定义组件位置(默认:src/components)
+			dirs: ['src/components'],
+			// 指定自动导入组件TS类型声明文件路径 (false:关闭自动生成)
+			dts: true,
 			resolvers: [
 				// 自动导入 Element Plus 组件
 				ElementPlusResolver({ importStyle: false })
@@ -94,11 +98,7 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 				// 	// element-plus图标库，其他图标库 https://icon-sets.iconify.design/
 				// 	enabledCollections: ['ep']
 				// })
-			],
-			// 指定自定义组件位置(默认:src/components)
-			dirs: ['src/components'],
-			// 指定自动导入组件TS类型声明文件路径 (false:关闭自动生成)
-			dts: true
+			]
 			// dts: "src/types/components.d.ts",
 		}),
 		// MOCK 服务
@@ -117,18 +117,18 @@ function createCompression(viteEnv: ViteEnv): PluginOption | PluginOption[] {
 	if (compressList.includes('gzip')) {
 		plugins.push(
 			viteCompression({
-				ext: '.gz',
 				algorithm: 'gzip',
-				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
+				ext: '.gz'
 			})
 		)
 	}
 	if (compressList.includes('brotli')) {
 		plugins.push(
 			viteCompression({
-				ext: '.br',
 				algorithm: 'brotliCompress',
-				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE
+				deleteOriginFile: VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
+				ext: '.br'
 			})
 		)
 	}
@@ -142,31 +142,31 @@ function createCompression(viteEnv: ViteEnv): PluginOption | PluginOption[] {
 function createVitePwa(viteEnv: ViteEnv): PluginOption | PluginOption[] {
 	const { VITE_GLOB_APP_TITLE } = viteEnv
 	return VitePWA({
-		registerType: 'autoUpdate',
 		manifest: {
+			icons: [
+				{
+					sizes: '192x192',
+					src: '/logo.png',
+					type: 'image/png'
+				},
+				{
+					sizes: '512x512',
+					src: '/logo.png',
+					type: 'image/png'
+				},
+				{
+					purpose: 'any maskable',
+					sizes: '512x512',
+					src: '/logo.png',
+					type: 'image/png'
+				}
+			],
 			name: VITE_GLOB_APP_TITLE,
 			// eslint-disable-next-line camelcase
 			short_name: VITE_GLOB_APP_TITLE,
 			// eslint-disable-next-line camelcase
-			theme_color: '#ffffff',
-			icons: [
-				{
-					src: '/logo.png',
-					sizes: '192x192',
-					type: 'image/png'
-				},
-				{
-					src: '/logo.png',
-					sizes: '512x512',
-					type: 'image/png'
-				},
-				{
-					src: '/logo.png',
-					sizes: '512x512',
-					type: 'image/png',
-					purpose: 'any maskable'
-				}
-			]
-		}
+			theme_color: '#ffffff'
+		},
+		registerType: 'autoUpdate'
 	})
 }

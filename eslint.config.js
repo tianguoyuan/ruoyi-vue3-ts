@@ -9,7 +9,7 @@ import parserVue from 'vue-eslint-parser'
 import globals from 'globals'
 
 export default [
-	{ ignores: ['**/*.cjs', 'eslint.config.js'] },
+	{ ignores: ['**/*.cjs', 'eslint.config.js', '**/dist/**'] },
 	js.configs.recommended,
 	...pluginVue.configs['flat/essential'],
 	...pluginVue.configs['flat/strongly-recommended'],
@@ -47,7 +47,6 @@ export default [
 			'prefer-const': 'off',
 			'no-irregular-whitespace': 'off',
 			eqeqeq: 'error',
-			camelcase: 'error',
 			'no-duplicate-imports': 'error',
 			'no-undef': 'off',
 			'no-unused-vars': 'off',
@@ -71,6 +70,8 @@ export default [
 			'vue/singleline-html-element-content-newline': 'off',
 			'vue/no-deprecated-model-definition': ['error', { allowVue3Compat: true }],
 			'vue/custom-event-name-casing': ['error', 'camelCase'],
+			// 变量、函数、属性等必须使用小驼峰命名
+			camelcase: ['error', { properties: 'always' }],
 			'vue/component-options-name-casing': ['error', 'PascalCase'],
 			'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false, ignores: [] }],
 			'vue/this-in-template': 'error',
@@ -79,6 +80,7 @@ export default [
 				{ html: { void: 'always', normal: 'always', component: 'always' }, svg: 'always', math: 'always' }
 			],
 			'vue/v-on-event-hyphenation': ['error', 'never'],
+			'vue/attribute-hyphenation': ['error', 'never'],
 			'vue/multi-word-component-names': 'off',
 			'vue/no-deprecated-slot-attribute': 'error',
 			'vue/no-deprecated-router-link-tag-prop': ['error', { components: ['RouterLink'] }],
@@ -99,7 +101,7 @@ export default [
 						'EVENTS',
 						'CONTENT'
 					],
-					alphabetical: false
+					alphabetical: true
 				}
 			],
 			'vue/no-required-prop-with-default': 'off',
@@ -125,6 +127,22 @@ export default [
 						{ newlinesBetween: 1 },
 						['parent', 'sibling', 'index']
 					]
+				}
+			],
+			'perfectionist/sort-objects': [
+				'error',
+				{
+					type: 'alphabetical',
+					order: 'asc',
+					ignoreCase: true
+				}
+			],
+			'perfectionist/sort-jsx-props': [
+				'error',
+				{
+					type: 'alphabetical',
+					order: 'asc',
+					ignoreCase: true
 				}
 			],
 			'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],

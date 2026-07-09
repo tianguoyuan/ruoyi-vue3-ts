@@ -24,53 +24,51 @@ function selectionChange(v) {
 
 const multiple = computed(() => !(selectList.value.length > 0))
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: allocatedUserList,
 	fields: [
 		{
-			type: 'input',
 			label: '用户名称',
+			placeholder: '请输入用户名称',
 			prop: 'userName',
-			placeholder: '请输入用户名称'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '手机号码',
+			placeholder: '请输入手机号码',
 			prop: 'phonenumber',
-			placeholder: '请输入手机号码'
+			type: 'input'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '添加用户',
-			type: 'primary',
 			event: 'openSelectUser',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:role:add'])
+			label: '添加用户',
+			plain: true,
+			show: checkPermission(['system:role:add']),
+			type: 'primary'
 		},
 		{
-			label: '批量取消授权',
-			type: 'danger',
-			event: 'cancelAuthUserAll',
-			plain: true,
-			icon: 'CircleClose',
 			disabled: multiple as any,
-			show: checkPermission(['system:role:remove'])
+			event: 'cancelAuthUserAll',
+			icon: 'CircleClose',
+			label: '批量取消授权',
+			plain: true,
+			show: checkPermission(['system:role:remove']),
+			type: 'danger'
 		},
 		{
-			label: '关闭',
-			type: 'warning',
 			event: 'handleClose',
+			icon: 'Close',
+			label: '关闭',
 			plain: true,
-			icon: 'Close'
+			type: 'warning'
 		}
 	],
 
-	tableShow: true,
-	api: allocatedUserList,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '用户名称',
@@ -98,27 +96,29 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
-			prop: 'createTime',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			prop: 'createTime'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
+					event: 'cancelAuthUser',
 					icon: 'CircleClose',
 					label: '取消授权',
-					event: 'cancelAuthUser',
-					show: checkPermission(['system:role:remove'])
+					link: true,
+					show: checkPermission(['system:role:remove']),
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 const visible = ref(false)
@@ -131,26 +131,24 @@ const dialogFormData = ref({
 	roleId: route.params.roleId
 })
 const dialogFormConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 8,
+	api: unallocatedUserList,
 	fields: [
 		{
-			type: 'input',
 			label: '用户名称',
+			placeholder: '请输入用户名称',
 			prop: 'userName',
-			placeholder: '请输入用户名称'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '手机号码',
+			placeholder: '请输入手机号码',
 			prop: 'phonenumber',
-			placeholder: '请输入手机号码'
+			type: 'input'
 		}
 	],
-	tableShow: true,
-	api: unallocatedUserList,
-	tableShowSelection: true,
+	labelWidth: '80px',
+	span: 8,
 	tableHeader: [
 		{
 			label: '用户名称',
@@ -178,12 +176,14 @@ const dialogFormConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
 			prop: 'createTime',
-			width: '180px',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			width: '180px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 async function dialogSubmit() {
@@ -215,8 +215,8 @@ function handleButtonClick(event: string) {
 	} else if (event === 'handleClose') {
 		// 关闭页面
 		tagsViewStore.delView({
-			path: route.path,
-			name: route.name as string
+			name: route.name as string,
+			path: route.path
 		})
 		router.replace('/system/role')
 	}
@@ -231,12 +231,12 @@ function tableEditClick(row, btn) {
 async function cancelAuthUser(userIds: string) {
 	const roleId = route.params.roleId as string
 	await ElMessageBox({
-		type: 'warning',
-		title: '提示',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: '是否取消选中用户授权数据项?',
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 
 	await authUserCancelAll({
@@ -263,21 +263,21 @@ init()
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		>
 			<!-- table-状态 -->
 			<template #statusSlot="{ row }">
 				<DictTag
-					:value="row.status"
 					:options="sysNormalDisable"
+					:value="row.status"
 				/>
 			</template>
 		</FormGenerator>
 		<ElDialog
 			v-model="visible"
+			:closeOnClickModal="false"
 			title="选择用户"
-			:close-on-click-modal="false"
 			@cancel="dialogCancel"
 		>
 			<FormGenerator
@@ -289,8 +289,8 @@ init()
 				<!-- table-状态 -->
 				<template #statusSlot="{ row }">
 					<DictTag
-						:value="row.status"
 						:options="sysNormalDisable"
+						:value="row.status"
 					/>
 				</template>
 			</FormGenerator>
@@ -298,8 +298,8 @@ init()
 			<template #footer>
 				<ElButton @click="dialogCancel">取消</ElButton>
 				<ElButton
-					type="primary"
 					:disabled="!dialogSelectList.length"
+					type="primary"
 					@click="dialogSubmit"
 				>
 					确定

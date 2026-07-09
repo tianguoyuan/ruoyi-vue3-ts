@@ -10,71 +10,71 @@ export function listConfig(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/system/config/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/system/config/list'
 	})
 }
 
 // 查询参数详细
 export function getConfig(configId) {
 	return request({
-		url: '/system/config/' + configId,
-		method: 'get'
+		method: 'get',
+		url: '/system/config/' + configId
 	})
 }
 
 // 根据参数键名查询参数值
 export function getConfigKey(configKey: string) {
 	return request({
-		url: '/system/config/configKey/' + configKey,
-		method: 'get'
+		method: 'get',
+		url: '/system/config/configKey/' + configKey
 	})
 }
 
 // 新增参数配置
 export function addConfig(data) {
 	return request({
-		url: '/system/config',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/system/config'
 	})
 }
 
 // 修改参数配置
 export function updateConfig(data) {
 	return request({
-		url: '/system/config',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/config'
 	})
 }
 
 // 删除参数配置
 export function delConfig(configId) {
 	return request({
-		url: '/system/config/' + configId,
-		method: 'delete'
+		method: 'delete',
+		url: '/system/config/' + configId
 	})
 }
 
 // 刷新参数缓存
 export function refreshCache() {
 	return request({
-		url: '/system/config/refreshCache',
-		method: 'delete'
+		method: 'delete',
+		url: '/system/config/refreshCache'
 	})
 }
 
 // 导出
 export function configExport(data) {
 	return request({
-		url: '/system/config/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/system/config/export'
 	})
 }

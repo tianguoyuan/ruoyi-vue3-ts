@@ -37,82 +37,80 @@ function selectionChange(v) {
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listRole,
 	fields: [
 		{
-			type: 'input',
 			label: '角色名称',
+			placeholder: '请输入角色名称',
 			prop: 'roleName',
-			placeholder: '请输入角色名称'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '权限字符',
+			placeholder: '请输入权限字符',
 			prop: 'roleKey',
-			placeholder: '请输入权限字符'
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '状态',
-			prop: 'roleName',
+			options: sysNormalDisable as unknown as any[],
 			placeholder: '请选择状态',
-			options: sysNormalDisable as unknown as any[]
+			prop: 'roleName',
+			type: 'select'
 		},
 
 		{
-			type: 'date-picker',
 			dateType: 'daterange',
 			label: '创建时间',
+			placeholder: '请选择创建时间',
 			prop: 'daterange',
-			placeholder: '请选择创建时间'
+			type: 'date-picker'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:role:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:role:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single as unknown as boolean,
 			event: 'handleUpdate',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['system:role:edit']),
-			disabled: single as unknown as boolean
+			type: 'success'
 		},
 
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['system:role:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['system:role:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['system:role:export']),
+			type: 'warning'
 		}
 	],
 
-	tableShow: true,
-	api: listRole,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '角色编号',
@@ -140,85 +138,87 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
-			prop: 'createTime',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			prop: 'createTime'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
 					event: 'handleUpdate',
-					show: row => checkPermission(['system:role:edit']) && row.userId !== 1
+					icon: 'Edit',
+					link: true,
+					show: row => checkPermission(['system:role:edit']) && row.userId !== 1,
+					tip: '修改',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
 					event: 'handleDelete',
-					show: row => checkPermission(['system:role:remove']) && row.userId !== 1
+					icon: 'Delete',
+					link: true,
+					show: row => checkPermission(['system:role:remove']) && row.userId !== 1,
+					tip: '删除',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'CircleCheck',
-					tip: '数据权限',
 					event: 'handleDataScope',
-					show: row => checkPermission(['system:role:edit']) && row.userId !== 1
+					icon: 'CircleCheck',
+					link: true,
+					show: row => checkPermission(['system:role:edit']) && row.userId !== 1,
+					tip: '数据权限',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'User',
-					tip: '分配用户',
 					event: 'handleAuthRole',
-					show: row => checkPermission(['system:role:edit']) && row.userId !== 1
+					icon: 'User',
+					link: true,
+					show: row => checkPermission(['system:role:edit']) && row.userId !== 1,
+					tip: '分配用户',
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 const dataScopeDialogVisible = ref(false)
 const dataScopeDialogForm = ref({
-	roleName: '',
-	roleKey: '',
 	dataScope: '',
 	deptCheckStrictly: true,
 	menuCheckStrictly: true,
-	roleId: ''
+	roleId: '',
+	roleKey: '',
+	roleName: ''
 })
 const dataScopeDialogDeptTree = ref([
 	{
-		value: '1',
-		label: '全部数据权限'
+		label: '全部数据权限',
+		value: '1'
 	},
 	{
-		value: '2',
-		label: '自定数据权限'
+		label: '自定数据权限',
+		value: '2'
 	},
 	{
-		value: '3',
-		label: '本部门数据权限'
+		label: '本部门数据权限',
+		value: '3'
 	},
 	{
-		value: '4',
-		label: '本部门及以下数据权限'
+		label: '本部门及以下数据权限',
+		value: '4'
 	},
 	{
-		value: '5',
-		label: '仅本人数据权限'
+		label: '仅本人数据权限',
+		value: '5'
 	}
 ])
 const deptOptions = ref<any[]>([])
@@ -341,12 +341,12 @@ function tableEditClick(row, btn) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 	await delRole(ids)
 	ElMessage.success('删除成功')
@@ -358,12 +358,12 @@ function handleStatusChange(row) {
 	const flagMsg = row.status === '0' ? '启用' : '停用'
 
 	ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `确认要"${flagMsg}""${row.roleId}"用户吗?`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 		.then(async () => {
 			await changeRoleStatus(row.roleId, row.status)
@@ -390,86 +390,86 @@ const dialogFormGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(nu
 const dialogId = ref('')
 const initDialogFormData = {
 	menuCheckStrictly: true,
-	roleId: '',
 	menuIds: '',
+	remark: '',
 
-	roleName: '',
+	roleId: '',
 	roleKey: '',
+	roleName: '',
 	roleSort: 0,
-	status: '0',
-	remark: ''
+	status: '0'
 }
 const dialogFormData = ref({ ...initDialogFormData })
 const menuExpand = ref(false)
 const menuNodeAll = ref(false)
 
 const dialogFormConfig = ref<FormConfig>({
-	labelWidth: '100px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			label: '角色名称',
+			placeholder: '请输入角色名称',
+			prop: 'roleName',
+			type: 'input'
+		},
+
+		{
+			label: '权限字符',
+			placeholder: '请输入权限字符',
+			prop: 'roleKey',
+			type: 'input'
+		},
+		{
+			controlsPosition: 'right',
+			label: '角色顺序',
+			min: 0,
+			prop: 'roleSort',
+			type: 'input-number'
+		},
+		{
+			label: '状态',
+			options: sysNormalDisable as unknown as any[],
+			prop: 'status',
+			type: 'radio'
+		},
+		{
+			label: '菜单权限',
+			prop: 'expanded',
+			slotName: 'expandedSlot',
+			type: 'slot'
+		},
+		{
+			label: '备注',
+			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 3,
+			type: 'textarea'
+		}
+	],
 	formRules: {
-		roleName: [
-			{
-				required: true,
-				message: '请输入角色名称'
-			}
-		],
 		roleKey: [
 			{
-				required: true,
-				message: '请输入权限字符'
+				message: '请输入权限字符',
+				required: true
+			}
+		],
+		roleName: [
+			{
+				message: '请输入角色名称',
+				required: true
 			}
 		],
 		roleSort: [
 			{
-				required: true,
-				message: '请输入角色顺序'
+				message: '请输入角色顺序',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '角色名称',
-			prop: 'roleName',
-			placeholder: '请输入角色名称'
-		},
-
-		{
-			type: 'input',
-			label: '权限字符',
-			prop: 'roleKey',
-			placeholder: '请输入权限字符'
-		},
-		{
-			type: 'input-number',
-			label: '角色顺序',
-			prop: 'roleSort',
-			min: 0,
-			controlsPosition: 'right'
-		},
-		{
-			type: 'radio',
-			label: '状态',
-			prop: 'status',
-			options: sysNormalDisable as unknown as any[]
-		},
-		{
-			type: 'slot',
-			slotName: 'expandedSlot',
-			prop: 'expanded',
-			label: '菜单权限'
-		},
-		{
-			type: 'textarea',
-			rows: 3,
-			label: '备注',
-			prop: 'remark',
-			placeholder: '请输入备注'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '100px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 // 新增|编辑
@@ -532,14 +532,14 @@ init()
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		>
 			<template #statusSlot="{ row }">
 				<ElSwitch
 					v-model="row.status"
-					active-value="0"
-					inactive-value="1"
+					activeValue="0"
+					inactiveValue="1"
 					@click="handleStatusChange(row)"
 				/>
 			</template>
@@ -548,9 +548,9 @@ init()
 		<!-- 分配数据权限 -->
 		<ElDialog
 			v-model="dataScopeDialogVisible"
+			:closeOnClickModal="false"
 			title="分配数据权限"
 			width="500px"
-			:close-on-click-modal="false"
 			@close="dataScopeDialogClose"
 		>
 			<ElForm :model="dataScopeDialogForm">
@@ -609,14 +609,14 @@ init()
 					</ElCheckbox>
 					<ElTree
 						ref="deptRef"
+						:checkStrictly="!dataScopeDialogForm.deptCheckStrictly"
 						class="tree-border"
 						:data="deptOptions"
-						show-checkbox
-						default-expand-all
-						node-key="id"
-						:check-strictly="!dataScopeDialogForm.deptCheckStrictly"
-						empty-text="加载中，请稍候"
+						defaultExpandAll
+						emptyText="加载中，请稍候"
+						nodeKey="id"
 						:props="{ label: 'label', children: 'children' }"
+						showCheckbox
 					/>
 				</ElFormItem>
 			</ElForm>
@@ -634,9 +634,9 @@ init()
 		<!-- 新增|编辑弹窗 -->
 		<ElDialog
 			v-model="dialogVisible"
+			:closeOnClickModal="false"
 			:title="dialogId ? '修改角色' : '添加角色'"
 			width="500px"
-			:close-on-click-modal="false"
 			@cancel="dialogCancel"
 		>
 			<FormGenerator
@@ -667,13 +667,13 @@ init()
 							</ElCheckbox>
 							<ElTree
 								ref="menuRef"
+								:checkStrictly="!dialogFormData.menuCheckStrictly"
 								class="tree-border"
 								:data="menuOptions"
-								show-checkbox
-								node-key="id"
-								:check-strictly="!dialogFormData.menuCheckStrictly"
-								empty-text="加载中，请稍候"
+								emptyText="加载中，请稍候"
+								nodeKey="id"
 								:props="{ label: 'label', children: 'children' }"
+								showCheckbox
 							/>
 						</div>
 					</ElFormItem>

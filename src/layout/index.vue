@@ -18,10 +18,10 @@ const needTagsView = computed(() => settingsStore.settings.tagsView)
 
 const classObj = computed(() => {
 	return {
-		openSidebar: sidebarOpened.value,
 		hideSidebar: !sidebarOpened.value,
-		withoutAnimation: false,
-		mobile: device.value === 'mobile'
+		mobile: device.value === 'mobile',
+		openSidebar: sidebarOpened.value,
+		withoutAnimation: false
 	}
 })
 function handleSidebarOpen() {
@@ -31,8 +31,8 @@ function handleSidebarOpen() {
 
 <template>
 	<div
-		:class="classObj"
 		class="app-wrapper"
+		:class="classObj"
 	>
 		<!-- 遮罩层999 menu1001 -->
 		<div
@@ -42,8 +42,8 @@ function handleSidebarOpen() {
 		/>
 		<Sidebar class="sidebar-container" />
 		<div
-			:class="{ hasTagsView: needTagsView }"
 			class="main-container"
+			:class="{ hasTagsView: needTagsView }"
 		>
 			<div :class="{ 'fixed-header': fixedHeader }">
 				<Navbar />

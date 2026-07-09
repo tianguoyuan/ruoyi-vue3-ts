@@ -7,16 +7,16 @@ import { createVitePlugins } from './build/plugins'
 import { createProxy } from './build/proxy'
 import pkg from './package.json'
 
-const { dependencies, devDependencies, name, version, engines } = pkg
+const { dependencies, devDependencies, engines, name, version } = pkg
 const __APP_INFO__ = {
+	lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
 	pkg: {
 		dependencies,
 		devDependencies,
+		engines,
 		name,
-		version,
-		engines
-	},
-	lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
+		version
+	}
 }
 
 // @see: https://vitejs.dev/config/
@@ -27,42 +27,21 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 
 	return {
 		base: viteEnv.VITE_PUBLIC_PATH,
-		root,
-		resolve: {
-			alias: {
-				'@': resolve(__dirname, './src'),
-				'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
-				'/#/': resolve(__dirname, './src/types')
-			}
-		},
-		define: {
-			__APP_INFO__: JSON.stringify(__APP_INFO__)
-		},
-		css: {
-			preprocessorOptions: {
-				scss: {
-					additionalData: `@import "@/styles/variables.scss";`
-				}
-			}
-		},
-		server: {
-			host: '0.0.0.0',
-			port: viteEnv.VITE_PORT,
-			open: viteEnv.VITE_OPEN,
-			cors: true,
-			// Load proxy configuration from .env.development
-			proxy: createProxy(viteEnv.VITE_PROXY)
-		},
-		optimizeDeps: {
-			include: ['element-plus/es', '@element-plus/icons-vue']
-		},
-		plugins: createVitePlugins(viteEnv),
-		esbuild: {
-			pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
-		},
 		build: {
-			outDir: 'dist',
+			// 规定触发警告的 chunk 大小
+			chunkSizeWarningLimit: 2000,
 			minify: 'esbuild',
+			outDir: 'dist',
+			// 禁用 gzip 压缩大小报告，可略微减少打包时间
+			reportCompressedSize: false,
+			rollupOptions: {
+				output: {
+					assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+					// Static resource classification and packaging
+					chunkFileNames: 'assets/js/[name]-[hash].js',
+					entryFileNames: 'assets/js/[name]-[hash].js'
+				}
+			},
 			// esbuild 打包更快，但是不能去除 console.log，terser打包慢，但能去除 console.log
 			// minify: "terser",
 			// terserOptions: {
@@ -71,19 +50,40 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			// 		drop_debugger: true
 			// 	}
 			// },
-			sourcemap: false,
-			// 禁用 gzip 压缩大小报告，可略微减少打包时间
-			reportCompressedSize: false,
-			// 规定触发警告的 chunk 大小
-			chunkSizeWarningLimit: 2000,
-			rollupOptions: {
-				output: {
-					// Static resource classification and packaging
-					chunkFileNames: 'assets/js/[name]-[hash].js',
-					entryFileNames: 'assets/js/[name]-[hash].js',
-					assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+			sourcemap: false
+		},
+		css: {
+			preprocessorOptions: {
+				scss: {
+					additionalData: `@import "@/styles/variables.scss";`
 				}
 			}
+		},
+		define: {
+			__APP_INFO__: JSON.stringify(__APP_INFO__)
+		},
+		esbuild: {
+			pure: viteEnv.VITE_DROP_CONSOLE ? ['console.log', 'debugger'] : []
+		},
+		optimizeDeps: {
+			include: ['element-plus/es', '@element-plus/icons-vue']
+		},
+		plugins: createVitePlugins(viteEnv),
+		resolve: {
+			alias: {
+				'@': resolve(__dirname, './src'),
+				'/#/': resolve(__dirname, './src/types'),
+				'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
+			}
+		},
+		root,
+		server: {
+			cors: true,
+			host: '0.0.0.0',
+			open: viteEnv.VITE_OPEN,
+			port: viteEnv.VITE_PORT,
+			// Load proxy configuration from .env.development
+			proxy: createProxy(viteEnv.VITE_PROXY)
 		}
 	}
 })

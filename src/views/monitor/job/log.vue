@@ -25,84 +25,81 @@ function selectionChange(v) {
 const multiple = computed(() => !(selection.value.length > 0))
 
 const formData = ref({
-	jobName: '',
 	jobGroup: '',
+	jobName: '',
 	status: undefined
 })
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listJobLog,
 	fields: [
 		{
-			type: 'input',
 			label: '任务名称',
+			placeholder: '请输入任务名称',
 			prop: 'jobName',
-			placeholder: '请输入任务名称'
+			type: 'input'
 		},
 		{
-			type: 'select',
 			label: '任务组名',
-			prop: 'jobGroup',
+			options: jobGroupOptions as any,
 			placeholder: '请选择任务组名',
-			options: jobGroupOptions as any
+			prop: 'jobGroup',
+			type: 'select'
 		},
 		{
-			type: 'select',
 			label: '执行状态',
-			prop: 'status',
+			options: statusOptions as any,
 			placeholder: '请选择执行状态',
-			options: statusOptions as any
+			prop: 'status',
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
 			dateType: 'daterange',
 			label: '执行时间',
+			placeholder: '请选择执行时间',
 			prop: 'daterange',
-			placeholder: '请选择执行时间'
+			type: 'date-picker'
 		}
 	],
+	labelWidth: '80px',
 
 	leftButtons: [
 		{
-			label: '删除',
-			icon: 'Delete',
-			plain: true,
-			type: 'danger',
-			event: 'handleDelete',
 			disabled: multiple as any,
-			show: checkPermission(['monitor:job:remove'])
+			event: 'handleDelete',
+			icon: 'Delete',
+			label: '删除',
+			plain: true,
+			show: checkPermission(['monitor:job:remove']),
+			type: 'danger'
 		},
 		{
-			label: '清空',
-			icon: 'Delete',
-			plain: true,
-			type: 'danger',
 			event: 'handleClean',
-			show: checkPermission(['monitor:job:remove'])
-		},
-		{
-			label: '导出',
 			icon: 'Delete',
+			label: '清空',
 			plain: true,
-			type: 'warning',
-			event: 'handleExport',
-			show: checkPermission(['monitor:job:export'])
+			show: checkPermission(['monitor:job:remove']),
+			type: 'danger'
 		},
 		{
-			label: '关闭页面',
-			icon: 'Close',
+			event: 'handleExport',
+			icon: 'Delete',
+			label: '导出',
 			plain: true,
-			type: 'warning',
-			event: 'handleClose'
+			show: checkPermission(['monitor:job:export']),
+			type: 'warning'
+		},
+		{
+			event: 'handleClose',
+			icon: 'Close',
+			label: '关闭页面',
+			plain: true,
+			type: 'warning'
 		}
 	],
 
-	tableShow: true,
-	api: listJobLog,
-	tableShowSelection: true,
-	tableInitQueryRefuse: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '日志编号',
@@ -136,27 +133,30 @@ const formConfig = ref<FormConfig>({
 			slotName: 'slotStatus'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '执行时间',
-			prop: 'createTime',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			prop: 'createTime'
 		},
 		{
 			custom: true,
-			prop: '',
 			label: '操作',
+			prop: '',
 			tableEditBtn: [
 				{
-					link: true,
-					type: 'primary',
+					event: 'handlePreview',
 					icon: 'View',
 					label: '详细',
+					link: true,
+					show: checkPermission(['monitor:job:query']),
 					tip: '详细',
-					event: 'handlePreview',
-					show: checkPermission(['monitor:job:query'])
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableInitQueryRefuse: true,
+	tableShow: true,
+	tableShowSelection: true
 })
 
 const open = ref(false)
@@ -174,24 +174,24 @@ async function handleButtonClick(event) {
 		// 删除
 		const ids = selection.value.join(',')
 		await ElMessageBox({
-			title: '提示',
-			type: 'warning',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: `是否确认删除调度日志编号为"${ids}"的数据项?`,
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		})
 		delJobLog(ids)
 		formGeneratorRef.value?.queryTableData()
 	} else if (event === 'handleClean') {
 		// 清空
 		await ElMessageBox({
-			title: '提示',
-			type: 'warning',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: `是否确认清空所有调度日志数据项?`,
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		})
 
 		await cleanJobLog()
@@ -205,8 +205,8 @@ async function handleButtonClick(event) {
 	} else if (event === 'handleClose') {
 		// 关闭
 		tagsViewStore.delView({
-			path: route.path,
-			name: route.name as string
+			name: route.name as string,
+			path: route.path
 		})
 		router.push('/monitor/job')
 	}
@@ -239,21 +239,21 @@ init()
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="handleTableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="handleTableEditClick"
 		>
 			<!-- table-任务组名 -->
 			<template #slotJobGroup="{ value }">
 				<DictTag
-					:value="value"
 					:options="jobGroupOptions"
+					:value="value"
 				/>
 			</template>
 			<!-- table-状态 -->
 			<template #slotStatus="{ row }">
 				<DictTag
-					:value="row.status"
 					:options="statusOptions"
+					:value="row.status"
 				/>
 			</template>
 		</FormGenerator>
@@ -261,13 +261,13 @@ init()
 		<!-- 调度日志详细 -->
 		<ElDialog
 			v-model="open"
+			appendToBody
 			title="调度日志详细"
 			width="700px"
-			append-to-body
 		>
 			<ElForm
+				labelWidth="100px"
 				:model="form"
-				label-width="100px"
 			>
 				<ElRow>
 					<ElCol :span="12">

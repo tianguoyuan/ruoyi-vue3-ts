@@ -13,28 +13,25 @@ const dialogVisible = ref(false)
 
 const formData = ref<Record<string, string>>({})
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: getDbList,
 	fields: [
 		{
-			type: 'input',
 			label: '表名称',
-			prop: 'tableName',
 			placeholder: '请输入表名称',
-			span: 10
+			prop: 'tableName',
+			span: 10,
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '表描述',
-			prop: 'tableComment',
 			placeholder: '请输入表描述',
-			span: 10
+			prop: 'tableComment',
+			span: 10,
+			type: 'input'
 		}
 	],
-	tableShow: true,
-	api: getDbList,
-	tableShowSelection: true,
-	tableShowIndex: true,
+	labelWidth: '80px',
+	span: 6,
 	tableHeader: [
 		{
 			label: '表名称',
@@ -53,7 +50,10 @@ const formConfig = ref<FormConfig>({
 			label: '更新时间',
 			prop: 'updateTime'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowIndex: true,
+	tableShowSelection: true
 })
 const selection = ref<string[]>([])
 
@@ -81,9 +81,9 @@ defineExpose({
 <template>
 	<ElDialog
 		v-model="dialogVisible"
+		:closeOnClickModal="false"
 		title="导入表"
 		width="800"
-		:close-on-click-modal="false"
 	>
 		<FormGenerator
 			ref="formGeneratorRef"

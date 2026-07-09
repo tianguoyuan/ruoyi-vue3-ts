@@ -18,8 +18,8 @@ function back() {
 <template>
 	<div class="errPage-container">
 		<ElButton
-			icon="el-icon-arrow-left"
 			class="pan-back-btn"
+			icon="el-icon-arrow-left"
 			@click="back"
 		>
 			返回
@@ -55,10 +55,10 @@ function back() {
 			</ElCol>
 			<ElCol :span="12">
 				<img
+					alt="Girl has dropped her ice cream."
+					height="428"
 					:src="errImg"
 					width="313"
-					height="428"
-					alt="Girl has dropped her ice cream."
 				/>
 			</ElCol>
 		</ElRow>
@@ -67,8 +67,8 @@ function back() {
 			title="随便看"
 		>
 			<img
-				:src="ewizardClap"
 				class="pan-img"
+				:src="ewizardClap"
 			/>
 		</ElDialog>
 	</div>

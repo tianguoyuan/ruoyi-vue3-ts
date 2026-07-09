@@ -10,25 +10,25 @@ export function list(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/monitor/operlog/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/monitor/operlog/list'
 	})
 }
 
 // 删除操作日志
 export function delOperlog(operId) {
 	return request({
-		url: '/monitor/operlog/' + operId,
-		method: 'delete'
+		method: 'delete',
+		url: '/monitor/operlog/' + operId
 	})
 }
 
 // 清空操作日志
 export function cleanOperlog() {
 	return request({
-		url: '/monitor/operlog/clean',
-		method: 'delete'
+		method: 'delete',
+		url: '/monitor/operlog/clean'
 	})
 }
 
@@ -42,12 +42,12 @@ export function operlogExport(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/monitor/operlog/export',
-		method: 'post',
 		data: apiParams,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/monitor/operlog/export'
 	})
 }

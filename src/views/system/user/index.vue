@@ -29,92 +29,90 @@ function selectionChange(v) {
 }
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listUser,
 	fields: [
 		{
-			type: 'input',
 			label: '用户名称',
-			prop: 'userName',
 			placeholder: '请输入用户名称',
-			span: 8
+			prop: 'userName',
+			span: 8,
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '手机号码',
-			prop: 'phonenumber',
 			placeholder: '请输入手机号码',
-			span: 8
+			prop: 'phonenumber',
+			span: 8,
+			type: 'input'
 		},
 		{
-			type: 'select',
 			label: '状态',
-			prop: 'status',
 			options: sysNormalDisable as unknown as any[],
-			span: 8
+			prop: 'status',
+			span: 8,
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
+			dateType: 'daterange',
+			endPlaceholder: '结束日期',
 			label: '创建时间',
 			prop: 'daterange',
+			span: 8,
 			startPlaceholder: '开始日期',
-			endPlaceholder: '结束日期',
-			dateType: 'daterange',
-			span: 8
+			type: 'date-picker'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:user:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:user:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single as unknown as boolean,
 			event: 'handleUpdate',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['system:user:edit']),
-			disabled: single as unknown as boolean
+			type: 'success'
 		},
 
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['system:user:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 
 		{
-			label: '导入',
-			type: 'info',
 			event: 'handleImport',
-			plain: true,
 			icon: 'Upload',
-			show: checkPermission(['system:user:import'])
+			label: '导入',
+			plain: true,
+			show: checkPermission(['system:user:import']),
+			type: 'info'
 		},
 
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['system:user:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['system:user:export']),
+			type: 'warning'
 		}
 	],
 
-	tableShow: true,
-	api: listUser,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '用户编号',
@@ -147,55 +145,57 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
 			prop: 'createTime',
-			width: '160px',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			width: '160px'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
 					event: 'handleUpdate',
-					show: row => checkPermission(['system:user:edit']) && row.userId !== 1
+					icon: 'Edit',
+					link: true,
+					show: row => checkPermission(['system:user:edit']) && row.userId !== 1,
+					tip: '修改',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
 					event: 'handleDelete',
-					show: row => checkPermission(['system:user:remove']) && row.userId !== 1
+					icon: 'Delete',
+					link: true,
+					show: row => checkPermission(['system:user:remove']) && row.userId !== 1,
+					tip: '删除',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Key',
-					tip: '重置密码',
 					event: 'handleResetPwd',
-					show: row => checkPermission(['system:user:resetPwd']) && row.userId !== 1
+					icon: 'Key',
+					link: true,
+					show: row => checkPermission(['system:user:resetPwd']) && row.userId !== 1,
+					tip: '重置密码',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'CircleCheck',
-					tip: '分配角色',
 					event: 'handleAuthRole',
-					show: row => checkPermission(['system:user:edit']) && row.userId !== 1
+					icon: 'CircleCheck',
+					link: true,
+					show: row => checkPermission(['system:user:edit']) && row.userId !== 1,
+					tip: '分配角色',
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 const deptTreeRef = ref<null | TreeInstance>(null)
@@ -263,19 +263,19 @@ function tableEditClick(row, btn) {
 	} else if (event === 'handleResetPwd') {
 		// 重置密码
 		ElMessageBox.prompt(`请输入"${row.userName}"的新密码`, {
-			title: '提示',
-			confirmButtonText: '确定',
 			cancelButtonText: '取消',
 			closeOnClickModal: false,
-			inputPattern: /^.{5,20}$/,
+			confirmButtonText: '确定',
 			inputErrorMessage: '用户密码长度必须介于 5 和 20 之间',
+			inputPattern: /^.{5,20}$/,
 			inputValidator: value => {
 				if (/<|>|"|'|\||\\/.test(value)) {
 					return '不能包含非法字符：< > " \' \\ |'
 				} else {
 					return true
 				}
-			}
+			},
+			title: '提示'
 		})
 			.then(({ value }) => {
 				resetUserPwd(row.userId, value).then(() => {
@@ -291,12 +291,12 @@ function tableEditClick(row, btn) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 
 	await delUser(ids)
@@ -314,12 +314,12 @@ function handleStatusChange(row) {
 	const flagMsg = row.status === '0' ? '启用' : '停用'
 
 	ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `确认要"${flagMsg}""${row.userName}"用户吗?`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 		.then(async () => {
 			await changeUserStatus(row.userId, row.status)
@@ -366,21 +366,21 @@ init()
 				<div class="mr-3">
 					<ElInput
 						v-model="deptName"
-						placeholder="请输入部门名称"
 						clearable
-						prefix-icon="Search"
+						placeholder="请输入部门名称"
+						prefixIcon="Search"
 						style="margin-bottom: 20px"
 					/>
 
 					<ElTree
 						ref="deptTreeRef"
 						:data="deptOptions"
+						defaultExpandAll
+						:expandOnClickNode="false"
+						:filterNodeMethod="filterNode"
+						highlightCurrent
+						nodeKey="id"
 						:props="{ label: 'label', children: 'children' }"
-						:expand-on-click-node="false"
-						:filter-node-method="filterNode"
-						node-key="id"
-						highlight-current
-						default-expand-all
 						@nodeClick="handleNodeClick"
 					/>
 				</div>
@@ -392,14 +392,14 @@ init()
 						v-model="formData"
 						:config="formConfig"
 						@buttonClick="handleButtonClick"
-						@tableEditClick="tableEditClick"
 						@selectionChange="selectionChange"
+						@tableEditClick="tableEditClick"
 					>
 						<template #statusSlot="{ row }">
 							<ElSwitch
 								v-model="row.status"
-								active-value="0"
-								inactive-value="1"
+								activeValue="0"
+								inactiveValue="1"
 								@click="handleStatusChange(row)"
 							/>
 						</template>
@@ -414,8 +414,8 @@ init()
 
 		<EditUserDialog
 			v-model:visible="addUserDialogVisible"
-			:user-id="addUserDialogId"
-			:enabled-dept-options="enabledDeptOptions"
+			:enabledDeptOptions="enabledDeptOptions"
+			:userId="addUserDialogId"
 			@refresh="queryList"
 		/>
 	</div>

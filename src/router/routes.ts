@@ -3,110 +3,110 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const errorPageRoute: RouteRecordRaw[] = [
 	{
-		path: '/404',
-		name: 'Page404',
 		component: () => import('@/views/errorPage/404.vue'),
 		meta: {
 			hidden: true
-		}
+		},
+		name: 'Page404',
+		path: '/404'
 	},
 	{
-		path: '/401',
-		name: 'Page401',
 		component: () => import('@/views/errorPage/401.vue'),
 		meta: {
 			hidden: true
-		}
+		},
+		name: 'Page401',
+		path: '/401'
 	}
 ]
 
 export const notFoundRoute: RouteRecordRaw = {
-	path: '/:pathMatch(.*)*',
+	component: () => import('@/views/errorPage/404.vue'),
 	// name: 'NotFound',
 	meta: {
-		title: '404',
-		hidden: true
+		hidden: true,
+		title: '404'
 	},
-	component: () => import('@/views/errorPage/404.vue')
+	path: '/:pathMatch(.*)*'
 }
 
 export const constantRoutes: RouteRecordRaw[] = [
 	{
-		path: '',
-		component: Layout,
-		redirect: '/index',
 		children: [
 			{
-				path: '/index',
 				component: () => import('@/views/index.vue'),
-				name: 'Index',
 				meta: {
-					title: '首页',
+					affix: true,
 					icon: 'dashboard',
-					affix: true
-				}
+					title: '首页'
+				},
+				name: 'Index',
+				path: '/index'
 			}
-		]
+		],
+		component: Layout,
+		path: '',
+		redirect: '/index'
 	},
 	{
-		path: '/redirect',
+		children: [
+			{
+				component: () => import('@/views/redirect/index.vue'),
+				path: '/redirect/:path(.*)'
+			}
+		],
 		component: Layout,
 		meta: { hidden: true },
-		children: [
-			{
-				path: '/redirect/:path(.*)',
-				component: () => import('@/views/redirect/index.vue')
-			}
-		]
+		path: '/redirect'
 	},
 	{
-		path: '/login',
-		name: 'Login',
 		component: () => import('@/views/login/index.vue'),
 		meta: {
-			title: '登录',
-			hidden: true
-		}
+			hidden: true,
+			title: '登录'
+		},
+		name: 'Login',
+		path: '/login'
 	},
 	{
-		path: '/demo',
-		redirect: '/demo/index',
-		component: Layout,
-		meta: {
-			title: 'demo',
-			icon: 'download',
-			alwaysShow: true
-		},
 		children: [
 			{
-				path: 'index',
-				name: 'Demo',
 				component: () => import('@/views/demo/index.vue'),
 				meta: {
-					title: '生成表单',
-					icon: 'log'
-				}
+					icon: 'log',
+					title: '生成表单'
+				},
+				name: 'Demo',
+				path: 'index'
 			}
-		]
+		],
+		component: Layout,
+		meta: {
+			alwaysShow: true,
+			icon: 'download',
+			title: 'demo'
+		},
+		path: '/demo',
+		redirect: '/demo/index'
 	},
 	{
-		path: '/system',
-		redirect: 'noRedirect',
+		children: [
+			{
+				component: () => import('@/views/system/user/profile/index.vue'),
+				meta: {
+					icon: 'user',
+					title: '个人中心'
+				},
+				name: 'Profile',
+				path: 'user/profile'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true
 		},
-		children: [
-			{
-				path: 'user/profile',
-				component: () => import('@/views/system/user/profile/index.vue'),
-				name: 'Profile',
-				meta: {
-					title: '个人中心',
-					icon: 'user'
-				}
-			}
-		]
+		path: '/system',
+		redirect: 'noRedirect'
 	},
 	...errorPageRoute,
 	notFoundRoute
@@ -115,103 +115,103 @@ export const constantRoutes: RouteRecordRaw[] = [
 // 动态路由，基于用户权限动态去加载
 export const asyncRoutes: RouteRecordRaw[] = [
 	{
-		path: '/tool/gen-edit',
+		children: [
+			{
+				component: () => import('@/views/tool/gen/editTable.vue'),
+				meta: {
+					activeMenu: '/tool/gen',
+					title: '修改生成配置'
+				},
+				name: 'GenEditIndex',
+				path: 'index/:tableId(\\d+)'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true,
 			permissions: ['tool:gen:edit']
 		},
-		children: [
-			{
-				path: 'index/:tableId(\\d+)',
-				component: () => import('@/views/tool/gen/editTable.vue'),
-				name: 'GenEditIndex',
-				meta: {
-					title: '修改生成配置',
-					activeMenu: '/tool/gen'
-				}
-			}
-		]
+		path: '/tool/gen-edit'
 	},
 	{
-		path: '/monitor/job-log',
+		children: [
+			{
+				component: () => import('@/views/monitor/job/log.vue'),
+				meta: {
+					activeMenu: '/monitor/job',
+					title: '调度日志'
+				},
+				name: 'JobLog',
+				path: 'index/:jobId(\\d+)'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true,
 			permissions: ['monitor:job:list']
 		},
-		children: [
-			{
-				path: 'index/:jobId(\\d+)',
-				component: () => import('@/views/monitor/job/log.vue'),
-				name: 'JobLog',
-				meta: {
-					title: '调度日志',
-					activeMenu: '/monitor/job'
-				}
-			}
-		]
+		path: '/monitor/job-log'
 	},
 
 	// 用户管理-分配角色
 	{
-		path: '/system/user-auth',
+		children: [
+			{
+				component: () => import('@/views/system/user/authRole.vue'),
+				meta: {
+					activeMenu: '/system/user',
+					title: '分配角色'
+				},
+				name: 'AuthRole',
+				path: 'role/:userId(\\d+)'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true,
 			permissions: ['system:user:edit']
 		},
-		children: [
-			{
-				path: 'role/:userId(\\d+)',
-				component: () => import('@/views/system/user/authRole.vue'),
-				name: 'AuthRole',
-				meta: {
-					title: '分配角色',
-					activeMenu: '/system/user'
-				}
-			}
-		]
+		path: '/system/user-auth'
 	},
 
 	// 角色管理-分配角色
 	{
-		path: '/system/role-auth',
+		children: [
+			{
+				component: () => import('@/views/system/role/authUser.vue'),
+				meta: {
+					activeMenu: '/system/role',
+					title: '分配用户'
+				},
+				name: 'AuthUser',
+				path: 'user/:roleId(\\d+)'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true,
 			permissions: ['system:role:edit']
 		},
-		children: [
-			{
-				path: 'user/:roleId(\\d+)',
-				component: () => import('@/views/system/role/authUser.vue'),
-				name: 'AuthUser',
-				meta: {
-					title: '分配用户',
-					activeMenu: '/system/role'
-				}
-			}
-		]
+		path: '/system/role-auth'
 	},
 	// 字典管理-字典数据
 	{
-		path: '/system/dict-data',
+		children: [
+			{
+				component: () => import('@/views/system/dict/data.vue'),
+				meta: {
+					activeMenu: '/system/dict',
+					title: '字典数据'
+				},
+				name: 'DictData',
+				path: 'index/:dictId(\\d+)'
+			}
+		],
 		component: Layout,
 		meta: {
 			hidden: true,
 			permissions: ['system:dict:list']
 		},
-		children: [
-			{
-				path: 'index/:dictId(\\d+)',
-				component: () => import('@/views/system/dict/data.vue'),
-				name: 'DictData',
-				meta: {
-					title: '字典数据',
-					activeMenu: '/system/dict'
-				}
-			}
-		]
+		path: '/system/dict-data'
 	}
 ]

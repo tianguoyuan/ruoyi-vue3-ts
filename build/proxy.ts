@@ -18,10 +18,10 @@ export function createProxy(list: ProxyList = []) {
 
 		// https://github.com/http-party/node-http-proxy#options
 		ret[prefix] = {
-			target: target,
 			changeOrigin: true,
-			ws: false, // 代理WebSocket
 			rewrite: path => path.replace(new RegExp(`^${prefix}`), ''),
+			target: target,
+			ws: false, // 代理WebSocket
 			// https is require secure=false
 			...(isHttps ? { secure: false } : {})
 		}

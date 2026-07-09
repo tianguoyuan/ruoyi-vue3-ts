@@ -2,8 +2,8 @@ import { request } from '@/utils/request'
 
 export function demoList(data: API.IDemoList): Promise<API.IDemoListRes> {
 	return request({
-		url: '/demo/list',
+		data,
 		method: 'post',
-		data
+		url: '/demo/list'
 	})
 }

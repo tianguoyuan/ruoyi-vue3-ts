@@ -12,8 +12,8 @@ function linkProps(to: string) {
 	if (isLink.value) {
 		return {
 			href: to,
-			target: '_blank',
-			rel: 'noopener'
+			rel: 'noopener',
+			target: '_blank'
 		}
 	}
 	return {

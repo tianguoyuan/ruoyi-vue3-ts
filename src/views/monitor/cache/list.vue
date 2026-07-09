@@ -6,8 +6,8 @@ import { listCacheName, listCacheKey, getCacheValue, clearCacheName, clearCacheK
 const cacheNames = ref([])
 const cacheKeys = ref([])
 const cacheForm = ref({
-	cacheName: '',
 	cacheKey: '',
+	cacheName: '',
 	cacheValue: ''
 })
 const loading = ref(true)
@@ -102,10 +102,10 @@ getCacheNames()
 						<Collection style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">缓存列表</span>
 						<ElButton
-							style="float: right; padding: 3px 0"
-							link
-							type="primary"
 							icon="Refresh"
+							link
+							style="float: right; padding: 3px 0"
+							type="primary"
 							@click="refreshCacheNames()"
 						/>
 					</template>
@@ -113,41 +113,41 @@ getCacheNames()
 						v-loading="loading"
 						:data="cacheNames"
 						:height="tableHeight"
-						highlight-current-row
+						highlightCurrentRow
 						style="width: 100%"
 						@rowClick="getCacheKeys"
 					>
 						<ElTableColumn
 							label="序号"
-							width="60"
 							type="index"
+							width="60"
 						/>
 
 						<ElTableColumn
-							label="缓存名称"
 							align="center"
-							prop="cacheName"
-							:show-overflow-tooltip="true"
 							:formatter="nameFormatter"
+							label="缓存名称"
+							prop="cacheName"
+							:showOverflowTooltip="true"
 						/>
 
 						<ElTableColumn
-							label="备注"
 							align="center"
+							label="备注"
 							prop="remark"
-							:show-overflow-tooltip="true"
+							:showOverflowTooltip="true"
 						/>
 						<ElTableColumn
+							align="center"
+							className="small-padding fixed-width"
 							label="操作"
 							width="60"
-							align="center"
-							class-name="small-padding fixed-width"
 						>
 							<template #default="scope">
 								<ElButton
+									icon="Delete"
 									link
 									type="primary"
-									icon="Delete"
 									@click="handleClearCacheName(scope.row)"
 								/>
 							</template>
@@ -161,10 +161,10 @@ getCacheNames()
 					<template #header>
 						<Key style="width: 1em; height: 1em; vertical-align: middle" /> <span style="vertical-align: middle">键名列表</span>
 						<ElButton
-							style="float: right; padding: 3px 0"
-							link
-							type="primary"
 							icon="Refresh"
+							link
+							style="float: right; padding: 3px 0"
+							type="primary"
 							@click="refreshCacheKeys()"
 						/>
 					</template>
@@ -172,32 +172,32 @@ getCacheNames()
 						v-loading="subLoading"
 						:data="cacheKeys"
 						:height="tableHeight"
-						highlight-current-row
+						highlightCurrentRow
 						style="width: 100%"
 						@rowClick="handleCacheValue"
 					>
 						<ElTableColumn
 							label="序号"
-							width="60"
 							type="index"
+							width="60"
 						/>
 						<ElTableColumn
-							label="缓存键名"
 							align="center"
-							:show-overflow-tooltip="true"
 							:formatter="keyFormatter"
+							label="缓存键名"
+							:showOverflowTooltip="true"
 						/>
 						<ElTableColumn
+							align="center"
+							className="small-padding fixed-width"
 							label="操作"
 							width="60"
-							align="center"
-							class-name="small-padding fixed-width"
 						>
 							<template #default="scope">
 								<ElButton
+									icon="Delete"
 									link
 									type="primary"
-									icon="Delete"
 									@click="handleClearCacheKey(scope.row)"
 								/>
 							</template>
@@ -215,10 +215,10 @@ getCacheNames()
 						<Document style="width: 1em; height: 1em; vertical-align: middle" />
 						<span style="vertical-align: middle">缓存内容</span>
 						<ElButton
-							style="float: right; padding: 3px 0"
-							link
-							type="primary"
 							icon="Refresh"
+							link
+							style="float: right; padding: 3px 0"
+							type="primary"
 							@click="handleClearCacheAll()"
 						>
 							清理全部
@@ -236,7 +236,7 @@ getCacheNames()
 								>
 									<ElInput
 										v-model="cacheForm.cacheName"
-										:read-only="true"
+										:readOnly="true"
 									/>
 								</ElFormItem>
 							</ElCol>
@@ -250,7 +250,7 @@ getCacheNames()
 								>
 									<ElInput
 										v-model="cacheForm.cacheKey"
-										:read-only="true"
+										:readOnly="true"
 									/>
 								</ElFormItem>
 							</ElCol>
@@ -264,9 +264,9 @@ getCacheNames()
 								>
 									<ElInput
 										v-model="cacheForm.cacheValue"
-										type="textarea"
+										:readOnly="true"
 										:rows="8"
-										:read-only="true"
+										type="textarea"
 									/>
 								</ElFormItem>
 							</ElCol>

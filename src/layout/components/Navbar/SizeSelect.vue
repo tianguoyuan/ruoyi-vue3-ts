@@ -6,9 +6,9 @@ import { useAppStore } from '@/store/app'
 const appStore = useAppStore()
 const sizeOptions = computed(() => {
 	return SizeEnum.map(val => ({
+		disabled: appStore.size === val.value,
 		label: val.label,
-		value: val.value,
-		disabled: appStore.size === val.value
+		value: val.value
 	}))
 })
 
@@ -24,7 +24,7 @@ function handleCommand(command: ISizeEnumType) {
 		@command="handleCommand"
 	>
 		<SvgIcon
-			icon-class="size"
+			iconClass="size"
 			size="18px"
 		/>
 		<template #dropdown>

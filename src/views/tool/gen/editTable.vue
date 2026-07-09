@@ -62,8 +62,8 @@ async function submitForm() {
 const tagsViewStore = useTagsViewStore()
 function pageBack() {
 	tagsViewStore.delView({
-		path: route.path,
-		name: route.name as string
+		name: route.name as string,
+		path: route.path
 	})
 
 	router.back()

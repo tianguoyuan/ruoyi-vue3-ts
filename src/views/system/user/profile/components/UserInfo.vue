@@ -14,24 +14,17 @@ const props = defineProps<{
 }>()
 
 const formModel = ref({
+	email: '',
 	nickName: '',
 	phonenumber: '',
-	email: '',
 	sex: ''
 })
 
 const formRules = ref({
-	nickName: [
-		{
-			required: true,
-			message: '用户昵称不能为空',
-			trigger: 'blur'
-		}
-	],
 	email: [
 		{
-			required: true,
 			message: '邮箱地址不能为空',
+			required: true,
 			trigger: 'blur'
 		},
 		{
@@ -39,15 +32,22 @@ const formRules = ref({
 			trigger: ['blur', 'change']
 		}
 	],
+	nickName: [
+		{
+			message: '用户昵称不能为空',
+			required: true,
+			trigger: 'blur'
+		}
+	],
 	phonenumber: [
 		{
-			required: true,
 			message: '手机号码不能为空',
+			required: true,
 			trigger: 'blur'
 		},
 		{
-			pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
 			message: '请输入正确的手机号码',
+			pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
 			trigger: 'blur'
 		}
 	]
@@ -85,9 +85,9 @@ async function submit() {
 <template>
 	<ElForm
 		ref="formRef"
+		labelWidth="80px"
 		:model="formModel"
 		:rules="formRules"
-		label-width="80px"
 	>
 		<ElFormItem
 			label="用户昵称"

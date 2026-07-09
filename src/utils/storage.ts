@@ -25,8 +25,8 @@ class Storage {
 	/** 设置缓存 */
 	set<K extends keyof StorageFiled>(key: K, value: StorageFiled[K], expire: number | null = DEFAULT_CACHE_TIME) {
 		const stringData = JSON.stringify({
-			value,
-			expire: expire !== null ? new Date().getTime() + expire * 1000 : null
+			expire: expire !== null ? new Date().getTime() + expire * 1000 : null,
+			value
 		})
 		this.#storage.setItem(this.getKey(key), stringData)
 	}

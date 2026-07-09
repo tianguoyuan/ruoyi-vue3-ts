@@ -7,24 +7,24 @@ const message = 'The webmaster said that you can not enter this page...'
 		<div class="wscn-http404">
 			<div class="pic-404">
 				<img
+					alt="404"
 					class="pic-404__parent"
 					src="@/assets/images/404_images/404.png"
-					alt="404"
 				/>
 				<img
+					alt="404"
 					class="pic-404__child left"
 					src="@/assets/images/404_images/404_cloud.png"
-					alt="404"
 				/>
 				<img
+					alt="404"
 					class="pic-404__child mid"
 					src="@/assets/images/404_images/404_cloud.png"
-					alt="404"
 				/>
 				<img
+					alt="404"
 					class="pic-404__child right"
 					src="@/assets/images/404_images/404_cloud.png"
-					alt="404"
 				/>
 			</div>
 			<div class="bullshit">
@@ -32,8 +32,8 @@ const message = 'The webmaster said that you can not enter this page...'
 				<div class="bullshit__info">
 					All rights reserved
 					<a
-						style="color: #20a0ff"
 						href="https://wallstreetcn.com"
+						style="color: #20a0ff"
 						target="_blank"
 						>wallstreetcn</a
 					>
@@ -43,8 +43,8 @@ const message = 'The webmaster said that you can not enter this page...'
 					Please check that the URL you entered is correct, or click the button below to return to the homepage.
 				</div>
 				<RouterLink
-					to="/"
 					class="bullshit__return-home"
+					to="/"
 				>
 					Back to home
 				</RouterLink>

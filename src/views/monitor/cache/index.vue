@@ -5,8 +5,8 @@ import { getCache } from '@/api/monitor/cache'
 
 const cache = ref<any>({
 	commandStats: [],
-	info: {},
-	dbSize: ''
+	dbSize: '',
+	info: {}
 })
 const commandstats = ref<HTMLElement | null>(null)
 const usedmemory = ref<HTMLElement | null>(null)
@@ -17,45 +17,45 @@ function getList() {
 
 		const commandstatsIntance = echarts.init(commandstats.value, 'macarons')
 		commandstatsIntance.setOption({
-			tooltip: {
-				trigger: 'item',
-				formatter: '{a} <br/>{b} : {c} ({d}%)'
-			},
 			series: [
 				{
-					name: '命令',
-					type: 'pie',
-					roseType: 'radius',
-					radius: [15, 95],
+					animationDuration: 1000,
+					animationEasing: 'cubicInOut',
 					center: ['50%', '38%'],
 					data: response.data.commandStats,
-					animationEasing: 'cubicInOut',
-					animationDuration: 1000
+					name: '命令',
+					radius: [15, 95],
+					roseType: 'radius',
+					type: 'pie'
 				}
-			]
+			],
+			tooltip: {
+				formatter: '{a} <br/>{b} : {c} ({d}%)',
+				trigger: 'item'
+			}
 		})
 		const usedmemoryInstance = echarts.init(usedmemory.value, 'macarons')
 		usedmemoryInstance.setOption({
-			tooltip: {
-				formatter: '{b} <br/>{a} : ' + cache.value.info.used_memory_human
-			},
 			series: [
 				{
-					name: '峰值',
-					type: 'gauge',
-					min: 0,
-					max: 1000,
+					data: [
+						{
+							name: '内存消耗',
+							value: parseFloat(cache.value.info.used_memory_human)
+						}
+					],
 					detail: {
 						formatter: cache.value.info.used_memory_human
 					},
-					data: [
-						{
-							value: parseFloat(cache.value.info.used_memory_human),
-							name: '内存消耗'
-						}
-					]
+					max: 1000,
+					min: 0,
+					name: '峰值',
+					type: 'gauge'
 				}
-			]
+			],
+			tooltip: {
+				formatter: '{b} <br/>{a} : ' + cache.value.info.used_memory_human
+			}
 		})
 		window.addEventListener('resize', () => {
 			commandstatsIntance.resize()
@@ -71,8 +71,8 @@ getList()
 	<div class="app-container">
 		<ElRow :gutter="10">
 			<ElCol
-				:span="24"
 				class="card-box"
+				:span="24"
 			>
 				<ElCard>
 					<template #header>
@@ -206,8 +206,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="12"
 				class="card-box mt-2.5"
+				:span="12"
 			>
 				<ElCard>
 					<template #header>
@@ -224,8 +224,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="12"
 				class="card-box mt-2.5"
+				:span="12"
 			>
 				<ElCard>
 					<template #header>

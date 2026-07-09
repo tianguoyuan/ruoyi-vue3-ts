@@ -30,121 +30,121 @@ const originInitPassword = ref('')
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const initFormData = {
-	nickName: '',
 	deptId: '',
-	phonenumber: '',
 	email: '',
-	userName: '',
+	nickName: '',
 	password: '',
+	phonenumber: '',
+	postIds: [],
+	remark: '',
+	roleIds: [],
 	sex: '',
 	status: '0',
-	postIds: [],
-	roleIds: [],
-	remark: ''
+	userName: ''
 }
 const formData = ref({ ...initFormData })
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 12,
+	buttons: [],
 	fields: [
 		{
-			type: 'input',
 			label: '用户昵称',
-			prop: 'nickName',
+			maxlength: 30,
 			placeholder: '请输入用户昵称',
-			maxlength: 30
+			prop: 'nickName',
+			type: 'input'
 		},
 		{
-			type: 'cascader',
 			label: '归属部门',
+			options: cacheEnabledDeptOptions as unknown as any[],
+			placeholder: '请选择归属部门',
 			prop: 'deptId',
 			props: {
-				value: 'id',
-				label: 'label',
+				checkStrictly: true,
 				children: 'children',
 				emitPath: false,
-				checkStrictly: true
+				label: 'label',
+				value: 'id'
 			},
-			placeholder: '请选择归属部门',
-			options: cacheEnabledDeptOptions as unknown as any[]
+			type: 'cascader'
 		},
 		{
-			type: 'input',
 			label: '手机号码',
-			prop: 'phonenumber',
+			maxlength: 11,
 			placeholder: '请输入手机号码',
-			maxlength: 11
+			prop: 'phonenumber',
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '邮箱',
-			prop: 'email',
+			maxlength: 50,
 			placeholder: '请输入邮箱',
-			maxlength: 50
+			prop: 'email',
+			type: 'input'
 		},
 
 		{
-			type: 'input',
+			hidden: cacheHasUserId as unknown as boolean,
 			label: '用户名称',
-			prop: 'userName',
-			placeholder: '请输入用户名称',
 			maxlength: 30,
-			hidden: cacheHasUserId as unknown as boolean
+			placeholder: '请输入用户名称',
+			prop: 'userName',
+			type: 'input'
 		},
 		{
-			type: 'input',
+			hidden: cacheHasUserId as unknown as boolean,
 			label: '用户密码',
+			maxlength: 20,
+			placeholder: '请输入用户密码',
 			prop: 'password',
 			showPassword: true,
-			placeholder: '请输入用户密码',
-			maxlength: 20,
-			hidden: cacheHasUserId as unknown as boolean
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '用户性别',
-			prop: 'sex',
+			options: sysUserSex as unknown as any[],
 			placeholder: '请选择用户性别',
-			options: sysUserSex as unknown as any[]
+			prop: 'sex',
+			type: 'select'
 		},
 		{
-			type: 'radio',
 			label: '状态',
+			options: sysNormalDisable as unknown as any[],
 			prop: 'status',
-			options: sysNormalDisable as unknown as any[]
+			type: 'radio'
 		},
 
 		{
-			type: 'select',
 			label: '岗位',
-			prop: 'postIds',
+			multiple: true,
+			options: postIdsOptions as unknown as any[],
 			placeholder: '请选择岗位',
-			multiple: true,
-			options: postIdsOptions as unknown as any[]
+			prop: 'postIds',
+			type: 'select'
 		},
 		{
-			type: 'select',
 			label: '角色',
-			prop: 'roleIds',
-			placeholder: '请选择角色',
 			multiple: true,
-			options: roleIdsOptions as unknown as any[]
+			options: roleIdsOptions as unknown as any[],
+			placeholder: '请选择角色',
+			prop: 'roleIds',
+			type: 'select'
 		},
 		{
-			type: 'textarea',
 			label: '备注',
+			placeholder: '请输入备注',
 			prop: 'remark',
 			rows: 3,
-			placeholder: '请输入备注',
-			span: 24
+			span: 24,
+			type: 'textarea'
 		}
 	],
 	formRules: {},
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 12,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 watch(
@@ -190,25 +190,25 @@ watch(
 
 function setFormRules(userId) {
 	const initRules = {
-		nickName: [
+		email: [
 			{
-				required: true,
-				message: '用户昵称不能为空',
-				trigger: 'blur'
+				message: '请输入正确的邮箱地址',
+				pattern: validEmailReg,
+				trigger: ['blur', 'change']
 			}
 		],
 
-		email: [
+		nickName: [
 			{
-				pattern: validEmailReg,
-				message: '请输入正确的邮箱地址',
-				trigger: ['blur', 'change']
+				message: '用户昵称不能为空',
+				required: true,
+				trigger: 'blur'
 			}
 		],
 		phonenumber: [
 			{
-				pattern: validPhoneReg,
 				message: '请输入正确的手机号码',
+				pattern: validPhoneReg,
 				trigger: 'blur'
 			}
 		]
@@ -218,32 +218,32 @@ function setFormRules(userId) {
 	if (!userId) {
 		formConfig.value.formRules.userName = [
 			{
-				required: true,
 				message: '用户名称不能为空',
+				required: true,
 				trigger: 'blur'
 			},
 			{
-				min: 2,
 				max: 20,
 				message: '用户名称长度必须介于 2 和 20 之间',
+				min: 2,
 				trigger: 'blur'
 			}
 		]
 		formConfig.value.formRules.password = [
 			{
-				required: true,
 				message: '用户密码不能为空',
+				required: true,
 				trigger: 'blur'
 			},
 			{
-				min: 5,
 				max: 20,
 				message: '用户密码长度必须介于 5 和 20 之间',
+				min: 5,
 				trigger: 'blur'
 			},
 			{
-				pattern: /^[^<>"'|\\]+$/,
 				message: '不能包含非法字符：< > " \' \\ |',
+				pattern: /^[^<>"'|\\]+$/,
 				trigger: 'blur'
 			}
 		]
@@ -284,9 +284,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="props.userId ? '修改用户' : '添加用户'"
-		:close-on-click-modal="false"
 		@update:modelValue="v => emits('update:visible', v)"
 	>
 		<FormGenerator

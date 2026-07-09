@@ -33,78 +33,76 @@ const single = computed(() => {
 const formData = ref({})
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: getListJob,
 	fields: [
 		{
-			type: 'input',
 			label: '任务名称',
+			placeholder: '请输入任务名称',
 			prop: 'jobName',
-			placeholder: '请输入任务名称'
+			type: 'input'
 		},
 		{
-			type: 'select',
 			label: '任务组名',
-			prop: 'jobGroup',
+			options: jobGroupOptions as any,
 			placeholder: '请选择任务组名',
-			options: jobGroupOptions as any
+			prop: 'jobGroup',
+			type: 'select'
 		},
 		{
-			type: 'select',
 			label: '任务状态',
-			prop: 'status',
+			options: statusOptions as any,
 			placeholder: '请选择任务状态',
-			options: statusOptions as any
+			prop: 'status',
+			type: 'select'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['monitor:job:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['monitor:job:add']),
+			type: 'primary'
 		},
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single,
 			event: 'handleUpdate',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['monitor:job:edit']),
-			disabled: single
+			type: 'success'
 		},
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['monitor:job:remove']),
-			disabled: multiple
+			type: 'danger'
 		},
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['monitor:job:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['monitor:job:export']),
+			type: 'warning'
 		},
 		{
-			label: '日志',
-			type: 'info',
 			event: 'handleJobLog',
-			plain: true,
 			icon: 'Operation',
-			show: checkPermission(['monitor:job:query'])
+			label: '日志',
+			plain: true,
+			show: checkPermission(['monitor:job:query']),
+			type: 'info'
 		}
 	],
 
-	tableShow: true,
-	api: getListJob,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '任务编号',
@@ -139,53 +137,55 @@ const formConfig = ref<FormConfig>({
 		},
 		{
 			custom: true,
-			prop: '',
 			label: '操作',
+			prop: '',
 			tableEditBtn: [
 				{
-					link: true,
-					type: 'primary',
-					icon: 'Edit',
-					tip: '修改',
 					event: 'handleUpdate',
-					show: checkPermission(['monitor:job:edit'])
+					icon: 'Edit',
+					link: true,
+					show: checkPermission(['monitor:job:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 
 				{
-					link: true,
-					type: 'primary',
-					icon: 'Delete',
-					tip: '删除',
 					event: 'handleDelete',
-					show: checkPermission(['monitor:job:remove'])
+					icon: 'Delete',
+					link: true,
+					show: checkPermission(['monitor:job:remove']),
+					tip: '删除',
+					type: 'primary'
 				},
 				{
-					link: true,
-					type: 'primary',
-					icon: 'CaretRight',
-					tip: '执行一次',
 					event: 'handleRun',
-					show: checkPermission(['monitor:job:changeStatus'])
+					icon: 'CaretRight',
+					link: true,
+					show: checkPermission(['monitor:job:changeStatus']),
+					tip: '执行一次',
+					type: 'primary'
 				},
 				{
-					link: true,
-					type: 'primary',
-					icon: 'View',
-					tip: '任务详细',
 					event: 'handleView',
-					show: checkPermission(['monitor:job:query'])
+					icon: 'View',
+					link: true,
+					show: checkPermission(['monitor:job:query']),
+					tip: '任务详细',
+					type: 'primary'
 				},
 				{
-					link: true,
-					type: 'primary',
-					icon: 'Operation',
-					tip: '调度日志',
 					event: 'handleJobLog',
-					show: checkPermission(['monitor:job:query'])
+					icon: 'Operation',
+					link: true,
+					show: checkPermission(['monitor:job:query']),
+					tip: '调度日志',
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 // 预览弹窗
@@ -207,12 +207,12 @@ function handleTableEditClick(row, btn) {
 	} else if (event === 'handleRun') {
 		// 执行一次
 		ElMessageBox({
-			type: 'warning',
-			title: '提示',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: '确认要立即执行一次"' + row.jobName + '"任务吗?',
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		}).then(() => {
 			runJob(row.jobId, row.jobGroup).then(() => {
 				ElMessage.success('执行成功')
@@ -271,12 +271,12 @@ function handleUpdate(val) {
 function handleDelete(ids: string) {
 	console.log('删除', ids)
 	ElMessageBox({
-		type: 'warning',
-		title: '提示',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: '是否确认删除定时任务编号为"' + ids + '"的数据项?',
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	}).then(() => {
 		delJob(ids).then(() => {
 			ElMessage.success('删除成功')
@@ -294,12 +294,12 @@ function handleJobLog(id: string) {
 function handleStatusChange(row) {
 	let text = row.status === '0' ? '启用' : '停用'
 	ElMessageBox({
-		type: 'warning',
-		title: '提示',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: '确认要"' + text + '""' + row.jobName + '"任务吗?',
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 		.then(() => {
 			return changeJobStatus(row.jobId, row.status).then(() => {
@@ -334,37 +334,37 @@ init()
 			ref="formGeneratorRef"
 			v-model="formData"
 			:config="formConfig"
-			@tableEditClick="handleTableEditClick"
 			@buttonClick="handleButtonClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="handleTableEditClick"
 		>
 			<!-- table-任务组名 -->
 			<template #slotJobGroup="{ value }">
 				<DictTag
-					:value="value"
 					:options="jobGroupOptions"
+					:value="value"
 				/>
 			</template>
 			<!-- table-状态 -->
 			<template #slotStatus="{ row }">
 				<ElSwitch
 					v-model="row.status"
-					active-value="0"
-					inactive-value="1"
+					activeValue="0"
+					inactiveValue="1"
 					@click="handleStatusChange(row)"
 				/>
 			</template>
 		</FormGenerator>
 
 		<PreviewDialog
-			v-model:preview-dialog-show="previewDialogShow"
-			:preview-dialog-id="previewDialogId"
+			v-model:previewDialogShow="previewDialogShow"
+			:previewDialogId="previewDialogId"
 		/>
 
 		<EditDialog
 			ref="editDialogRef"
 			v-model:visible="editDialogVisible"
-			:edit-id="editId"
+			:editId="editId"
 			@refresh="queryList"
 		/>
 	</div>

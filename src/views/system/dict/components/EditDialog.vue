@@ -18,11 +18,11 @@ const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const initFormData = {
-	postName: '',
 	postCode: '',
+	postName: '',
 	postSort: 0,
-	status: '0',
-	remark: ''
+	remark: '',
+	status: '0'
 }
 const formData = ref({ ...initFormData })
 
@@ -40,53 +40,53 @@ watch(
 	}
 )
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			label: '字典名称',
+			placeholder: '请输入字典名称',
+			prop: 'dictName',
+			type: 'input'
+		},
+
+		{
+			label: '字典类型',
+			placeholder: '请输入字典类型',
+			prop: 'dictType',
+			type: 'input'
+		},
+		{
+			label: '状态',
+			options: sysNormalDisable as unknown as any[],
+			prop: 'status',
+			type: 'radio'
+		},
+		{
+			label: '备注',
+			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 3,
+			type: 'textarea'
+		}
+	],
 	formRules: {
 		dictName: [
 			{
-				required: true,
-				message: '请输入字典名称'
+				message: '请输入字典名称',
+				required: true
 			}
 		],
 		dictType: [
 			{
-				required: true,
-				message: '请输入字典类型'
+				message: '请输入字典类型',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '字典名称',
-			prop: 'dictName',
-			placeholder: '请输入字典名称'
-		},
-
-		{
-			type: 'input',
-			label: '字典类型',
-			prop: 'dictType',
-			placeholder: '请输入字典类型'
-		},
-		{
-			type: 'radio',
-			label: '状态',
-			prop: 'status',
-			options: sysNormalDisable as unknown as any[]
-		},
-		{
-			type: 'textarea',
-			rows: 3,
-			label: '备注',
-			prop: 'remark',
-			placeholder: '请输入备注'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 async function submit() {
@@ -109,9 +109,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="id ? '修改字典类型' : '添加字典类型'"
-		:close-on-click-modal="false"
 		width="500px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>

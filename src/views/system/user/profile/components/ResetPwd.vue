@@ -4,9 +4,9 @@ import { ElMessage, type FormInstance } from 'element-plus'
 import { updateUserPwd } from '@/api/system/user'
 
 const formModel = ref({
-	oldPassword: undefined,
+	confirmPassword: undefined,
 	newPassword: undefined,
-	confirmPassword: undefined
+	oldPassword: undefined
 })
 
 function equalToPassword(rule, value, callback) {
@@ -18,40 +18,40 @@ function equalToPassword(rule, value, callback) {
 }
 
 const formRules = ref({
-	oldPassword: [
+	confirmPassword: [
+		{
+			message: '确认密码不能为空',
+			required: true,
+			trigger: 'blur'
+		},
 		{
 			required: true,
-			message: '旧密码不能为空',
-			trigger: 'blur'
+			trigger: 'blur',
+			validator: equalToPassword
 		}
 	],
 	newPassword: [
 		{
-			required: true,
 			message: '新密码不能为空',
+			required: true,
 			trigger: 'blur'
 		},
 		{
-			min: 6,
 			max: 20,
 			message: '长度在 6 到 20 个字符',
+			min: 6,
 			trigger: 'blur'
 		},
 		{
-			pattern: /^[^<>"'|\\]+$/,
 			message: '不能包含非法字符：< > " \' \\ |',
+			pattern: /^[^<>"'|\\]+$/,
 			trigger: 'blur'
 		}
 	],
-	confirmPassword: [
+	oldPassword: [
 		{
+			message: '旧密码不能为空',
 			required: true,
-			message: '确认密码不能为空',
-			trigger: 'blur'
-		},
-		{
-			required: true,
-			validator: equalToPassword,
 			trigger: 'blur'
 		}
 	]
@@ -74,9 +74,9 @@ async function submit() {
 <template>
 	<ElForm
 		ref="formRef"
+		labelWidth="80px"
 		:model="formModel"
 		:rules="formRules"
-		label-width="80px"
 	>
 		<ElFormItem
 			label="旧密码"
@@ -85,8 +85,8 @@ async function submit() {
 			<ElInput
 				v-model="formModel.oldPassword"
 				placeholder="请输入旧密码"
+				showPassword
 				type="password"
-				show-password
 			/>
 		</ElFormItem>
 		<ElFormItem
@@ -96,8 +96,8 @@ async function submit() {
 			<ElInput
 				v-model="formModel.newPassword"
 				placeholder="请输入新密码"
+				showPassword
 				type="password"
-				show-password
 			/>
 		</ElFormItem>
 		<ElFormItem
@@ -107,8 +107,8 @@ async function submit() {
 			<ElInput
 				v-model="formModel.confirmPassword"
 				placeholder="请确认新密码"
+				showPassword
 				type="password"
-				show-password
 			/>
 		</ElFormItem>
 		<ElFormItem>

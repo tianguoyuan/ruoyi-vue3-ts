@@ -183,18 +183,18 @@ onMounted(() => {
 
 // 暴露方法
 defineExpose({
-	validate,
-	resetFields,
-	resetPage,
 	clearValidate,
-	queryTableData,
 	getPageParams: () => ({
 		pageNum: pageNum.value,
 		pageSize: pageSize.value
 	}),
 	getTableData() {
 		return tableData.value
-	}
+	},
+	queryTableData,
+	resetFields,
+	resetPage,
+	validate
 })
 </script>
 
@@ -202,12 +202,12 @@ defineExpose({
 	<div class="w-full">
 		<ElForm
 			ref="formRef"
-			:model="formData"
-			:rules="config.formRules"
-			:label-width="config.labelWidth || '120px'"
-			:label-position="config.labelPosition || 'right'"
 			:disabled="config.disabled"
 			:inline="config.inline"
+			:labelPosition="config.labelPosition || 'right'"
+			:labelWidth="config.labelWidth || '120px'"
+			:model="formData"
+			:rules="config.formRules"
 		>
 			<ElRow :gutter="20">
 				<template
@@ -249,16 +249,16 @@ defineExpose({
 								</template>
 								<ElInput
 									v-model="formData[item.prop]"
-									:placeholder="item.placeholder || `请输入${item.label}`"
-									:clearable="item.clearable"
-									:show-password="item.showPassword"
-									:prefix-icon="item.prefixIcon"
-									:suffix-icon="item.suffixIcon"
-									:maxlength="item.maxlength"
-									:show-word-limit="item.showWordLimit"
-									:disabled="item.disabled"
-									:readonly="item.readonly"
 									:autocomplete="item.showPassword ? 'new-password' : undefined"
+									:clearable="item.clearable"
+									:disabled="item.disabled"
+									:maxlength="item.maxlength"
+									:placeholder="item.placeholder || `请输入${item.label}`"
+									:prefixIcon="item.prefixIcon"
+									:readonly="item.readonly"
+									:showPassword="item.showPassword"
+									:showWordLimit="item.showWordLimit"
+									:suffixIcon="item.suffixIcon"
 								/>
 							</ElFormItem>
 
@@ -281,11 +281,11 @@ defineExpose({
 								</template>
 								<ElInput
 									v-model="formData[item.prop]"
-									type="textarea"
+									:clearable="item.clearable"
 									:placeholder="item.placeholder || `请输入${item.label}`"
 									:rows="item.rows || 2"
 									style="width: 100%"
-									:clearable="item.clearable"
+									type="textarea"
 								/>
 							</ElFormItem>
 
@@ -308,15 +308,15 @@ defineExpose({
 								</template>
 								<ElInputNumber
 									v-model="formData[item.prop]"
-									:min="item.min"
-									:max="item.max"
-									:step="item.step"
-									:step-strictly="item.stepStrictly"
-									:precision="item.precision"
-									:controls-position="item.controlsPosition"
-									:disabled="item.disabled"
 									:controls="item.controls"
+									:controlsPosition="item.controlsPosition"
+									:disabled="item.disabled"
+									:max="item.max"
+									:min="item.min"
 									:placeholder="item.placeholder || `请输入${item.label}`"
+									:precision="item.precision"
+									:step="item.step"
+									:stepStrictly="item.stepStrictly"
 								/>
 							</ElFormItem>
 
@@ -341,9 +341,9 @@ defineExpose({
 									<ElRadio
 										v-for="option in item.options"
 										:key="option.value"
-										:value="option.value"
 										:border="item.border"
 										:disabled="option.disabled"
+										:value="option.value"
 									>
 										{{ option.label }}
 									</ElRadio>
@@ -371,9 +371,9 @@ defineExpose({
 									<ElRadioButton
 										v-for="option in item.options"
 										:key="option.value"
-										:value="option.value"
 										:border="item.border"
 										:disabled="option.disabled"
+										:value="option.value"
 									>
 										{{ option.label }}
 									</ElRadioButton>
@@ -401,9 +401,9 @@ defineExpose({
 									<ElCheckbox
 										v-for="option in item.options"
 										:key="option.value"
-										:value="option.value"
 										:border="item.border"
 										:disabled="option.disabled"
+										:value="option.value"
 									>
 										{{ option.label }}
 									</ElCheckbox>
@@ -429,23 +429,23 @@ defineExpose({
 								</template>
 								<ElSelect
 									v-model="formData[item.prop]"
-									:multiple="item.multiple"
-									:filterable="item.filterable"
-									:allow-create="item.allowCreate"
-									:remote="item.remote"
-									:remote-method="item.remoteMethod"
-									:loading="item.loading"
-									:disabled="item.disabled"
+									:allowCreate="item.allowCreate"
 									:clearable="item.clearable"
+									:disabled="item.disabled"
+									:filterable="item.filterable"
+									:loading="item.loading"
+									:multiple="item.multiple"
 									:placeholder="item.placeholder || `请选择${item.label}`"
+									:remote="item.remote"
+									:remoteMethod="item.remoteMethod"
 									style="width: 100%"
 								>
 									<ElOption
 										v-for="option in item.options"
 										:key="option.value"
+										:disabled="option.disabled"
 										:label="option.label"
 										:value="option.value"
-										:disabled="option.disabled"
 									/>
 								</ElSelect>
 							</ElFormItem>
@@ -470,15 +470,15 @@ defineExpose({
 								<!-- @ts-nocheck -->
 								<ElCascader
 									v-model="formData[item.prop]"
-									:options="item.options"
-									:props="item.props"
-									:show-all-levels="item.showAllLevels"
-									:collapse-tags="item.collapseTags"
-									:separator="item.separator"
-									:filterable="item.filterable"
 									:clearable="item.clearable"
+									:collapseTags="item.collapseTags"
 									:disabled="item.disabled"
+									:filterable="item.filterable"
+									:options="item.options"
 									:placeholder="item.placeholder || `请选择${item.label}`"
+									:props="item.props"
+									:separator="item.separator"
+									:showAllLevels="item.showAllLevels"
 									style="width: 100%"
 								/>
 							</ElFormItem>
@@ -502,11 +502,11 @@ defineExpose({
 								</template>
 								<ElSwitch
 									v-model="formData[item.prop]"
-									:active-value="item.activeValue || true"
-									:inactive-value="item.inactiveValue || false"
-									:active-text="item.activeText"
-									:inactive-text="item.inactiveText"
+									:activeText="item.activeText"
+									:activeValue="item.activeValue || true"
 									:disabled="item.disabled"
+									:inactiveText="item.inactiveText"
+									:inactiveValue="item.inactiveValue || false"
 								/>
 							</ElFormItem>
 
@@ -529,16 +529,16 @@ defineExpose({
 								</template>
 								<ElSlider
 									v-model="formData[item.prop]"
-									:min="item.min"
-									:max="item.max"
-									:step="item.step"
-									:show-stops="item.showStops"
-									:show-input="item.showInput"
-									:range="item.range"
-									:vertical="item.vertical"
+									:disabled="item.disabled"
 									:height="item.height"
 									:marks="item.marks"
-									:disabled="item.disabled"
+									:max="item.max"
+									:min="item.min"
+									:range="item.range"
+									:showInput="item.showInput"
+									:showStops="item.showStops"
+									:step="item.step"
+									:vertical="item.vertical"
 								/>
 							</ElFormItem>
 
@@ -561,19 +561,19 @@ defineExpose({
 								</template>
 								<ElTimePicker
 									v-model="formData[item.prop]"
-									:is-range="item.isRange"
-									:arrow-control="item.arrowControl"
+									:arrowControl="item.arrowControl"
 									:clearable="item.clearable"
+									:defaultTime="item.defaultTime"
 									:disabled="item.disabled"
 									:editable="item.editable"
+									:endPlaceholder="item.endPlaceholder || '结束时间'"
 									:format="item.format"
+									:isRange="item.isRange"
 									:placeholder="item.placeholder || `请选择${item.label}`"
-									:range-separator="item.rangeSeparator || '至'"
-									:start-placeholder="item.startPlaceholder || '开始时间'"
-									:end-placeholder="item.endPlaceholder || '结束时间'"
-									:value-format="item.valueFormat"
-									:default-time="item.defaultTime"
+									:rangeSeparator="item.rangeSeparator || '至'"
+									:startPlaceholder="item.startPlaceholder || '开始时间'"
 									style="width: 100%"
+									:valueFormat="item.valueFormat"
 								/>
 							</ElFormItem>
 
@@ -596,18 +596,18 @@ defineExpose({
 								</template>
 								<ElDatePicker
 									v-model="formData[item.prop]"
-									:type="item.dateType || 'date'"
-									:placeholder="item.placeholder || `请选择${item.label}`"
-									:start-placeholder="item.startPlaceholder || '开始日期'"
-									:end-placeholder="item.endPlaceholder || '结束日期'"
-									:range-separator="item.rangeSeparator || '至'"
-									:format="item.format || 'YYYY-MM-DD'"
-									:value-format="item.valueFormat || 'YYYY-MM-DD'"
 									:clearable="item.clearable"
 									:disabled="item.disabled"
 									:editable="item.editable"
+									:endPlaceholder="item.endPlaceholder || '结束日期'"
+									:format="item.format || 'YYYY-MM-DD'"
+									:placeholder="item.placeholder || `请选择${item.label}`"
+									:rangeSeparator="item.rangeSeparator || '至'"
 									:shortcuts="item.shortcuts"
+									:startPlaceholder="item.startPlaceholder || '开始日期'"
 									style="width: 100%"
+									:type="item.dateType || 'date'"
+									:valueFormat="item.valueFormat || 'YYYY-MM-DD'"
 								/>
 							</ElFormItem>
 
@@ -630,14 +630,14 @@ defineExpose({
 								</template>
 								<ElDatePicker
 									v-model="formData[item.prop]"
-									type="datetime"
-									:placeholder="item.placeholder || `请选择${item.label}`"
-									:format="item.format"
-									:value-format="item.valueFormat"
 									:clearable="item.clearable"
 									:disabled="item.disabled"
 									:editable="item.editable"
+									:format="item.format"
+									:placeholder="item.placeholder || `请选择${item.label}`"
 									style="width: 100%"
+									type="datetime"
+									:valueFormat="item.valueFormat"
 								/>
 							</ElFormItem>
 							<!-- 评分 -->
@@ -659,19 +659,19 @@ defineExpose({
 								</template>
 								<ElRate
 									v-model="formData[item.prop]"
-									:max="item.max || 5"
-									:allow-half="item.allowHalf"
-									:show-score="item.showScore"
-									:disabled="item.disabled"
+									:allowHalf="item.allowHalf"
 									:colors="item.colors"
-									:void-color="item.voidColor"
-									:disabled-void-color="item.disabledVoidColor"
+									:disabled="item.disabled"
+									:disabledVoidColor="item.disabledVoidColor"
+									:disabledVoidIcon="item.disabledVoidIcon"
 									:icons="item.icons"
-									:void-icon="item.voidIcon"
-									:disabled-void-icon="item.disabledVoidIcon"
-									:show-text="item.showText"
+									:max="item.max || 5"
+									:showScore="item.showScore"
+									:showText="item.showText"
+									:textColor="item.textColor"
 									:texts="item.texts"
-									:text-color="item.textColor"
+									:voidColor="item.voidColor"
+									:voidIcon="item.voidIcon"
 								/>
 							</ElFormItem>
 
@@ -694,10 +694,10 @@ defineExpose({
 								</template>
 								<ElColorPicker
 									v-model="formData[item.prop]"
-									:show-alpha="item.showAlpha"
-									:color-format="item.colorFormat"
+									:colorFormat="item.colorFormat"
 									:disabled="item.disabled"
 									:predefine="item.predefine"
+									:showAlpha="item.showAlpha"
 								/>
 							</ElFormItem>
 
@@ -720,27 +720,27 @@ defineExpose({
 								</template>
 								<ElTransfer
 									v-model="formData[item.prop]"
+									:buttonTexts="item.buttonTexts"
 									:data="item.data"
-									:filterable="item.filterable"
-									:filter-placeholder="item.filterPlaceholder || '请输入搜索内容'"
-									:target-order="item.targetOrder"
-									:titles="item.titles || ['列表1', '列表2']"
-									:button-texts="item.buttonTexts"
-									:render-content="item.renderContent"
-									:format="item.format"
-									:props="item.props"
-									:left-default-checked="item.leftDefaultChecked"
-									:right-default-checked="item.rightDefaultChecked"
 									:disabled="item.disabled"
+									:filterPlaceholder="item.filterPlaceholder || '请输入搜索内容'"
+									:filterable="item.filterable"
+									:format="item.format"
+									:leftDefaultChecked="item.leftDefaultChecked"
+									:props="item.props"
+									:renderContent="item.renderContent"
+									:rightDefaultChecked="item.rightDefaultChecked"
+									:targetOrder="item.targetOrder"
+									:titles="item.titles || ['列表1', '列表2']"
 								/>
 							</ElFormItem>
 
 							<!-- 自定义插槽 -->
 							<slot
 								v-if="item.type === 'slot'"
-								:name="item.slotName"
 								:data="formData"
 								:item="item"
+								:name="item.slotName"
 							/>
 							<!-- <el-form-item
 								v-if="item.type === 'slot'"
@@ -769,11 +769,11 @@ defineExpose({
 							v-for="(btn, idx) in config.leftButtons"
 							v-show="btn.show === false ? false : true"
 							:key="idx"
-							:type="btn.type || ''"
+							:disabled="btn.disabled"
 							:icon="btn.icon"
 							:loading="btn.loading"
-							:disabled="btn.disabled"
 							:plain="btn.plain"
+							:type="btn.type || ''"
 							@click="handleButtonClick(btn)"
 						>
 							{{ btn.label }}
@@ -788,11 +788,11 @@ defineExpose({
 							v-for="(btn, idx) in config.buttons"
 							v-show="btn.show === false ? false : true"
 							:key="idx"
-							:type="btn.type || ''"
+							:disabled="btn.disabled"
 							:icon="btn.icon"
 							:loading="btn.loading"
-							:disabled="btn.disabled"
 							:plain="btn.plain"
+							:type="btn.type || ''"
 							@click="handleButtonClick(btn)"
 						>
 							{{ btn.label }}
@@ -802,8 +802,8 @@ defineExpose({
 				<div v-else-if="!config.buttons && !config.hideDefaultButton">
 					<div class="flex justify-end w-full">
 						<ElButton
-							type="primary"
 							icon="Search"
+							type="primary"
 							@click="queryTableData()"
 						>
 							搜索
@@ -829,39 +829,39 @@ defineExpose({
 			<ElTable
 				v-if="refreshTable"
 				ref="tableRef"
-				:data="tableData"
 				class="mt-3"
-				:default-sort="defaultSort"
-				:tree-props="config.tableTreeProps"
-				:row-key="config.tableTreeRowKey"
-				:default-expand-all="config.tableExpandAll"
+				:data="tableData"
+				:defaultExpandAll="config.tableExpandAll"
+				:defaultSort="defaultSort"
+				:rowKey="config.tableTreeRowKey"
+				:treeProps="config.tableTreeProps"
 				@selectionChange="selectList => emit('selectionChange', selectList)"
 				@sortChange="handleSortChange"
 			>
 				<ElTableColumn
 					v-if="config.tableShowSelection"
-					type="selection"
-					:selectable="config.tableSelection"
-					:width="55"
 					align="center"
+					:selectable="config.tableSelection"
+					type="selection"
+					:width="55"
 				/>
 				<ElTableColumn
 					v-if="config.tableShowIndex"
-					type="index"
-					label="序号"
-					:width="55"
 					align="center"
+					label="序号"
+					type="index"
+					:width="55"
 				/>
 				<ElTableColumn
 					v-for="(item, index) in config.tableHeader"
 					:key="index"
-					:prop="item.prop"
-					:label="item.label"
-					:width="item.width || undefined"
-					:sortable="item.sortable"
-					:sort-orders="item.sortOrders || ['ascending', 'descending']"
-					:show-overflow-tooltip="item.showOverflowTooltip"
 					:align="item.align || 'center'"
+					:label="item.label"
+					:prop="item.prop"
+					:showOverflowTooltip="item.showOverflowTooltip"
+					:sortOrders="item.sortOrders || ['ascending', 'descending']"
+					:sortable="item.sortable"
+					:width="item.width || undefined"
 				>
 					<template #default="{ row }">
 						<span v-if="item.format">{{ item.format(row[item.prop]) }}</span>
@@ -885,10 +885,10 @@ defineExpose({
 								>
 									<ElButton
 										v-show="typeof btn.show === 'function' ? btn.show(row) : typeof btn.show === 'boolean' ? btn.show : true"
-										:type="btn.type"
-										:link="btn.link"
-										:icon="btn.icon"
 										:disabled="btn.disabled"
+										:icon="btn.icon"
+										:link="btn.link"
+										:type="btn.type"
 										@click="emit('tableEditClick', row, btn)"
 									>
 										{{ btn.label }}
@@ -897,10 +897,10 @@ defineExpose({
 								<ElButton
 									v-else
 									v-show="typeof btn.show === 'function' ? btn.show(row) : typeof btn.show === 'boolean' ? btn.show : true"
-									:type="btn.type"
-									:link="btn.link"
-									:icon="btn.icon"
 									:disabled="btn.disabled"
+									:icon="btn.icon"
+									:link="btn.link"
+									:type="btn.type"
 									@click="emit('tableEditClick', row, btn)"
 								>
 									{{ btn.label }}
@@ -915,8 +915,8 @@ defineExpose({
 				class="flex justify-end mt-3"
 			>
 				<ElPagination
-					v-model:current-page="pageNum"
-					v-model:page-size="pageSize"
+					v-model:currentPage="pageNum"
+					v-model:pageSize="pageSize"
 					background
 					layout="total, sizes, prev, pager, next, jumper"
 					:total="total"

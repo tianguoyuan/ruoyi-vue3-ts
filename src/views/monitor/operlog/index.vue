@@ -13,12 +13,12 @@ const router = useRouter()
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
 	deptId: '',
-	orderByColumn: 'operTime',
-	isAsc: 'descending'
+	isAsc: 'descending',
+	orderByColumn: 'operTime'
 })
 const defaultSort = {
-	prop: 'operTime',
-	order: 'descending'
+	order: 'descending',
+	prop: 'operTime'
 } as Sort
 
 const selectionList = ref<string[]>([])
@@ -33,82 +33,80 @@ const sysOperType = ref<API.IGetDictsRes>([])
 const sysCommonStatus = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 7,
+	api: list,
 	fields: [
 		{
-			type: 'input',
 			label: '操作地址',
+			placeholder: '请输入操作地址',
 			prop: 'operIp',
-			placeholder: '请输入操作地址'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '系统模块',
+			placeholder: '请输入系统模块',
 			prop: 'title',
-			placeholder: '请输入系统模块'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '操作人员',
+			placeholder: '请输入操作人员',
 			prop: 'operName',
-			placeholder: '请输入操作人员'
+			type: 'input'
 		},
 		{
-			type: 'select',
 			label: '操作类型',
-			prop: 'businessType',
+			options: sysOperType as unknown as any[],
 			placeholder: '请选择操作类型',
-			options: sysOperType as unknown as any[]
-		},
-		{
-			type: 'select',
-			label: '操作状态',
 			prop: 'businessType',
-			placeholder: '请选择操作状态',
-			options: sysCommonStatus as unknown as any[]
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
+			label: '操作状态',
+			options: sysCommonStatus as unknown as any[],
+			placeholder: '请选择操作状态',
+			prop: 'businessType',
+			type: 'select'
+		},
+		{
 			dateType: 'daterange',
-			prop: 'daterange',
+			defaultTime: [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 1, 1, 23, 59, 59)],
 			label: '操作时间',
-			valueFormat: 'YYYY-MM-DD HH:mm:ss',
-			defaultTime: [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 1, 1, 23, 59, 59)]
+			prop: 'daterange',
+			type: 'date-picker',
+			valueFormat: 'YYYY-MM-DD HH:mm:ss'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['monitor:operlog:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 		{
-			label: '清空',
-			type: 'danger',
 			event: 'handleClean',
-			plain: true,
 			icon: 'Delete',
-			show: checkPermission(['monitor:operlog:remove'])
+			label: '清空',
+			plain: true,
+			show: checkPermission(['monitor:operlog:remove']),
+			type: 'danger'
 		},
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['monitor:operlog:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['monitor:operlog:export']),
+			type: 'warning'
 		}
 	],
-	tableShow: true,
-	api: list,
-	tableShowSelection: true,
+	span: 7,
 	tableHeader: [
 		{
 			label: '日志编号',
@@ -142,36 +140,38 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '操作日期',
 			prop: 'operTime',
 			sortable: 'custom',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			width: '160px'
 		},
 		{
+			format: v => v + '毫秒',
 			label: '消耗时间',
 			prop: 'costTime',
-			sortable: 'custom',
-			format: v => v + '毫秒'
+			sortable: 'custom'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'View',
-					tip: '详细',
-					label: '详细',
 					event: 'handleView',
-					show: checkPermission(['monitor:operlog:query'])
+					icon: 'View',
+					label: '详细',
+					link: true,
+					show: checkPermission(['monitor:operlog:query']),
+					tip: '详细',
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 // 表单按钮
@@ -183,12 +183,12 @@ async function handleButtonClick(event: string) {
 	} else if (event === 'handleClean') {
 		// 清空
 		await ElMessageBox({
-			title: '提示',
-			type: 'warning',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: `是否确认清空所有操作日志数据项？`,
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		})
 		await cleanOperlog()
 		ElMessage.success('清空成功')
@@ -219,12 +219,12 @@ async function tableEditClick(row, btn) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 	await delOperlog(ids)
 	ElMessage.success('删除成功')
@@ -259,10 +259,10 @@ init()
 			ref="formGeneratorRef"
 			v-model="formData"
 			:config="formConfig"
-			:default-sort="defaultSort"
+			:defaultSort="defaultSort"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		>
 			<template #businessTypeSlot="{ row }">
 				<DictTag
@@ -281,15 +281,15 @@ init()
 		<!-- 操作日志详细 -->
 		<ElDialog
 			v-model="dialogVisible"
+			appendToBody
+			class="dialogContainer"
+			:closeOnClickModal="false"
 			title="操作日志详细"
 			width="800px"
-			append-to-body
-			:close-on-click-modal="false"
-			class="dialogContainer"
 		>
 			<ElForm
+				labelWidth="100px"
 				:model="dialogForm"
-				label-width="100px"
 			>
 				<ElRow>
 					<ElCol :span="12">

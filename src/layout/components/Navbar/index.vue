@@ -39,7 +39,7 @@ async function logout() {
 		<Hamburger
 			id="hamburger-container"
 			class="hamburger-container"
-			:is-active="sidebarOpened"
+			:isActive="sidebarOpened"
 			@toggleClick="toggleSideBar"
 		/>
 		<Breadcrumb
@@ -74,8 +74,8 @@ async function logout() {
 				<div class="avatar-wrapper">
 					<div class="flex items-center">
 						<img
-							:src="avatar"
 							class="w-7 h-7 rounded-full"
+							:src="avatar"
 						/>
 						<span class="pl-2 text-3.5">{{ username }}</span>
 					</div>

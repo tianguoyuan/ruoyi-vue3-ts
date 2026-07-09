@@ -1,21 +1,21 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps({
+	check: {
+		default: () => {},
+		type: Function
+	},
 	cron: {
-		type: Object,
 		default: () => ({
-			second: '*',
-			min: '*',
-			hour: '*',
 			day: '*',
+			hour: '*',
+			min: '*',
 			month: '*',
+			second: '*',
 			week: '?',
 			year: ''
-		})
-	},
-	check: {
-		type: Function,
-		default: () => {}
+		}),
+		type: Object
 	}
 })
 const radioValue = ref(1)
@@ -153,14 +153,14 @@ function onRadioChange() {
 				周期从
 				<ElInputNumber
 					v-model="cycle01"
-					:min="1"
 					:max="11"
+					:min="1"
 				/>
 				-
 				<ElInputNumber
 					v-model="cycle02"
-					:min="cycle01 + 1"
 					:max="12"
+					:min="cycle01 + 1"
 				/>
 				月
 			</ElRadio>
@@ -174,14 +174,14 @@ function onRadioChange() {
 				从
 				<ElInputNumber
 					v-model="average01"
-					:min="1"
 					:max="11"
+					:min="1"
 				/>
 				月开始，每
 				<ElInputNumber
 					v-model="average02"
-					:min="1"
 					:max="12 - average01"
+					:min="1"
 				/>
 				月月执行一次
 			</ElRadio>
@@ -196,9 +196,9 @@ function onRadioChange() {
 				<ElSelect
 					v-model="checkboxList"
 					clearable
-					placeholder="可多选"
 					multiple
-					:multiple-limit="8"
+					:multipleLimit="8"
+					placeholder="可多选"
 				>
 					<ElOption
 						v-for="item in monthList"

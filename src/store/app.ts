@@ -45,16 +45,16 @@ export const useAppStore = defineStore('app', () => {
 	}
 
 	return {
+		closeSideBar,
+		device,
 		language,
 		locale,
-		size,
 		setSize,
 		sidebarOpened,
 		sidebarWithoutAnimation,
-		toggleSideBar,
-		closeSideBar,
-		device,
-		toggleDevice
+		size,
+		toggleDevice,
+		toggleSideBar
 	}
 })
 

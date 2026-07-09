@@ -22,10 +22,10 @@ function copyTextSuccess(val) {
 
 <template>
 	<ElDialog
-		:model-value="props.show"
+		:closeOnClickModal="false"
+		:modelValue="props.show"
 		title="导入表"
 		width="80%"
-		:close-on-click-modal="false"
 		@update:modelValue="v => emit('update:show', v)"
 	>
 		<ElTabs v-model="activeName">
@@ -36,9 +36,9 @@ function copyTextSuccess(val) {
 				:name="index"
 			>
 				<ElLink
-					underline="always"
 					icon="DocumentCopy"
 					style="float: right"
+					underline="always"
 					@click="copyTextSuccess(val)"
 				>
 					&nbsp;复制

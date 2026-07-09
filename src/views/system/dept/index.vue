@@ -16,58 +16,52 @@ const formData = ref({
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listDept,
 	fields: [
 		{
-			type: 'input',
 			label: '部门名称',
+			placeholder: '请输入部门名称',
 			prop: 'deptName',
-			placeholder: '请输入部门名称'
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '部门状态',
-			prop: 'roleName',
+			options: sysNormalDisable as unknown as any[],
 			placeholder: '请选择部门状态',
-			options: sysNormalDisable as unknown as any[]
+			prop: 'roleName',
+			type: 'select'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:dept:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:dept:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '展开/折叠',
-			type: 'info',
 			event: 'toggleExpandAll',
+			icon: 'Sort',
+			label: '展开/折叠',
 			plain: true,
-			icon: 'Sort'
+			type: 'info'
 		}
 	],
 
-	tableShow: true,
-	api: listDept,
-	tableExpandAll: true,
-	tableTreeRowKey: 'deptId',
 	removePageParams: true,
-	tableTreeProps: {
-		children: 'children',
-		hasChildren: 'hasChildren'
-	},
+	span: 6,
+	tableExpandAll: true,
 	tableHeader: [
 		{
+			align: 'left',
 			label: '部门名称',
 			prop: 'deptName',
-			showOverflowTooltip: true,
-			align: 'left'
+			showOverflowTooltip: true
 		},
 		{
 			label: '排序',
@@ -80,47 +74,53 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
 			prop: 'createTime',
-			showOverflowTooltip: true,
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			showOverflowTooltip: true
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
-					label: '修改',
 					event: 'handleUpdate',
-					show: checkPermission(['system:dept:edit'])
+					icon: 'Edit',
+					label: '修改',
+					link: true,
+					show: checkPermission(['system:dept:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Plus',
-					tip: '新增',
-					label: '新增',
 					event: 'handleAdd',
-					show: checkPermission(['system:dept:add'])
+					icon: 'Plus',
+					label: '新增',
+					link: true,
+					show: checkPermission(['system:dept:add']),
+					tip: '新增',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
-					label: '删除',
 					event: 'handleDelete',
-					show: row => checkPermission(['system:dept:remove']) && row.parentId !== 0
+					icon: 'Delete',
+					label: '删除',
+					link: true,
+					show: row => checkPermission(['system:dept:remove']) && row.parentId !== 0,
+					tip: '删除',
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableShow: true,
+	tableTreeProps: {
+		children: 'children',
+		hasChildren: 'hasChildren'
+	},
+	tableTreeRowKey: 'deptId'
 })
 
 function handleButtonClick(event: string) {
@@ -145,12 +145,12 @@ async function tableEditClick(row, btn) {
 		// 删除
 
 		await ElMessageBox({
-			title: '提示',
-			message: `是否确认删除名称为"${row.deptName}"的数据项?`,
-			type: 'warning',
-			showCancelButton: true,
 			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			confirmButtonText: '确定',
+			message: `是否确认删除名称为"${row.deptName}"的数据项?`,
+			showCancelButton: true,
+			title: '提示',
+			type: 'warning'
 		})
 
 		await delDept(row.deptId)
@@ -198,18 +198,18 @@ init()
 			<!-- table-状态 -->
 			<template #statusSlot="{ row }">
 				<DictTag
-					:value="row.status"
 					:options="sysNormalDisable"
+					:value="row.status"
 				/>
 			</template>
 		</FormGenerator>
 
 		<EditDialog
 			v-model:visible="editDialogVisible"
-			:options="editDialogOptions"
-			:parent-id="editDialogParentId"
+			:deptId="editDIalogDeptId"
 			:flag="editDIalogFlag"
-			:dept-id="editDIalogDeptId"
+			:options="editDialogOptions"
+			:parentId="editDialogParentId"
 			@refresh="queryList"
 		/>
 	</div>

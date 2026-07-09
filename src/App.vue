@@ -19,8 +19,8 @@ const settingsStore = useSettingsStore()
 		:size="size"
 	>
 		<ElWatermark
-			:z-index="9999"
 			:content="settingsStore.settings.watermarkEnabled ? settingsStore.settings.watermarkContent : ''"
+			:zIndex="9999"
 		>
 			<RouterView />
 		</ElWatermark>

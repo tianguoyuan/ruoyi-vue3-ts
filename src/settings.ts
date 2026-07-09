@@ -9,21 +9,21 @@ console.log('pkg', pkg)
 const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
 
 const defaultSettings: AppSettings = {
-	title: pkg.name,
-	version: pkg.version,
-	showSettings: false,
-	tagsView: true,
 	fixedHeader: true,
-	sidebarLogo: true,
-	needErrorLog: ['production'],
-	watermarkEnabled: false,
-	watermarkContent: pkg.name,
-	size: 'default',
 	language: LanguageEnum.ZH_CN,
-
 	layout: LayoutEnum.LEFT,
+	needErrorLog: ['production'],
+	showSettings: false,
+	sidebarLogo: true,
+	size: 'default',
+	tagsView: true,
 	theme: mediaQueryList.matches ? ThemeEnum.DARK : ThemeEnum.LIGHT,
-	themeColor: '#409EFF'
+	themeColor: '#409EFF',
+	title: pkg.name,
+
+	version: pkg.version,
+	watermarkContent: pkg.name,
+	watermarkEnabled: false
 }
 
 export default defaultSettings

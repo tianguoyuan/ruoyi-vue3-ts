@@ -51,11 +51,11 @@ class Request {
 		isReLogin.show = true
 		console.log('errorAuthToast', msg)
 		ElMessageBox.confirm('登录过期, 是否重新登录?', {
-			title: '系统提示',
-			type: 'warning',
-			confirmButtonText: '确定',
 			cancelButtonText: '取消',
-			closeOnClickModal: false
+			closeOnClickModal: false,
+			confirmButtonText: '确定',
+			title: '系统提示',
+			type: 'warning'
 		})
 			.then(() => {
 				isReLogin.show = false
@@ -72,9 +72,9 @@ class Request {
 	}
 	private showLoading() {
 		this.loadingInstance = ElLoading.service({
+			background: 'rgba(0, 0, 0, 0.7)',
 			lock: true,
-			text: '加载中...',
-			background: 'rgba(0, 0, 0, 0.7)'
+			text: '加载中...'
 		})
 	}
 	private debouncedHideLoading = debounce(600, () => {
@@ -90,14 +90,14 @@ class Request {
 		this.debouncedHideLoading()
 	}
 	private interceptors(options: InterceptorsState) {
-		const { instance, url, loading, cancelToken } = options
+		const { cancelToken, instance, loading, url } = options
 		console.time(url)
 		instance.interceptors.request.use(config => {
 			if (cancelToken) {
 				config.cancelToken = new axios.CancelToken(cancel => {
 					this.cancelTokenList.push({
-						url: url,
-						cancel
+						cancel,
+						url: url
 					})
 				})
 			}
@@ -148,8 +148,8 @@ class Request {
 						if (match) filename = decodeURIComponent(match[1])
 					}
 					const blobData = {
-						filename: filename,
-						data: response.data
+						data: response.data,
+						filename: filename
 					}
 					console.log('request: success->', url, requestParams, blobData)
 					return blobData
@@ -194,10 +194,10 @@ class Request {
 			withCredentials: true
 		})
 		this.interceptors({
+			cancelToken: cancelToken || false,
 			instance: instance,
-			url: options.url || '',
 			loading: loading || true,
-			cancelToken: cancelToken || false
+			url: options.url || ''
 		})
 		return instance(options)
 	}

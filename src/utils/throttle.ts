@@ -31,6 +31,6 @@ interface IDebounceFunc {
  * - 应用场景：输入框
  */
 export function debounceFunc(callback: () => void, options?: IDebounceFunc) {
-	const { delay = funcDelay, atBegin } = options || {}
+	const { atBegin, delay = funcDelay } = options || {}
 	return debounce(delay, callback, { atBegin })
 }

@@ -1,21 +1,21 @@
 <script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps({
+	check: {
+		default: () => {},
+		type: Function
+	},
 	cron: {
-		type: Object,
 		default: () => ({
-			second: '*',
-			min: '*',
-			hour: '*',
 			day: '*',
+			hour: '*',
+			min: '*',
 			month: '*',
+			second: '*',
 			week: '?',
 			year: ''
-		})
-	},
-	check: {
-		type: Function,
-		default: () => {}
+		}),
+		type: Object
 	}
 })
 
@@ -121,14 +121,14 @@ function onRadioChange() {
 				周期从
 				<ElInputNumber
 					v-model="cycle01"
-					:min="fullYear"
 					:max="2098"
+					:min="fullYear"
 				/>
 				-
 				<ElInputNumber
 					v-model="cycle02"
-					:min="cycle01 ? cycle01 + 1 : fullYear + 1"
 					:max="2099"
+					:min="cycle01 ? cycle01 + 1 : fullYear + 1"
 				/>
 			</ElRadio>
 		</ElFormItem>
@@ -141,14 +141,14 @@ function onRadioChange() {
 				从
 				<ElInputNumber
 					v-model="average01"
-					:min="fullYear"
 					:max="2098"
+					:min="fullYear"
 				/>
 				年开始，每
 				<ElInputNumber
 					v-model="average02"
-					:min="1"
 					:max="2099 - average01 || fullYear"
+					:min="1"
 				/>
 				年执行一次
 			</ElRadio>
@@ -163,15 +163,15 @@ function onRadioChange() {
 				<ElSelect
 					v-model="checkboxList"
 					clearable
-					placeholder="可多选"
 					multiple
-					:multiple-limit="8"
+					:multipleLimit="8"
+					placeholder="可多选"
 				>
 					<ElOption
 						v-for="item in 9"
 						:key="item"
-						:value="item - 1 + fullYear"
 						:label="item - 1 + fullYear"
+						:value="item - 1 + fullYear"
 					/>
 				</ElSelect>
 			</ElRadio>

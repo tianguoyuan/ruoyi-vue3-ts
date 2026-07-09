@@ -23,8 +23,8 @@ getList()
 	<div class="p-5">
 		<ElRow :gutter="10">
 			<ElCol
-				:span="12"
 				class="card-box"
+				:span="12"
 			>
 				<ElCard>
 					<template #header>
@@ -94,8 +94,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="12"
 				class="card-box"
+				:span="12"
 			>
 				<ElCard>
 					<template #header>
@@ -200,8 +200,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="24"
 				class="card-box"
+				:span="24"
 			>
 				<ElCard>
 					<template #header>
@@ -261,8 +261,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="24"
 				class="card-box"
+				:span="24"
 			>
 				<ElCard>
 					<template #header>
@@ -317,14 +317,14 @@ getList()
 								</tr>
 								<tr>
 									<td
-										colspan="1"
 										class="el-table__cell is-leaf"
+										colspan="1"
 									>
 										<div class="cell">安装路径</div>
 									</td>
 									<td
-										colspan="3"
 										class="el-table__cell is-leaf"
+										colspan="3"
 									>
 										<div
 											v-if="server.jvm"
@@ -336,14 +336,14 @@ getList()
 								</tr>
 								<tr>
 									<td
-										colspan="1"
 										class="el-table__cell is-leaf"
+										colspan="1"
 									>
 										<div class="cell">项目路径</div>
 									</td>
 									<td
-										colspan="3"
 										class="el-table__cell is-leaf"
+										colspan="3"
 									>
 										<div
 											v-if="server.sys"
@@ -355,14 +355,14 @@ getList()
 								</tr>
 								<tr>
 									<td
-										colspan="1"
 										class="el-table__cell is-leaf"
+										colspan="1"
 									>
 										<div class="cell">运行参数</div>
 									</td>
 									<td
-										colspan="3"
 										class="el-table__cell is-leaf"
+										colspan="3"
 									>
 										<div
 											v-if="server.jvm"
@@ -379,8 +379,8 @@ getList()
 			</ElCol>
 
 			<ElCol
-				:span="24"
 				class="card-box"
+				:span="24"
 			>
 				<ElCard>
 					<template #header>

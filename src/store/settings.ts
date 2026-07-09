@@ -6,7 +6,7 @@ import variables from '@/styles/element-variables.module.scss'
 
 import { store } from '.'
 
-const { showSettings, tagsView, fixedHeader, sidebarLogo, watermarkEnabled, watermarkContent } = defaultSettings
+const { fixedHeader, showSettings, sidebarLogo, tagsView, watermarkContent, watermarkEnabled } = defaultSettings
 
 interface ISettings {
 	theme: string
@@ -21,13 +21,13 @@ interface ISettings {
 type ISettingsKey = keyof ISettings
 export const useSettingsStore = defineStore('settings', () => {
 	const settings = ref<ISettings>({
-		theme: variables['theme'],
-		showSettings,
-		tagsView,
 		fixedHeader,
+		showSettings,
 		sidebarLogo,
-		watermarkEnabled,
-		watermarkContent
+		tagsView,
+		theme: variables['theme'],
+		watermarkContent,
+		watermarkEnabled
 	})
 	function changeSettings<K extends ISettingsKey>({ key, value }: { key: K; value: ISettings[K] }) {
 		if (Object.prototype.hasOwnProperty.call(settings.value, key)) {
@@ -35,8 +35,8 @@ export const useSettingsStore = defineStore('settings', () => {
 		}
 	}
 	return {
-		settings,
-		changeSettings
+		changeSettings,
+		settings
 	}
 })
 

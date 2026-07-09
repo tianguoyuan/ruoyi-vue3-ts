@@ -10,9 +10,9 @@ export function listMenu(query?: any) {
 	// })
 	return new Promise(resolve => {
 		request({
-			url: '/system/menu/list',
 			method: 'get',
-			params: query
+			params: query,
+			url: '/system/menu/list'
 		}).then(data => {
 			const list = buildTree(data.data, 0, 'menuId', 'parentId', 'children')
 			resolve({ rows: list })
@@ -23,49 +23,49 @@ export function listMenu(query?: any) {
 // 查询菜单详细
 export function getMenu(menuId) {
 	return request({
-		url: '/system/menu/' + menuId,
-		method: 'get'
+		method: 'get',
+		url: '/system/menu/' + menuId
 	})
 }
 
 // 查询菜单下拉树结构
 export function treeselect() {
 	return request({
-		url: '/system/menu/treeselect',
-		method: 'get'
+		method: 'get',
+		url: '/system/menu/treeselect'
 	})
 }
 
 // 根据角色ID查询菜单下拉树结构
 export function roleMenuTreeselect(roleId) {
 	return request({
-		url: '/system/menu/roleMenuTreeselect/' + roleId,
-		method: 'get'
+		method: 'get',
+		url: '/system/menu/roleMenuTreeselect/' + roleId
 	})
 }
 
 // 新增菜单
 export function addMenu(data) {
 	return request({
-		url: '/system/menu',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/system/menu'
 	})
 }
 
 // 修改菜单
 export function updateMenu(data) {
 	return request({
-		url: '/system/menu',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/menu'
 	})
 }
 
 // 删除菜单
 export function delMenu(menuId) {
 	return request({
-		url: '/system/menu/' + menuId,
-		method: 'delete'
+		method: 'delete',
+		url: '/system/menu/' + menuId
 	})
 }

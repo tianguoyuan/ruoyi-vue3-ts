@@ -19,9 +19,9 @@ const logo = 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.pn
 			>
 				<img
 					v-if="logo"
-					:src="logo"
 					alt=""
 					class="sidebar-logo"
+					:src="logo"
 				/>
 				<h1
 					v-else
@@ -38,9 +38,9 @@ const logo = 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.pn
 				to="/"
 			>
 				<img
-					:src="logo"
-					class="sidebar-logo"
 					alt=""
+					class="sidebar-logo"
+					:src="logo"
 				/>
 				<h1 class="sidebar-title">{{ title }}</h1>
 			</RouterLink>

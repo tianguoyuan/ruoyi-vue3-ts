@@ -32,15 +32,15 @@ function jobGroupFormat(value: string) {
 <template>
 	<!-- 任务日志详细 -->
 	<ElDialog
-		:model-value="props.previewDialogShow"
+		appendToBody
+		:modelValue="props.previewDialogShow"
 		title="任务详细"
 		width="700px"
-		append-to-body
 		@update:modelValue="v => emit('update:previewDialogShow', v)"
 	>
 		<ElForm
+			labelWidth="120px"
 			:model="form"
-			label-width="120px"
 		>
 			<ElRow>
 				<ElCol :span="12">

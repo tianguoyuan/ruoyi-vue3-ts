@@ -10,44 +10,44 @@ export function listRole(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/system/role/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/system/role/list'
 	})
 }
 
 // 查询角色详细
 export function getRole(roleId) {
 	return request({
-		url: '/system/role/' + roleId,
-		method: 'get'
+		method: 'get',
+		url: '/system/role/' + roleId
 	})
 }
 
 // 新增角色
 export function addRole(data) {
 	return request({
-		url: '/system/role',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/system/role'
 	})
 }
 
 // 修改角色
 export function updateRole(data) {
 	return request({
-		url: '/system/role',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/role'
 	})
 }
 
 // 角色数据权限
 export function dataScope(data) {
 	return request({
-		url: '/system/role/dataScope',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/role/dataScope'
 	})
 }
 
@@ -58,82 +58,82 @@ export function changeRoleStatus(roleId, status) {
 		status
 	}
 	return request({
-		url: '/system/role/changeStatus',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/role/changeStatus'
 	})
 }
 
 // 删除角色
 export function delRole(roleId) {
 	return request({
-		url: '/system/role/' + roleId,
-		method: 'delete'
+		method: 'delete',
+		url: '/system/role/' + roleId
 	})
 }
 
 // 查询角色已授权用户列表
 export function allocatedUserList(query) {
 	return request({
-		url: '/system/role/authUser/allocatedList',
 		method: 'get',
-		params: query
+		params: query,
+		url: '/system/role/authUser/allocatedList'
 	})
 }
 
 // 查询角色未授权用户列表
 export function unallocatedUserList(query) {
 	return request({
-		url: '/system/role/authUser/unallocatedList',
 		method: 'get',
-		params: query
+		params: query,
+		url: '/system/role/authUser/unallocatedList'
 	})
 }
 
 // 取消用户授权角色
 export function authUserCancel(data) {
 	return request({
-		url: '/system/role/authUser/cancel',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/role/authUser/cancel'
 	})
 }
 
 // 批量取消用户授权角色
 export function authUserCancelAll(data) {
 	return request({
-		url: '/system/role/authUser/cancelAll',
 		method: 'put',
-		params: data
+		params: data,
+		url: '/system/role/authUser/cancelAll'
 	})
 }
 
 // 授权用户选择
 export function authUserSelectAll(data) {
 	return request({
-		url: '/system/role/authUser/selectAll',
 		method: 'put',
-		params: data
+		params: data,
+		url: '/system/role/authUser/selectAll'
 	})
 }
 
 // 根据角色ID查询部门树结构
 export function deptTreeSelect(roleId) {
 	return request({
-		url: '/system/role/deptTree/' + roleId,
-		method: 'get'
+		method: 'get',
+		url: '/system/role/deptTree/' + roleId
 	})
 }
 
 // 导出
 export function roleExport(data) {
 	return request({
-		url: '/system/role/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/system/role/export'
 	})
 }

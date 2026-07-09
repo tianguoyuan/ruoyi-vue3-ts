@@ -21,24 +21,24 @@ init()
 	<ElTable
 		ref="dragTable"
 		:data="props.columns"
-		row-key="columnId"
+		rowKey="columnId"
 	>
 		<ElTableColumn
+			className="allowDrag"
 			label="序号"
+			minWidth="5%"
 			type="index"
-			min-width="5%"
-			class-name="allowDrag"
 		/>
 		<ElTableColumn
+			className="allowDrag"
 			label="字段列名"
+			minWidth="10%"
 			prop="columnName"
-			min-width="10%"
-			:show-overflow-tooltip="true"
-			class-name="allowDrag"
+			:showOverflowTooltip="true"
 		/>
 		<ElTableColumn
 			label="字段描述"
-			min-width="10%"
+			minWidth="10%"
 		>
 			<template #default="scope">
 				<ElInput v-model="scope.row.columnComment" />
@@ -46,13 +46,13 @@ init()
 		</ElTableColumn>
 		<ElTableColumn
 			label="物理类型"
+			minWidth="10%"
 			prop="columnType"
-			min-width="10%"
-			:show-overflow-tooltip="true"
+			:showOverflowTooltip="true"
 		/>
 		<ElTableColumn
 			label="Java类型"
-			min-width="11%"
+			minWidth="11%"
 		>
 			<template #default="scope">
 				<ElSelect v-model="scope.row.javaType">
@@ -89,7 +89,7 @@ init()
 		</ElTableColumn>
 		<ElTableColumn
 			label="java属性"
-			min-width="10%"
+			minWidth="10%"
 		>
 			<template #default="scope">
 				<ElInput v-model="scope.row.javaField" />
@@ -98,55 +98,55 @@ init()
 
 		<ElTableColumn
 			label="插入"
-			min-width="5%"
+			minWidth="5%"
 		>
 			<template #default="scope">
 				<ElCheckbox
 					v-model="scope.row.isInsert"
-					true-value="1"
-					false-value="0"
+					falseValue="0"
+					trueValue="1"
 				/>
 			</template>
 		</ElTableColumn>
 		<ElTableColumn
 			label="编辑"
-			min-width="5%"
+			minWidth="5%"
 		>
 			<template #default="scope">
 				<ElCheckbox
 					v-model="scope.row.isEdit"
-					true-value="1"
-					false-value="0"
+					falseValue="0"
+					trueValue="1"
 				/>
 			</template>
 		</ElTableColumn>
 		<ElTableColumn
 			label="列表"
-			min-width="5%"
+			minWidth="5%"
 		>
 			<template #default="scope">
 				<ElCheckbox
 					v-model="scope.row.isList"
-					true-value="1"
-					false-value="0"
+					falseValue="0"
+					trueValue="1"
 				/>
 			</template>
 		</ElTableColumn>
 		<ElTableColumn
 			label="查询"
-			min-width="5%"
+			minWidth="5%"
 		>
 			<template #default="scope">
 				<ElCheckbox
 					v-model="scope.row.isQuery"
-					true-value="1"
-					false-value="0"
+					falseValue="0"
+					trueValue="1"
 				/>
 			</template>
 		</ElTableColumn>
 		<ElTableColumn
 			label="查询方式"
-			min-width="10%"
+			minWidth="10%"
 		>
 			<template #default="scope">
 				<ElSelect v-model="scope.row.queryType">
@@ -187,19 +187,19 @@ init()
 		</ElTableColumn>
 		<ElTableColumn
 			label="必填"
-			min-width="5%"
+			minWidth="5%"
 		>
 			<template #default="scope">
 				<ElCheckbox
 					v-model="scope.row.isRequired"
-					true-value="1"
-					false-value="0"
+					falseValue="0"
+					trueValue="1"
 				/>
 			</template>
 		</ElTableColumn>
 		<ElTableColumn
 			label="显示类型"
-			min-width="12%"
+			minWidth="12%"
 		>
 			<template #default="scope">
 				<ElSelect v-model="scope.row.htmlType">
@@ -244,7 +244,7 @@ init()
 		</ElTableColumn>
 		<ElTableColumn
 			label="字典类型"
-			min-width="12%"
+			minWidth="12%"
 		>
 			<template #default="scope">
 				<ElSelect

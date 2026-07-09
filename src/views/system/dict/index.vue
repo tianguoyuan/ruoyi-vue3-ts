@@ -26,89 +26,87 @@ function selectionChange(v) {
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listType,
 	fields: [
 		{
-			type: 'input',
 			label: '字典名称',
+			placeholder: '请输入字典名称',
 			prop: 'dictName',
-			placeholder: '请输入字典名称'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '字典类型',
+			placeholder: '请输入字典类型',
 			prop: 'dictType',
-			placeholder: '请输入字典类型'
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '字典状态',
-			prop: 'status',
+			options: sysNormalDisable as unknown as any[],
 			placeholder: '请选择字典状态',
-			options: sysNormalDisable as unknown as any[]
+			prop: 'status',
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
 			dateType: 'daterange',
 			label: '创建时间',
+			placeholder: '请选择创建时间',
 			prop: 'daterange',
-			placeholder: '请选择创建时间'
+			type: 'date-picker'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:dict:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:dict:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single as unknown as boolean,
 			event: 'handleUpdate',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['system:dict:edit']),
-			disabled: single as unknown as boolean
+			type: 'success'
 		},
 
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['system:dict:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['system:dict:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['system:dict:export']),
+			type: 'warning'
 		},
 		{
-			label: '刷新缓存',
-			type: 'danger',
 			event: 'handleRefreshCache',
-			plain: true,
 			icon: 'Refresh',
-			show: checkPermission(['system:dict:remove'])
+			label: '刷新缓存',
+			plain: true,
+			show: checkPermission(['system:dict:remove']),
+			type: 'danger'
 		}
 	],
 
-	tableShow: true,
-	api: listType,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '字典编号',
@@ -123,8 +121,8 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '字典类型',
 			prop: 'dictType',
-			slotName: 'dictTypeSlot',
-			showOverflowTooltip: true
+			showOverflowTooltip: true,
+			slotName: 'dictTypeSlot'
 		},
 		{
 			label: '状态',
@@ -137,38 +135,40 @@ const formConfig = ref<FormConfig>({
 			showOverflowTooltip: true
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
-			prop: 'createTime',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			prop: 'createTime'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
-					label: '修改',
 					event: 'handleUpdate',
-					show: checkPermission(['system:dict:edit'])
+					icon: 'Edit',
+					label: '修改',
+					link: true,
+					show: checkPermission(['system:dict:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
-					label: '删除',
 					event: 'handleDelete',
-					show: checkPermission(['system:dict:remove'])
+					icon: 'Delete',
+					label: '删除',
+					link: true,
+					show: checkPermission(['system:dict:remove']),
+					tip: '删除',
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 // 表单按钮
@@ -221,12 +221,12 @@ function handleUpdate(id: string) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 	await delType(ids)
 	ElMessage.success('删除成功')
@@ -252,13 +252,13 @@ init()
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		>
 			<template #dictTypeSlot="{ row }">
 				<RouterLink
-					:to="'/system/dict-data/index/' + row.dictId"
 					class="link-type"
+					:to="'/system/dict-data/index/' + row.dictId"
 				>
 					<span>{{ row.dictType }}</span>
 				</RouterLink>

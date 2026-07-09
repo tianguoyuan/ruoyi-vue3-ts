@@ -10,13 +10,13 @@ import { store } from '.'
 
 export const useUserStore = defineStore('user', () => {
 	const userInfoDefault = {
-		token: Storage.get('token') || '',
 		avatar: '',
 		introduction: '',
 		name: '',
-		roles: [] as string[],
 		permissions: [] as string[],
-		routes: [] // 存储后端返回的路由
+		roles: [] as string[],
+		routes: [], // 存储后端返回的路由
+		token: Storage.get('token') || ''
 	}
 	const userInfo = ref({ ...userInfoDefault })
 
@@ -43,8 +43,8 @@ export const useUserStore = defineStore('user', () => {
 		/* 初始密码提示 */
 		if (userResult.isDefaultModifyPwd) {
 			ElMessageBox.confirm('您的密码还是初始密码，请修改密码！', '安全提示', {
-				confirmButtonText: '确定',
 				cancelButtonText: '取消',
+				confirmButtonText: '确定',
 				type: 'warning'
 			})
 				.then(() => {
@@ -58,10 +58,10 @@ export const useUserStore = defineStore('user', () => {
 		/* 过期密码提示 */
 		if (!userResult.isDefaultModifyPwd && userResult.isPasswordExpired) {
 			ElMessageBox.confirm('您的密码已过期，请尽快修改密码！', '安全提示', {
-				confirmButtonText: '确定',
 				cancelButtonText: '取消',
-				type: 'warning',
-				closeOnClickModal: false
+				closeOnClickModal: false,
+				confirmButtonText: '确定',
+				type: 'warning'
 			})
 				.then(() => {
 					router.push({
@@ -93,13 +93,13 @@ export const useUserStore = defineStore('user', () => {
 	}
 
 	return {
-		userInfo,
-		login,
 		getUserInfo,
-		userInfoSimple,
-		resetUserInfo,
+		login,
 		logout,
-		setAvatar
+		resetUserInfo,
+		setAvatar,
+		userInfo,
+		userInfoSimple
 	}
 })
 

@@ -20,8 +20,8 @@ const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 console.log('props.options', props.options)
 
 const initFormData = {
-	parentId: '',
-	orderNum: 0
+	orderNum: 0,
+	parentId: ''
 }
 const formData = ref({ ...initFormData })
 watch(
@@ -50,93 +50,93 @@ const deptIdOptions = computed(() => props.options)
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	buttons: [],
+	fields: [
+		{
+			hidden: parentIdTop as unknown as boolean,
+			label: '上级部门',
+			options: deptIdOptions as unknown as any[],
+			placeholder: '请选择上级部门',
+			prop: 'parentId',
+			props: {
+				checkStrictly: true,
+				emitPath: false,
+				label: 'deptName',
+				value: 'deptId'
+			},
+			showAllLevels: false,
+			span: 24,
+			type: 'cascader'
+		},
+		{
+			label: '部门名称',
+			placeholder: '请输入部门名称',
+			prop: 'deptName',
+			span: 12,
+			type: 'input'
+		},
+		{
+			controlsPosition: 'right',
+			label: '显示排序',
+			min: 0,
+			prop: 'orderNum',
+			span: 12,
+			type: 'input-number'
+		},
+		{
+			label: '负责人',
+			maxlength: 20,
+			placeholder: '请输入负责人',
+			prop: 'leader',
+			span: 12,
+			type: 'input'
+		},
+		{
+			label: '联系电话',
+			maxlength: 11,
+			placeholder: '请输入联系电话',
+			prop: 'phone',
+			span: 12,
+			type: 'input'
+		},
+		{
+			label: '邮箱',
+			maxlength: 50,
+			placeholder: '请输入邮箱',
+			prop: 'email',
+			span: 12,
+			type: 'input'
+		},
+		{
+			label: '邮箱',
+			options: sysNormalDisable as unknown as any[],
+			prop: 'status',
+			span: 12,
+			type: 'radio'
+		}
+	],
 	formRules: {
-		parentId: [
-			{
-				required: true,
-				message: '请选择上级部门'
-			}
-		],
 		deptName: [
 			{
-				required: true,
-				message: '请输入部门名称'
+				message: '请输入部门名称',
+				required: true
 			}
 		],
 		orderNum: [
 			{
-				required: true,
-				message: '请输入显示排序'
+				message: '请输入显示排序',
+				required: true
+			}
+		],
+		parentId: [
+			{
+				message: '请选择上级部门',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'cascader',
-			options: deptIdOptions as unknown as any[],
-			showAllLevels: false,
-			props: {
-				label: 'deptName',
-				value: 'deptId',
-				emitPath: false,
-				checkStrictly: true
-			},
-			label: '上级部门',
-			prop: 'parentId',
-			placeholder: '请选择上级部门',
-			span: 24,
-			hidden: parentIdTop as unknown as boolean
-		},
-		{
-			type: 'input',
-			label: '部门名称',
-			prop: 'deptName',
-			placeholder: '请输入部门名称',
-			span: 12
-		},
-		{
-			type: 'input-number',
-			label: '显示排序',
-			prop: 'orderNum',
-			min: 0,
-			controlsPosition: 'right',
-			span: 12
-		},
-		{
-			type: 'input',
-			label: '负责人',
-			placeholder: '请输入负责人',
-			prop: 'leader',
-			span: 12,
-			maxlength: 20
-		},
-		{
-			type: 'input',
-			label: '联系电话',
-			placeholder: '请输入联系电话',
-			prop: 'phone',
-			span: 12,
-			maxlength: 11
-		},
-		{
-			type: 'input',
-			label: '邮箱',
-			placeholder: '请输入邮箱',
-			prop: 'email',
-			span: 12,
-			maxlength: 50
-		},
-		{
-			type: 'radio',
-			label: '邮箱',
-			prop: 'status',
-			span: 12,
-			options: sysNormalDisable as unknown as any[]
-		}
-	],
-	buttons: [],
+	labelWidth: '80px',
+	span: 6,
 	tableShow: false
 })
 
@@ -161,10 +161,10 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="props.flag === 'add' ? '添加部门' : '修改部门'"
 		width="600px"
-		:close-on-click-modal="false"
 		@update:modelValue="v => emits('update:visible', v)"
 	>
 		<FormGenerator

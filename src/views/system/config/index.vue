@@ -26,95 +26,93 @@ function selectionChange(v) {
 const sysYesNo = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listConfig,
 	fields: [
 		{
-			type: 'input',
 			label: '参数名称',
+			placeholder: '请输入参数名称',
 			prop: 'configName',
-			placeholder: '请输入参数名称'
+			type: 'input'
 		},
 
 		{
-			type: 'input',
 			label: '参数键名',
+			placeholder: '请输入参数键名',
 			prop: 'configKey',
-			placeholder: '请输入参数键名'
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '系统内置',
-			prop: 'configType',
+			options: sysYesNo as unknown as any[],
 			placeholder: '请选择系统内置',
-			options: sysYesNo as unknown as any[]
+			prop: 'configType',
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
 			dateType: 'daterange',
 			label: '创建时间',
+			placeholder: '请选择创建时间',
 			prop: 'daterange',
-			placeholder: '请选择创建时间'
+			type: 'date-picker'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:config:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:config:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single as unknown as boolean,
 			event: 'handleUpdate',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['system:config:edit']),
-			disabled: single as unknown as boolean
+			type: 'success'
 		},
 
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['system:config:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['system:config:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['system:config:export']),
+			type: 'warning'
 		},
 		{
-			label: '刷新缓存',
-			type: 'danger',
 			event: 'handleRefreshCache',
-			plain: true,
 			icon: 'Refresh',
-			show: checkPermission(['system:config:remove'])
+			label: '刷新缓存',
+			plain: true,
+			show: checkPermission(['system:config:remove']),
+			type: 'danger'
 		}
 	],
 
-	tableShow: true,
-	api: listConfig,
-	tableShowSelection: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '参数主键',
 			prop: 'configId',
-			width: '80px',
-			showOverflowTooltip: true
+			showOverflowTooltip: true,
+			width: '80px'
 		},
 		{
 			label: '参数名称',
@@ -134,8 +132,8 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '系统内置',
 			prop: 'configType',
-			width: '80px',
-			slotName: 'configTypeSlot'
+			slotName: 'configTypeSlot',
+			width: '80px'
 		},
 		{
 			label: '备注',
@@ -143,39 +141,41 @@ const formConfig = ref<FormConfig>({
 			showOverflowTooltip: true
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
 			prop: 'createTime',
-			width: '170px',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			width: '170px'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '140px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
-					label: '修改',
 					event: 'handleUpdate',
-					show: checkPermission(['system:config:edit'])
+					icon: 'Edit',
+					label: '修改',
+					link: true,
+					show: checkPermission(['system:config:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
-					label: '删除',
 					event: 'handleDelete',
-					show: checkPermission(['system:config:remove'])
+					icon: 'Delete',
+					label: '删除',
+					link: true,
+					show: checkPermission(['system:config:remove']),
+					tip: '删除',
+					type: 'primary'
 				}
-			]
+			],
+			width: '140px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 // 表单按钮
@@ -223,12 +223,12 @@ function handleUpdate(id: string) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 	await delConfig(ids)
 	ElMessage.success('删除成功')
@@ -254,8 +254,8 @@ init()
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		>
 			<template #configTypeSlot="{ row }">
 				<DictTag

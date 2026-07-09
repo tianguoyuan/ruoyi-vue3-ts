@@ -8,11 +8,11 @@ const props = defineProps<{
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref<API.IGetGenTableRes['data']['info']>({
-	tableName: '',
-	tableComment: '',
 	className: '',
 	functionAuthor: '',
-	remark: ''
+	remark: '',
+	tableComment: '',
+	tableName: ''
 })
 
 watch(
@@ -28,72 +28,70 @@ watch(
 )
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '150px',
-	span: 6,
 	fields: [
 		{
-			type: 'input',
 			label: '表名称',
-			prop: 'tableName',
 			placeholder: '请输入表名称',
-			span: 12
+			prop: 'tableName',
+			span: 12,
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '表描述',
-			prop: 'tableComment',
 			placeholder: '请输入表描述',
-			span: 12
+			prop: 'tableComment',
+			span: 12,
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '实体类名称',
-			prop: 'className',
 			placeholder: '请输入实体类名称',
-			span: 12
+			prop: 'className',
+			span: 12,
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '作者',
-			prop: 'functionAuthor',
 			placeholder: '请输入作者',
-			span: 12
+			prop: 'functionAuthor',
+			span: 12,
+			type: 'input'
 		},
 		{
-			type: 'textarea',
 			label: '备注',
-			prop: 'remark',
 			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 4,
 			span: 24,
-			rows: 4
+			type: 'textarea'
 		}
 	],
 	formRules: {
-		tableName: [
-			{
-				required: true,
-				message: '请输入表名称',
-				trigger: 'blur'
-			}
-		],
-		tableComment: [
-			{
-				required: true,
-				message: '请输入实体类名称',
-				trigger: 'blur'
-			}
-		],
 		className: [
 			{
-				required: true,
 				message: '请输入表描述',
+				required: true,
 				trigger: 'blur'
 			}
 		],
 		functionAuthor: [
 			{
-				required: true,
 				message: '请输入作者',
+				required: true,
+				trigger: 'blur'
+			}
+		],
+		tableComment: [
+			{
+				message: '请输入实体类名称',
+				required: true,
+				trigger: 'blur'
+			}
+		],
+		tableName: [
+			{
+				message: '请输入表名称',
+				required: true,
 				trigger: 'blur'
 			}
 		]
@@ -105,9 +103,11 @@ const formConfig = ref<FormConfig>({
 		// 	}
 		// ]
 	},
-	tableShow: false,
+	hideDefaultButton: true,
+	labelWidth: '150px',
+	span: 6,
 	tableInitQueryRefuse: true,
-	hideDefaultButton: true
+	tableShow: false
 })
 
 function validate() {
@@ -119,8 +119,8 @@ function getData() {
 }
 
 defineExpose({
-	validate,
-	getData
+	getData,
+	validate
 })
 </script>
 

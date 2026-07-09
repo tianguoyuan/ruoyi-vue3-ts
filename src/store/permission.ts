@@ -38,10 +38,10 @@ export const usePermissionStore = defineStore('permission', () => {
 	}
 
 	return {
+		addRoutes,
 		generateRoutesByBackend,
 		generateRoutesByFront,
-		routes,
-		addRoutes
+		routes
 	}
 })
 

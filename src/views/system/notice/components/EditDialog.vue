@@ -19,10 +19,10 @@ const sysNoticeType = ref<API.IGetDictsRes>([])
 const sysNoticeStatus = ref<API.IGetDictsRes>([])
 
 const initFormData = {
+	noticeContent: undefined,
 	noticeTitle: undefined,
 	noticeType: undefined,
-	status: '0',
-	noticeContent: undefined
+	status: '0'
 }
 const formData = ref({ ...initFormData })
 
@@ -40,57 +40,57 @@ watch(
 	}
 )
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			label: '公告标题',
+			placeholder: '请输入公告标题',
+			prop: 'noticeTitle',
+			span: 12,
+			type: 'input'
+		},
+
+		{
+			label: '公告类型',
+			options: sysNoticeType as unknown as any[],
+			placeholder: '请选择公告类型',
+			prop: 'noticeType',
+			span: 12,
+			type: 'select'
+		},
+		{
+			label: '状态',
+			options: sysNoticeStatus as unknown as any[],
+			prop: 'status',
+			type: 'radio'
+		},
+		{
+			label: '内容',
+			prop: 'noticeContent',
+			slotName: 'noticeContentSlot',
+			type: 'slot'
+		}
+	],
 	formRules: {
 		noticeTitle: [
 			{
-				required: true,
 				message: '公告标题不能为空',
+				required: true,
 				trigger: 'blur'
 			}
 		],
 		noticeType: [
 			{
-				required: true,
 				message: '公告类型不能为空',
+				required: true,
 				trigger: 'change'
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '公告标题',
-			prop: 'noticeTitle',
-			placeholder: '请输入公告标题',
-			span: 12
-		},
-
-		{
-			type: 'select',
-			label: '公告类型',
-			prop: 'noticeType',
-			placeholder: '请选择公告类型',
-			options: sysNoticeType as unknown as any[],
-			span: 12
-		},
-		{
-			type: 'radio',
-			label: '状态',
-			prop: 'status',
-			options: sysNoticeStatus as unknown as any[]
-		},
-		{
-			type: 'slot',
-			slotName: 'noticeContentSlot',
-			label: '内容',
-			prop: 'noticeContent'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 async function submit() {
@@ -116,9 +116,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="id ? '修改公告' : '添加公告'"
-		:close-on-click-modal="false"
 		width="800px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>
@@ -130,7 +130,7 @@ init()
 			<template #noticeContentSlot>
 				<Editor
 					v-model="formData.noticeContent"
-					:min-height="192"
+					:minHeight="192"
 				/>
 			</template>
 		</FormGenerator>

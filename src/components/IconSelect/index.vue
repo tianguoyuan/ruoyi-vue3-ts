@@ -54,8 +54,8 @@ defineExpose({
 				>
 					<div :class="['icon-item', { active: props.activeIcon === item }]">
 						<SvgIcon
-							:icon-class="item"
-							class-name="icon"
+							className="icon"
+							:iconClass="item"
 							style="width: 16px; height: 25px"
 						/>
 						<span>{{ item }}</span>

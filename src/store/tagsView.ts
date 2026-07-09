@@ -55,8 +55,8 @@ export const useTagsViewStore = defineStore('tagsView', () => {
 		delCachedView({ name: view.name })
 
 		return {
-			visitedViews: [...visitedViews.value],
-			cachedViews: [...cachedViews.value]
+			cachedViews: [...cachedViews.value],
+			visitedViews: [...visitedViews.value]
 		}
 	}
 
@@ -79,8 +79,8 @@ export const useTagsViewStore = defineStore('tagsView', () => {
 		delOthersCachedViews({ name: view.name })
 
 		return {
-			visitedViews: [...visitedViews.value],
-			cachedViews: [...cachedViews.value]
+			cachedViews: [...cachedViews.value],
+			visitedViews: [...visitedViews.value]
 		}
 	}
 
@@ -96,22 +96,22 @@ export const useTagsViewStore = defineStore('tagsView', () => {
 		delAllVisitedViews()
 		delAllCachedViews()
 		return {
-			visitedViews: [...visitedViews.value],
-			cachedViews: [...cachedViews.value]
+			cachedViews: [...cachedViews.value],
+			visitedViews: [...visitedViews.value]
 		}
 	}
 
 	return {
-		cachedViews,
-		visitedViews,
-		addVisitedView,
 		addView,
-		updateVisitedView,
-		delVisitedView,
+		addVisitedView,
+		cachedViews,
+		delAllViews,
 		delCachedView,
-		delView,
 		delOthersViews,
-		delAllViews
+		delView,
+		delVisitedView,
+		updateVisitedView,
+		visitedViews
 	}
 })
 

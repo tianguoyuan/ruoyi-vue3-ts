@@ -20,7 +20,17 @@ const emit = defineEmits<{
 
 const jopGroupOptions = ref<API.IGetDictsRes>([])
 const formConfig = ref<FormConfig>({
-	labelWidth: '100px',
+	buttons: [
+		{
+			event: 'cancel',
+			label: '取消'
+		},
+		{
+			event: 'submit',
+			label: '确定',
+			type: 'primary'
+		}
+	],
 	fields: [
 		{
 			label: '任务名称',
@@ -30,35 +40,32 @@ const formConfig = ref<FormConfig>({
 		},
 		{
 			label: '任务分组',
+			options: jopGroupOptions as any,
 			prop: 'jobGroup',
-			type: 'select',
 			span: 12,
-			options: jopGroupOptions as any
+			type: 'select'
 		},
 
 		{
 			label: '调用方法',
-			prop: 'invokeTarget',
-			type: 'input',
-			placeholder: '请输入调用目标字符串',
 			labelTip: `Bean调用示例：ryTask.ryParams('ry') 
     Class类调用示例：com.ruoyi.quartz.task.RyTask.ryParams('ry')
     参数说明：支持字符串，布尔类型，长整型，浮点型，整型`,
-			span: 24
+			placeholder: '请输入调用目标字符串',
+			prop: 'invokeTarget',
+			span: 24,
+			type: 'input'
 		},
 		{
 			label: 'cron表达式',
 			prop: 'cronExpression',
-			type: 'slot',
 			slotName: 'cronExpressionSlot',
-			span: 24
+			span: 24,
+			type: 'slot'
 		},
 
 		{
 			label: '执行策略',
-			prop: 'misfirePolicy',
-			type: 'radio-button',
-			span: 12,
 			options: [
 				{
 					label: '立即执行',
@@ -72,13 +79,13 @@ const formConfig = ref<FormConfig>({
 					label: '放弃执行',
 					value: '3'
 				}
-			]
+			],
+			prop: 'misfirePolicy',
+			span: 12,
+			type: 'radio-button'
 		},
 		{
 			label: '是否并发',
-			prop: 'concurrent',
-			type: 'radio-button',
-			span: 12,
 			options: [
 				{
 					label: '允许',
@@ -88,53 +95,46 @@ const formConfig = ref<FormConfig>({
 					label: '禁止',
 					value: '1'
 				}
-			]
+			],
+			prop: 'concurrent',
+			span: 12,
+			type: 'radio-button'
 		}
 	],
 	formRules: {
-		jobName: [
+		cronExpression: [
 			{
+				message: '请输入cron表达式',
 				required: true,
-				message: '请输入任务名称',
 				trigger: 'blur'
 			}
 		],
 		invokeTarget: [
 			{
-				required: true,
 				message: '请输入调用方法',
+				required: true,
 				trigger: 'blur'
 			}
 		],
-		cronExpression: [
+		jobName: [
 			{
+				message: '请输入任务名称',
 				required: true,
-				message: '请输入cron表达式',
 				trigger: 'blur'
 			}
 		]
 	},
-	buttons: [
-		{
-			label: '取消',
-			event: 'cancel'
-		},
-		{
-			label: '确定',
-			event: 'submit',
-			type: 'primary'
-		}
-	],
+	labelWidth: '100px',
 	tableInitQueryRefuse: true
 })
 
 const initForm = {
-	jobName: '',
-	jobGroup: '',
-	invokeTarget: '',
+	concurrent: '',
 	cronExpression: '',
-	misfirePolicy: '',
-	concurrent: ''
+	invokeTarget: '',
+	jobGroup: '',
+	jobName: '',
+	misfirePolicy: ''
 }
 const form = ref<Record<string, any>>({ ...initForm })
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator>>()
@@ -199,11 +199,11 @@ init()
 <template>
 	<!-- 任务日志详细 -->
 	<ElDialog
-		:model-value="props.visible"
+		appendToBody
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="props.editId ? '修改任务' : '添加任务'"
 		width="800px"
-		append-to-body
-		:close-on-click-modal="false"
 		@update:modelValue="v => emit('update:visible', v)"
 	>
 		<FormGenerator
@@ -219,8 +219,8 @@ init()
 				>
 					<ElInput
 						v-model="form.cronExpression"
-						placeholder="请输入cron执行表达式"
 						clearable
+						placeholder="请输入cron执行表达式"
 					>
 						<template #append>
 							<ElButton
@@ -244,8 +244,8 @@ init()
 		<Crontab
 			ref="crontabRef"
 			:expression="expression"
-			@hide="cronDialogVisible = false"
 			@fill="crontabFill"
+			@hide="cronDialogVisible = false"
 		/>
 	</ElDialog>
 </template>

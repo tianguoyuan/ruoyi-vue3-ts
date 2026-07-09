@@ -10,26 +10,24 @@ import { checkPermission } from '@/utils/permission'
 const formData = ref({})
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: getOnlineList,
 	fields: [
 		{
-			type: 'input',
 			label: '登录地址',
+			placeholder: '请输入登录地址',
 			prop: 'ipaddr',
-			placeholder: '请输入登录地址'
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '用户名称',
+			placeholder: '请输入用户名称',
 			prop: 'userName',
-			placeholder: '请输入用户名称'
+			type: 'input'
 		}
 	],
+	labelWidth: '80px',
 
-	tableShow: true,
-	api: getOnlineList,
-	tableShowIndex: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '会话编号',
@@ -67,38 +65,40 @@ const formConfig = ref<FormConfig>({
 			showOverflowTooltip: true
 		},
 		{
+			format: val => dayjs(val).format('YYYY-MM-DD hh:mm:ss'),
 			label: '登录时间',
 			prop: 'loginTime',
-			format: val => dayjs(val).format('YYYY-MM-DD hh:mm:ss'),
 			showOverflowTooltip: true
 		},
 		{
 			custom: true,
-			prop: '',
 			label: '操作',
+			prop: '',
 			tableEditBtn: [
 				{
-					link: true,
-					type: 'primary',
+					event: 'forceOut',
 					icon: 'Delete',
 					label: '强退',
-					event: 'forceOut',
-					show: checkPermission(['monitor:online:forceLogout'])
+					link: true,
+					show: checkPermission(['monitor:online:forceLogout']),
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableShow: true,
+	tableShowIndex: true
 })
 
 function handleTableEditClick(row, btn) {
 	if (btn.event === 'forceOut') {
 		ElMessageBox({
-			title: '提示',
-			message: `是否确认强退名称为"${row.userName}"的用户?`,
-			type: 'warning',
-			showCancelButton: true,
 			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			confirmButtonText: '确定',
+			message: `是否确认强退名称为"${row.userName}"的用户?`,
+			showCancelButton: true,
+			title: '提示',
+			type: 'warning'
 		}).then(() => {
 			forceLogout(row.tokenId).then(res => {
 				ElMessage.success(res.msg)

@@ -10,71 +10,71 @@ export function listType(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/system/dict/type/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/system/dict/type/list'
 	})
 }
 
 // 查询字典类型详细
 export function getType(dictId) {
 	return request({
-		url: '/system/dict/type/' + dictId,
-		method: 'get'
+		method: 'get',
+		url: '/system/dict/type/' + dictId
 	})
 }
 
 // 新增字典类型
 export function addType(data) {
 	return request({
-		url: '/system/dict/type',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/system/dict/type'
 	})
 }
 
 // 修改字典类型
 export function updateType(data) {
 	return request({
-		url: '/system/dict/type',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/dict/type'
 	})
 }
 
 // 删除字典类型
 export function delType(dictId) {
 	return request({
-		url: '/system/dict/type/' + dictId,
-		method: 'delete'
+		method: 'delete',
+		url: '/system/dict/type/' + dictId
 	})
 }
 
 // 刷新字典缓存
 export function refreshCache() {
 	return request({
-		url: '/system/dict/type/refreshCache',
-		method: 'delete'
+		method: 'delete',
+		url: '/system/dict/type/refreshCache'
 	})
 }
 
 // 获取字典选择框列表
 export function optionselect() {
 	return request({
-		url: '/system/dict/type/optionselect',
-		method: 'get'
+		method: 'get',
+		url: '/system/dict/type/optionselect'
 	})
 }
 
 // 导出
 export function typeExport(data) {
 	return request({
-		url: '/system/dict/type/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/system/dict/type/export'
 	})
 }

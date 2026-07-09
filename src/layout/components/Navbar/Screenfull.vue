@@ -35,7 +35,7 @@ function change() {
 <template>
 	<div>
 		<SvgIcon
-			:icon-class="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"
+			:iconClass="isFullscreen ? 'fullscreen-exit' : 'fullscreen'"
 			size="18px"
 			@click="click"
 		/>

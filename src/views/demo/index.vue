@@ -8,123 +8,119 @@ import type { FormConfig } from '@/components/FormGenerator/types'
 const formData = ref<Record<string, any>>({})
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
-	fields: [
-		{
-			type: 'input',
-			label: '用户名',
-			prop: 'username',
-			placeholder: '请输入用户名',
-			rules: [
-				{
-					required: true,
-					message: '用户名不能为空',
-					trigger: 'change'
-				},
-				{
-					min: 3,
-					max: 10,
-					message: '长度在 3 到 10 个字符',
-					trigger: 'change'
-				}
-			]
-		},
-		{
-			type: 'select',
-			label: '城市',
-			prop: 'city4',
-			options: [
-				{
-					label: '北京',
-					value: 'beijing'
-				},
-				{
-					label: '上海',
-					value: 'shanghai'
-				},
-				{
-					label: '广州',
-					value: 'guangzhou'
-				}
-			]
-		},
-		{
-			type: 'select',
-			label: '城市',
-			prop: 'city3',
-			options: [
-				{
-					label: '北京',
-					value: 'beijing'
-				},
-				{
-					label: '上海',
-					value: 'shanghai'
-				},
-				{
-					label: '广州',
-					value: 'guangzhou'
-				}
-			]
-		},
-		{
-			type: 'select',
-			label: '城市',
-			prop: 'city2',
-			options: [
-				{
-					label: '北京',
-					value: 'beijing'
-				},
-				{
-					label: '上海',
-					value: 'shanghai'
-				},
-				{
-					label: '广州',
-					value: 'guangzhou'
-				}
-			]
-		},
-		{
-			type: 'select',
-			label: '城市',
-			prop: 'city1',
-			options: [
-				{
-					label: '北京',
-					value: 'beijing'
-				},
-				{
-					label: '上海',
-					value: 'shanghai'
-				},
-				{
-					label: '广州',
-					value: 'guangzhou'
-				}
-			]
-		}
-	],
+	api: demoList,
 	buttons: [
 		{
+			event: 'search',
 			label: '搜索',
-			type: 'primary',
-			event: 'search'
+			type: 'primary'
 		},
 		{
+			event: 'reset',
 			label: '重置',
-			type: 'danger',
-			event: 'reset'
+			type: 'danger'
 		}
 	],
+	fields: [
+		{
+			label: '用户名',
+			placeholder: '请输入用户名',
+			prop: 'username',
+			rules: [
+				{
+					message: '用户名不能为空',
+					required: true,
+					trigger: 'change'
+				},
+				{
+					max: 10,
+					message: '长度在 3 到 10 个字符',
+					min: 3,
+					trigger: 'change'
+				}
+			],
+			type: 'input'
+		},
+		{
+			label: '城市',
+			options: [
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
+			],
+			prop: 'city4',
+			type: 'select'
+		},
+		{
+			label: '城市',
+			options: [
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
+			],
+			prop: 'city3',
+			type: 'select'
+		},
+		{
+			label: '城市',
+			options: [
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
+			],
+			prop: 'city2',
+			type: 'select'
+		},
+		{
+			label: '城市',
+			options: [
+				{
+					label: '北京',
+					value: 'beijing'
+				},
+				{
+					label: '上海',
+					value: 'shanghai'
+				},
+				{
+					label: '广州',
+					value: 'guangzhou'
+				}
+			],
+			prop: 'city1',
+			type: 'select'
+		}
+	],
+	labelWidth: '80px',
 
-	tableShow: true,
-	api: demoList,
-	tableInitQueryRefuse: true,
-	tableShowSelection: true,
-	tableShowIndex: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: 'a1',
@@ -139,18 +135,22 @@ const formConfig = ref<FormConfig>({
 			prop: 'address'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
 			tableEditBtn: [
 				{
+					event: 'edit',
 					label: '编辑',
-					type: 'primary',
-					event: 'edit'
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableInitQueryRefuse: true,
+	tableShow: true,
+	tableShowIndex: true,
+	tableShowSelection: true
 })
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
@@ -179,8 +179,8 @@ function selectionChange(selectList) {
 			v-model="formData"
 			:config="formConfig"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		/>
 	</div>
 </template>

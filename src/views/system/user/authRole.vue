@@ -17,8 +17,8 @@ const roleIds = ref([])
 const roles = ref<any[]>([])
 const form = ref({
 	nickName: undefined,
-	userName: undefined,
-	userId: undefined
+	userId: undefined,
+	userName: undefined
 })
 const roleRef = ref<null | TableInstance>(null)
 /** 单击选中行数据 */
@@ -46,8 +46,8 @@ function checkSelectable(row) {
 /** 关闭按钮 */
 function close() {
 	const obj = {
-		path: route.path,
-		name: route.name as string
+		name: route.name as string,
+		path: route.path
 	}
 	tagsStore.delView(obj)
 	router.back()
@@ -58,8 +58,8 @@ function submitForm() {
 	const userId = form.value.userId
 	const rIds = roleIds.value.join(',')
 	updateAuthRole({
-		userId: userId,
-		roleIds: rIds
+		roleIds: rIds,
+		userId: userId
 	}).then(() => {
 		ElMessage.success('授权成功')
 		close()
@@ -92,13 +92,13 @@ init()
 	<div class="app-container">
 		<h4 class="text-4 color-#6379bb border-b border-#ddd border-b-solid pb-1 mb-6">基本信息</h4>
 		<ElForm
+			labelWidth="80px"
 			:model="form"
-			label-width="80px"
 		>
 			<ElRow>
 				<ElCol
-					:span="8"
 					:offset="2"
+					:span="8"
 				>
 					<ElFormItem
 						label="用户昵称"
@@ -111,8 +111,8 @@ init()
 					</ElFormItem>
 				</ElCol>
 				<ElCol
-					:span="8"
 					:offset="2"
+					:span="8"
 				>
 					<ElFormItem
 						label="登录账号"
@@ -131,45 +131,45 @@ init()
 		<ElTable
 			ref="roleRef"
 			v-loading="loading"
-			:row-key="getRowKey"
 			:data="roles.slice((pageNum - 1) * pageSize, pageNum * pageSize)"
+			:rowKey="getRowKey"
 			@rowClick="clickRow"
 			@selectionChange="handleSelectionChange"
 		>
 			<ElTableColumn
-				label="序号"
-				width="55"
-				type="index"
 				align="center"
+				label="序号"
+				type="index"
+				width="55"
 			>
 				<template #default="scope">
 					<span>{{ (pageNum - 1) * pageSize + scope.$index + 1 }}</span>
 				</template>
 			</ElTableColumn>
 			<ElTableColumn
-				type="selection"
-				:reserve-selection="true"
+				:reserveSelection="true"
 				:selectable="checkSelectable"
+				type="selection"
 				width="55"
 			/>
 			<ElTableColumn
-				label="角色编号"
 				align="center"
+				label="角色编号"
 				prop="roleId"
 			/>
 			<ElTableColumn
-				label="角色名称"
 				align="center"
+				label="角色名称"
 				prop="roleName"
 			/>
 			<ElTableColumn
-				label="权限字符"
 				align="center"
+				label="权限字符"
 				prop="roleKey"
 			/>
 			<ElTableColumn
-				label="创建时间"
 				align="center"
+				label="创建时间"
 				prop="createTime"
 				width="180"
 			>
@@ -182,10 +182,10 @@ init()
 		<div class="overflow-hidden">
 			<ElPagination
 				v-show="total > 0"
-				v-model:current-page="pageNum"
-				v-model:page-size="pageSize"
-				class="float-right mt-3"
+				v-model:currentPage="pageNum"
+				v-model:pageSize="pageSize"
 				background
+				class="float-right mt-3"
 				layout="total, sizes, prev, pager, next, jumper"
 				:total="total"
 			/>

@@ -29,37 +29,37 @@ const sysShowHide = ref<API.IGetDictsRes>([])
 const menuOptions = ref<any[]>([])
 
 const initForm = {
-	menuId: undefined,
-	parentId: 0,
-	menuName: undefined,
 	icon: undefined,
+	isCache: '0',
+	isFrame: '1',
+	menuId: undefined,
+	menuName: undefined,
 	menuType: 'M',
 	orderNum: undefined,
-	isFrame: '1',
-	isCache: '0',
-	visible: '0',
-	status: '0'
+	parentId: 0,
+	status: '0',
+	visible: '0'
 }
 const form = ref<Record<string, any>>({ ...initForm })
 const rules = ref({
 	menuName: [
 		{
-			required: true,
 			message: '菜单名称不能为空',
+			required: true,
 			trigger: 'blur'
 		}
 	],
 	orderNum: [
 		{
-			required: true,
 			message: '菜单顺序不能为空',
+			required: true,
 			trigger: 'blur'
 		}
 	],
 	path: [
 		{
-			required: true,
 			message: '路由地址不能为空',
+			required: true,
 			trigger: 'blur'
 		}
 	]
@@ -72,8 +72,8 @@ watch(
 		if (!flag) return
 		form.value = {
 			...initForm,
-			parentId: props.parentId,
-			menuId: props.id
+			menuId: props.id,
+			parentId: props.parentId
 		}
 		getListMenu()
 		menuRef.value?.clearValidate()
@@ -120,9 +120,9 @@ function getListMenu() {
 	listMenu().then(({ rows }) => {
 		const menu = [
 			{
+				children: rows,
 				menuId: 0,
-				menuName: '主类目',
-				children: rows
+				menuName: '主类目'
 			}
 		]
 		menuOptions.value = menu
@@ -141,28 +141,28 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="title"
-		:close-on-click-modal="false"
 		width="680px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>
 		<ElForm
 			ref="menuRef"
+			labelWidth="100px"
 			:model="form"
 			:rules="rules"
-			label-width="100px"
 		>
 			<ElRow>
 				<ElCol :span="24">
 					<ElFormItem label="上级菜单">
 						<ElTreeSelect
 							v-model="form.parentId"
+							checkStrictly
 							:data="menuOptions"
-							:props="{ value: 'menuId', label: 'menuName', children: 'children' }"
-							value-key="menuId"
 							placeholder="选择上级菜单"
-							check-strictly
+							:props="{ value: 'menuId', label: 'menuName', children: 'children' }"
+							valueKey="menuId"
 						/>
 					</ElFormItem>
 				</ElCol>
@@ -188,8 +188,8 @@ init()
 					>
 						<ElPopover
 							placement="bottom-start"
-							:width="540"
 							trigger="click"
+							:width="540"
 						>
 							<template #reference>
 								<ElInput
@@ -201,8 +201,8 @@ init()
 									<template #prefix>
 										<SvgIcon
 											v-if="form.icon"
-											:icon-class="form.icon"
 											class="el-input__icon"
+											:iconClass="form.icon"
 											style="width: 16px; height: 32px"
 										/>
 										<ElIcon
@@ -216,7 +216,7 @@ init()
 							</template>
 							<IconSelect
 								ref="iconSelectRef"
-								:active-icon="form.icon"
+								:activeIcon="form.icon"
 								@selected="selected"
 							/>
 						</ElPopover>
@@ -229,7 +229,7 @@ init()
 					>
 						<ElInputNumber
 							v-model="form.orderNum"
-							controls-position="right"
+							controlsPosition="right"
 							:min="0"
 						/>
 					</ElFormItem>
@@ -339,8 +339,8 @@ init()
 					<ElFormItem>
 						<ElInput
 							v-model="form.perms"
-							placeholder="请输入权限标识"
 							maxlength="100"
+							placeholder="请输入权限标识"
 						/>
 						<template #label>
 							<span>
@@ -362,8 +362,8 @@ init()
 					<ElFormItem>
 						<ElInput
 							v-model="form.query"
-							placeholder="请输入路由参数"
 							maxlength="255"
+							placeholder="请输入路由参数"
 						/>
 						<template #label>
 							<span>

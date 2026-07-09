@@ -8,11 +8,11 @@ import { constantRoutes } from './routes'
 const router = createRouter({
 	history: createWebHashHistory(import.meta.env.VITE_PUBLIC_PATH),
 	routes: constantRoutes,
-	strict: true,
 	scrollBehavior: () => ({
 		left: 0,
 		top: 0
-	})
+	}),
+	strict: true
 })
 
 export function setupRouter(app: App) {

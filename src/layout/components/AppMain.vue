@@ -11,7 +11,7 @@ const cachedViews = computed(() => tagsViewStore.cachedViews)
 	<div class="app-main">
 		<RouterView v-slot="{ Component, route }">
 			<Transition
-				enter-active-class="animate__animated animate__fadeIn"
+				enterActiveClass="animate__animated animate__fadeIn"
 				mode="out-in"
 			>
 				<KeepAlive :include="cachedViews">

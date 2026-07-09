@@ -5,47 +5,47 @@ import { useSettingsStore } from '@/store/settings'
 
 const settingsStore = useSettingsStore()
 const tagsView = computed({
+	get() {
+		return settingsStore.settings.tagsView
+	},
 	set(val: boolean) {
 		settingsStore.changeSettings({
 			key: 'tagsView',
 			value: val
 		})
-	},
-	get() {
-		return settingsStore.settings.tagsView
 	}
 })
 const fixedHeader = computed({
+	get() {
+		return settingsStore.settings.fixedHeader
+	},
 	set(val: boolean) {
 		settingsStore.changeSettings({
 			key: 'fixedHeader',
 			value: val
 		})
-	},
-	get() {
-		return settingsStore.settings.fixedHeader
 	}
 })
 const sidebarLogo = computed({
+	get() {
+		return settingsStore.settings.sidebarLogo
+	},
 	set(val: boolean) {
 		settingsStore.changeSettings({
 			key: 'sidebarLogo',
 			value: val
 		})
-	},
-	get() {
-		return settingsStore.settings.sidebarLogo
 	}
 })
 const watermarkEnabled = computed({
+	get() {
+		return settingsStore.settings.watermarkEnabled
+	},
 	set(val: boolean) {
 		settingsStore.changeSettings({
 			key: 'watermarkEnabled',
 			value: val
 		})
-	},
-	get() {
-		return settingsStore.settings.watermarkEnabled
 	}
 })
 </script>

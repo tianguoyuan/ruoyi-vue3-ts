@@ -2,138 +2,138 @@ import { defineMock } from './base'
 
 export default defineMock([
 	{
-		url: 'auth/login',
-		method: ['POST'],
 		body: {
 			code: '200',
-			msg: 'ok',
 			data: {
 				token: 'admin-token'
-			}
-		}
+			},
+			msg: 'ok'
+		},
+		method: ['POST'],
+		url: 'auth/login'
 	},
 	{
-		url: 'auth/logout',
-		method: ['POST'],
 		body: {
 			code: '200',
-			msg: 'ok',
 			data: {
 				token: 'admin-token'
-			}
-		}
+			},
+			msg: 'ok'
+		},
+		method: ['POST'],
+		url: 'auth/logout'
 	},
 	{
-		url: 'auth/userInfo',
-		method: ['POST'],
 		body: {
 			code: '200',
-			msg: 'ok',
 			data: {
+				avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+				introduction: 'I am a super administrator',
+				name: 'Super Admin',
 				// ['edit', ...] - router.meta.roles
 				roles: ['admin'],
-				introduction: 'I am a super administrator',
-				avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-				name: 'Super Admin',
 				routes: [
 					{
-						path: '/',
-						component: 'Layout',
-						redirect: '/home',
-						meta: {
-							title: '首页',
-							breadcrumb: false
-						},
 						children: [
 							{
-								path: 'home',
-								name: 'Home',
 								component: 'home/index',
 								meta: {
-									title: '首页',
 									affix: true,
-									icon: 'dashboard'
-								}
+									icon: 'dashboard',
+									title: '首页'
+								},
+								name: 'Home',
+								path: 'home'
 							}
-						]
-					},
-					{
-						path: '/guide',
-						redirect: '/guide/index',
+						],
 						component: 'Layout',
 						meta: {
-							title: '指南',
-							icon: 'guide',
-							roles: ['admin'],
-							alwaysShow: true
+							breadcrumb: false,
+							title: '首页'
 						},
+						path: '/',
+						redirect: '/home'
+					},
+					{
 						children: [
 							{
-								path: 'index',
-								name: 'Guide',
 								component: 'guide/index',
 								meta: {
-									title: '指南',
-									icon: 'guide'
-								}
+									icon: 'guide',
+									title: '指南'
+								},
+								name: 'Guide',
+								path: 'index'
 							}
-						]
+						],
+						component: 'Layout',
+						meta: {
+							alwaysShow: true,
+							icon: 'guide',
+							roles: ['admin'],
+							title: '指南'
+						},
+						path: '/guide',
+						redirect: '/guide/index'
 					}
 				]
-			}
-		}
+			},
+			msg: 'ok'
+		},
+		method: ['POST'],
+		url: 'auth/userInfo'
 	},
 	{
-		url: 'demo/list',
-		method: ['POST'],
 		body: {
 			code: '200',
-			msg: 'ok',
 			data: {
-				total: 201,
 				rows: [
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-03',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-02',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-04',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-01',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-03',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-02',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-04',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					},
 					{
+						address: 'No. 189, Grove St, Los Angeles',
 						date: '2016-05-01',
-						name: 'Tom',
-						address: 'No. 189, Grove St, Los Angeles'
+						name: 'Tom'
 					}
-				]
-			}
-		}
+				],
+				total: 201
+			},
+			msg: 'ok'
+		},
+		method: ['POST'],
+		url: 'demo/list'
 	}
 ])

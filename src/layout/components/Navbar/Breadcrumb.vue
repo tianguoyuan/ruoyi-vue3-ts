@@ -38,7 +38,7 @@ function pathCompile(path: string) {
 	return toPath(params)
 }
 function handleLink(item: RouteRecordRaw) {
-	const { redirect, path } = item
+	const { path, redirect } = item
 	if (redirect) {
 		router.push(redirect as string)
 		return

@@ -9,13 +9,13 @@ import CrontabWeek from './week.vue'
 import CrontabYear from './year.vue'
 const emit = defineEmits(['hide', 'fill'])
 const props = defineProps({
-	hideComponent: {
-		type: Array,
-		default: () => []
-	},
 	expression: {
-		type: String,
-		default: ''
+		default: '',
+		type: String
+	},
+	hideComponent: {
+		default: () => [],
+		type: Array
 	}
 })
 const tabTitles = ref(['秒', '分钟', '小时', '日', '月', '周', '年'])
@@ -23,11 +23,11 @@ const tabActive = ref(0)
 const hideComponentData = ref<any[]>([])
 const expressionData = ref('')
 const crontabValueObj = ref({
-	second: '*',
-	min: '*',
-	hour: '*',
 	day: '*',
+	hour: '*',
+	min: '*',
 	month: '*',
+	second: '*',
 	week: '?',
 	year: ''
 })
@@ -59,11 +59,11 @@ function resolveExp() {
 		if (arr.length >= 6) {
 			//6 位以上是合法表达式
 			let obj = {
-				second: arr[0],
-				min: arr[1],
-				hour: arr[2],
 				day: arr[3],
+				hour: arr[2],
+				min: arr[1],
 				month: arr[4],
+				second: arr[0],
 				week: arr[5],
 				year: arr[6] ? arr[6] : ''
 			}
@@ -107,11 +107,11 @@ function submitFill() {
 function clearCron() {
 	// 还原选择项
 	crontabValueObj.value = {
-		second: '*',
-		min: '*',
-		hour: '*',
 		day: '*',
+		hour: '*',
+		min: '*',
 		month: '*',
+		second: '*',
 		week: '?',
 		year: ''
 	}

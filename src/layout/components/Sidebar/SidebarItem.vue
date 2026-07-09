@@ -15,8 +15,8 @@ const props = withDefaults(
 		basePath?: string
 	}>(),
 	{
-		isNest: false,
-		basePath: ''
+		basePath: '',
+		isNest: false
 	}
 )
 
@@ -40,8 +40,8 @@ function hasOneShowingChild(children: RouteRecordRaw[] = [], parent: RouteRecord
 	if (showingChildren.length === 0) {
 		onlyOneChild.value = {
 			...parent,
-			path: '',
-			noShowingChildren: true
+			noShowingChildren: true,
+			path: ''
 		}
 		return true
 	}
@@ -76,8 +76,8 @@ function resolvePath(routePath: string) {
 				:to="resolvePath(onlyOneChild.path)"
 			>
 				<ElMenuItem
-					:index="resolvePath(onlyOneChild.path)"
 					:class="{ 'submenu-title-noDropdown': !isNest }"
+					:index="resolvePath(onlyOneChild.path)"
 				>
 					<MenuItem
 						:icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
@@ -91,7 +91,7 @@ function resolvePath(routePath: string) {
 			v-else
 			ref="subMenu"
 			:index="resolvePath(props.item.path)"
-			popper-append-to-body
+			popperAppendToBody
 		>
 			<template #title>
 				<MenuItem
@@ -103,10 +103,10 @@ function resolvePath(routePath: string) {
 			<SidebarItem
 				v-for="child in props.item.children"
 				:key="child.path"
-				:is-nest="true"
-				:item="child"
-				:base-path="resolvePath(child.path)"
+				:basePath="resolvePath(child.path)"
 				class="nest-menu"
+				:isNest="true"
+				:item="child"
 			/>
 		</ElSubMenu>
 	</div>

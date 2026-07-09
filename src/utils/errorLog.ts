@@ -18,9 +18,9 @@ if (checkNeed()) {
 			const errorStore = useErrorStoreWithOut()
 			errorStore.addErrorLog({
 				err,
-				vm,
 				info,
-				url: window.location.href
+				url: window.location.href,
+				vm
 			})
 		})
 	})

@@ -10,69 +10,69 @@ export function getGenList(params: API.IGenList): Promise<API.IGenListRes> {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/tool/gen/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/tool/gen/list'
 	})
 }
 
 // 生成文件下载
 export function genBatchGenCode(params: API.IGenBatchGenCode): Promise<API.IGenBatchGenCodeRes> {
 	return request({
-		url: '/tool/gen/batchGenCode',
 		method: 'get',
 		params,
-		responseType: 'blob'
+		responseType: 'blob',
+		url: '/tool/gen/batchGenCode'
 	})
 }
 
 // 同步数据库
 export function synchDb(tableName: string) {
 	return request({
-		url: '/tool/gen/synchDb/' + tableName,
-		method: 'get'
+		method: 'get',
+		url: '/tool/gen/synchDb/' + tableName
 	})
 }
 
 // 删除表数据
 export function delTable(tableId: string) {
 	return request({
-		url: '/tool/gen/' + tableId,
-		method: 'delete'
+		method: 'delete',
+		url: '/tool/gen/' + tableId
 	})
 }
 
 // 创建表
 export function createTable(data: { sql: string }): Promise<{ msg: string }> {
 	return request({
-		url: '/tool/gen/createTable',
 		method: 'post',
-		params: data
+		params: data,
+		url: '/tool/gen/createTable'
 	})
 }
 
 // 查询db数据库列表
 export function getDbList(query: API.IGetDbList): Promise<API.IGetDbListRes> {
 	return request({
-		url: '/tool/gen/db/list',
 		method: 'get',
-		params: query
+		params: query,
+		url: '/tool/gen/db/list'
 	})
 }
 
 // 导入表
 export function importTable(data: { tables: string }): Promise<{ msg: string }> {
 	return request({
-		url: '/tool/gen/importTable',
 		method: 'post',
-		params: data
+		params: data,
+		url: '/tool/gen/importTable'
 	})
 }
 
 // 预览生成代码
 export function previewTable(tableId: string): Promise<{ data: Record<string, string> }> {
 	return request({
-		url: '/tool/gen/preview/' + tableId,
-		method: 'get'
+		method: 'get',
+		url: '/tool/gen/preview/' + tableId
 	})
 }

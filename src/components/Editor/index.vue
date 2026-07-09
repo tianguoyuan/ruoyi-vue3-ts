@@ -16,40 +16,39 @@ const emits = defineEmits<{
 }>()
 
 const props = defineProps({
-	/* 编辑器的内容 */
-	modelValue: {
-		type: String,
-		default: ''
+	/* 上传文件大小限制(MB) */
+	fileSize: {
+		default: 5,
+		type: Number
 	},
 	/* 高度 */
 	height: {
-		type: Number,
-		default: null
+		default: null,
+		type: Number
 	},
 	/* 最小高度 */
 	minHeight: {
-		type: Number,
-		default: null
+		default: null,
+		type: Number
+	},
+	/* 编辑器的内容 */
+	modelValue: {
+		default: '',
+		type: String
 	},
 	/* 只读 */
 	readOnly: {
-		type: Boolean,
-		default: false
-	},
-	/* 上传文件大小限制(MB) */
-	fileSize: {
-		type: Number,
-		default: 5
+		default: false,
+		type: Boolean
 	},
 	/* 类型（base64格式、url格式） */
 	type: {
-		type: String,
-		default: 'url'
+		default: 'url',
+		type: String
 	}
 })
 
 const options = ref({
-	theme: 'snow',
 	bounds: document.body,
 	debug: 'warn',
 	modules: {
@@ -68,13 +67,14 @@ const options = ref({
 		]
 	},
 	placeholder: '请输入内容',
-	readOnly: props.readOnly
+	readOnly: props.readOnly,
+	theme: 'snow'
 })
 
 const styles = computed(() => {
 	let style = {
-		minHeight: '',
-		height: ''
+		height: '',
+		minHeight: ''
 	}
 	if (props.minHeight) {
 		style.minHeight = `${props.minHeight}px`
@@ -177,8 +177,8 @@ function insertImage(file) {
 	axios
 		.post(uploadUrl.value, formData, {
 			headers: {
-				'Content-Type': 'multipart/form-data',
-				Authorization: headers.value.Authorization
+				Authorization: headers.value.Authorization,
+				'Content-Type': 'multipart/form-data'
 			}
 		})
 		.then(res => {
@@ -192,13 +192,13 @@ function insertImage(file) {
 		<ElUpload
 			v-if="type == 'url'"
 			:action="uploadUrl"
-			:before-upload="handleBeforeUpload"
-			:on-success="handleUploadSuccess"
-			:on-error="handleUploadError"
-			name="file"
-			:show-file-list="false"
-			:headers="headers"
+			:beforeUpload="handleBeforeUpload"
 			class="editor-img-uploader"
+			:headers="headers"
+			name="file"
+			:onError="handleUploadError"
+			:onSuccess="handleUploadSuccess"
+			:showFileList="false"
 		>
 			<i
 				ref="uploadRef"
@@ -210,7 +210,7 @@ function insertImage(file) {
 		<QuillEditor
 			ref="quillEditorRef"
 			v-model:content="content"
-			content-type="html"
+			contentType="html"
 			:options="options"
 			:style="styles"
 			@textChange="e => emits('update:modelValue', content)"

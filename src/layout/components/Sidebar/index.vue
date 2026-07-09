@@ -27,22 +27,22 @@ const activeMenu = computed(() => {
 			v-if="showLogo"
 			:collapse="isCollapse"
 		/>
-		<ElScrollbar wrap-class="scrollbar-wrapper">
+		<ElScrollbar wrapClass="scrollbar-wrapper">
 			<ElMenu
-				:default-active="activeMenu"
+				activeTextColor="#409EFF"
+				backgroundColor="#304156"
 				:collapse="isCollapse"
-				:unique-opened="true"
-				:collapse-transition="false"
+				:collapseTransition="false"
+				:defaultActive="activeMenu"
 				mode="vertical"
-				background-color="#304156"
-				text-color="#bfcbd9"
-				active-text-color="#409EFF"
+				textColor="#bfcbd9"
+				:uniqueOpened="true"
 			>
 				<SidebarItem
 					v-for="item in permissionRoutes"
 					:key="item.path"
+					:basePath="item.path"
 					:item="item"
-					:base-path="item.path"
 				/>
 			</ElMenu>
 		</ElScrollbar>

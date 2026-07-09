@@ -38,31 +38,31 @@ watch(
 )
 
 const formModel = ref({
-	username: 'admin',
+	code: '',
 	password: 'admin123',
 	rememberMe: false,
-	code: '',
+	username: 'admin',
 	uuid: ''
 })
 const formRule = ref({
-	username: [
+	code: [
 		{
+			message: 'Please input code',
 			required: true,
-			message: 'Please input username',
 			trigger: 'blur'
 		}
 	],
 	password: [
 		{
-			required: true,
 			message: 'Please input password',
+			required: true,
 			trigger: 'blur'
 		}
 	],
-	code: [
+	username: [
 		{
+			message: 'Please input username',
 			required: true,
-			message: 'Please input code',
 			trigger: 'blur'
 		}
 	]
@@ -73,9 +73,9 @@ async function submit() {
 	await formRef.value?.validate()
 	const [err] = await to(
 		userStore.login({
-			username: formModel.value.username,
-			password: formModel.value.password,
 			code: formModel.value.code,
+			password: formModel.value.password,
+			username: formModel.value.username,
 			uuid: formModel.value.uuid
 		})
 	)
@@ -128,37 +128,37 @@ getCookie()
 			<div class="text-#707070 text-4.5 text-center mb-7.5">{{ appTitle }}</div>
 			<ElForm
 				ref="formRef"
+				class="form"
 				:model="formModel"
 				:rules="formRule"
-				class="form"
 			>
 				<ElFormItem
-					prop="username"
 					label=""
+					prop="username"
 				>
 					<ElInput
 						v-model.trim="formModel.username"
-						type="text"
-						clearable
-						:prefix-icon="User"
-						placeholder="Username"
-						class="h-9.5"
 						autocomplete="off"
+						class="h-9.5"
+						clearable
+						placeholder="Username"
+						:prefixIcon="User"
+						type="text"
 					/>
 				</ElFormItem>
 				<ElFormItem
-					prop="password"
 					label=""
+					prop="password"
 				>
 					<ElInput
 						ref="passwordRef"
 						v-model.trim="formModel.password"
-						type="password"
-						clearable
-						:prefix-icon="Lock"
-						placeholder="Password"
 						autocomplete="off"
 						class="h-9.5"
+						clearable
+						placeholder="Password"
+						:prefixIcon="Lock"
+						type="password"
 						@keyup.enter="submit"
 					/>
 				</ElFormItem>
@@ -168,22 +168,22 @@ getCookie()
 						<div class="w-63%">
 							<ElInput
 								v-model="formModel.code"
-								auto-complete="off"
-								placeholder="验证码"
+								autoComplete="off"
 								class="h-9.5 w-100%"
+								placeholder="验证码"
 								@keyup.enter="submit"
 							>
 								<template #prefix>
 									<SvgIcon
-										icon-class="validCode"
+										iconClass="validCode"
 										size="14"
 									/>
 								</template>
 							</ElInput>
 						</div>
 						<img
-							:src="codeImg"
 							class="h-9.5 cursor-pointer"
+							:src="codeImg"
 							@click="getCaptchaImage"
 						/>
 					</div>
@@ -193,9 +193,9 @@ getCookie()
 					<ElCheckbox v-model="formModel.rememberMe">记住密码</ElCheckbox>
 				</ElFormItem>
 				<ElButton
-					type="primary"
 					class="w-full"
 					size="large"
+					type="primary"
 					@click="submit"
 				>
 					登录

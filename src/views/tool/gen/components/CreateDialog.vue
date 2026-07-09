@@ -13,8 +13,8 @@ const dialogVisible = ref(false)
 const formRules = ref({
 	content: [
 		{
-			required: true,
-			message: '请输入建表语句'
+			message: '请输入建表语句',
+			required: true
 		}
 	]
 })
@@ -50,15 +50,15 @@ defineExpose({
 <template>
 	<ElDialog
 		v-model="dialogVisible"
+		:closeOnClickModal="false"
 		title="创建表"
 		width="800"
-		:close-on-click-modal="false"
 	>
 		<ElForm
 			ref="formRef"
+			labelPosition="top"
 			:model="formModel"
 			:rules="formRules"
-			label-position="top"
 		>
 			<ElFormItem
 				label="创建表语句(支持多个建表语句)："
@@ -66,9 +66,9 @@ defineExpose({
 			>
 				<ElInput
 					v-model="formModel.content"
-					type="textarea"
-					:rows="10"
 					placeholder="请输入文本"
+					:rows="10"
+					type="textarea"
 				/>
 			</ElFormItem>
 		</ElForm>

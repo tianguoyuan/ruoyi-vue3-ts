@@ -18,10 +18,10 @@ const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const sysYesNo = ref<API.IGetDictsRes>([])
 
 const initFormData = {
-	configName: undefined,
 	configKey: undefined,
-	configValue: undefined,
+	configName: undefined,
 	configType: 'Y',
+	configValue: undefined,
 	remark: ''
 }
 const formData = ref({ ...initFormData })
@@ -40,65 +40,65 @@ watch(
 	}
 )
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			label: '参数名称',
+			placeholder: '请输入参数名称',
+			prop: 'configName',
+			type: 'input'
+		},
+
+		{
+			label: '参数键名',
+			placeholder: '请输入参数键名',
+			prop: 'configKey',
+			type: 'input'
+		},
+		{
+			label: '参数键值',
+			placeholder: '请输入参数键值',
+			prop: 'configValue',
+			type: 'input'
+		},
+		{
+			label: '系统内置',
+			options: sysYesNo as unknown as any[],
+			prop: 'configType',
+			type: 'radio'
+		},
+		{
+			label: '备注',
+			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 3,
+			type: 'textarea'
+		}
+	],
 	formRules: {
-		configName: [
-			{
-				required: true,
-				message: '参数名称不能为空'
-			}
-		],
 		configKey: [
 			{
-				required: true,
-				message: '参数键名不能为空'
+				message: '参数键名不能为空',
+				required: true
+			}
+		],
+		configName: [
+			{
+				message: '参数名称不能为空',
+				required: true
 			}
 		],
 		configValue: [
 			{
-				required: true,
-				message: '参数键值不能为空'
+				message: '参数键值不能为空',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '参数名称',
-			prop: 'configName',
-			placeholder: '请输入参数名称'
-		},
-
-		{
-			type: 'input',
-			label: '参数键名',
-			prop: 'configKey',
-			placeholder: '请输入参数键名'
-		},
-		{
-			type: 'input',
-			label: '参数键值',
-			prop: 'configValue',
-			placeholder: '请输入参数键值'
-		},
-		{
-			type: 'radio',
-			label: '系统内置',
-			prop: 'configType',
-			options: sysYesNo as unknown as any[]
-		},
-		{
-			type: 'textarea',
-			rows: 3,
-			label: '备注',
-			prop: 'remark',
-			placeholder: '请输入备注'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 async function submit() {
@@ -121,9 +121,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="id ? '修改参数' : '添加参数'"
-		:close-on-click-modal="false"
 		width="500px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>

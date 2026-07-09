@@ -16,16 +16,16 @@ const cropperRef = ref<any>(null)
 
 //图片裁剪数据
 const options = ref({
-	img: userStore.userInfo.avatar, // 裁剪图片的地址
 	autoCrop: true, // 是否默认生成截图框
-	autoCropWidth: 200, // 默认生成截图框宽度
 	autoCropHeight: 200, // 默认生成截图框高度
-	fixedBox: true, // 固定截图框大小 不允许改变
-	outputType: 'png', // 默认生成截图为PNG格式
+	autoCropWidth: 200, // 默认生成截图框宽度
 	filename: 'avatar', // 文件名称
+	fixedBox: true, // 固定截图框大小 不允许改变
+	img: userStore.userInfo.avatar, // 裁剪图片的地址
+	outputType: 'png', // 默认生成截图为PNG格式
 	previews: {
-		url: undefined,
-		img: undefined
+		img: undefined,
+		url: undefined
 	} //预览数据
 })
 
@@ -104,41 +104,41 @@ function closeDialog() {
 		@click="editCropper()"
 	>
 		<img
+			class="h-full w-full rounded-full"
 			:src="options.img"
 			title="点击上传头像"
-			class="h-full w-full rounded-full"
 		/>
 		<ElDialog
 			v-model="open"
+			appendToBody
 			:title="title"
 			width="800px"
-			append-to-body
-			@opened="modalOpened"
 			@close="closeDialog"
+			@opened="modalOpened"
 		>
 			<ElRow>
 				<ElCol
-					:xs="24"
 					:md="12"
 					:style="{ height: '350px' }"
+					:xs="24"
 				>
 					<VueCropper
 						v-if="visible"
 						ref="cropperRef"
+						:autoCrop="options.autoCrop"
+						:autoCropHeight="options.autoCropHeight"
+						:autoCropWidth="options.autoCropWidth"
+						:fixedBox="options.fixedBox"
 						:img="options.img"
 						:info="true"
-						:auto-crop="options.autoCrop"
-						:auto-crop-width="options.autoCropWidth"
-						:auto-crop-height="options.autoCropHeight"
-						:fixed-box="options.fixedBox"
-						:output-type="options.outputType"
+						:outputType="options.outputType"
 						@realTime="realTime"
 					/>
 				</ElCol>
 				<ElCol
-					:xs="24"
 					:md="12"
 					:style="{ height: '350px' }"
+					:xs="24"
 				>
 					<div class="avatar-upload-preview">
 						<img
@@ -156,9 +156,9 @@ function closeDialog() {
 				>
 					<ElUpload
 						action="#"
-						:http-request="undefined"
-						:show-file-list="false"
-						:before-upload="beforeUpload"
+						:beforeUpload="beforeUpload"
+						:httpRequest="undefined"
+						:showFileList="false"
 					>
 						<ElButton>
 							选择

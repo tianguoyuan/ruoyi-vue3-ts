@@ -3,84 +3,84 @@ import { request } from '@/utils/request'
 // 查询用户信息
 export function systemUserProfile(): Promise<any> {
 	return request({
-		url: '/system/user/profile',
-		method: 'get'
+		method: 'get',
+		url: '/system/user/profile'
 	})
 }
 // 修改用户个人信息
 export function updateUserProfile(data: API.IUpdateUserProfile): Promise<void> {
 	return request({
-		url: '/system/user/profile',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/user/profile'
 	})
 }
 // 用户密码重置
 export function updateUserPwd(oldPassword, newPassword) {
 	const data = {
-		oldPassword,
-		newPassword
+		newPassword,
+		oldPassword
 	}
 	return request({
-		url: '/system/user/profile/updatePwd',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/user/profile/updatePwd'
 	})
 }
 
 // 用户头像上传
 export function uploadAvatar(data: API.IUploadAvatar): Promise<{ imgUrl: string }> {
 	return request({
-		url: '/system/user/profile/avatar',
-		method: 'post',
+		data: data,
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-		data: data
+		method: 'post',
+		url: '/system/user/profile/avatar'
 	})
 }
 
 // 用户状态修改
 export function changeUserStatus(userId, status) {
 	const data = {
-		userId,
-		status
+		status,
+		userId
 	}
 	return request({
-		url: '/system/user/changeStatus',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/user/changeStatus'
 	})
 }
 
 // 查询用户个人信息
 export function getUserProfile() {
 	return request({
-		url: '/system/user/profile',
-		method: 'get'
+		method: 'get',
+		url: '/system/user/profile'
 	})
 }
 
 // 查询授权角色
 export function getAuthRole(userId) {
 	return request({
-		url: '/system/user/authRole/' + userId,
-		method: 'get'
+		method: 'get',
+		url: '/system/user/authRole/' + userId
 	})
 }
 
 // 保存授权角色
 export function updateAuthRole(data) {
 	return request({
-		url: '/system/user/authRole',
 		method: 'put',
-		params: data
+		params: data,
+		url: '/system/user/authRole'
 	})
 }
 
 // 查询部门下拉树结构
 export function deptTreeSelect() {
 	return request({
-		url: '/system/user/deptTree',
-		method: 'get'
+		method: 'get',
+		url: '/system/user/deptTree'
 	})
 }
 
@@ -95,69 +95,69 @@ export function listUser(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/system/user/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/system/user/list'
 	})
 }
 
 // 查询用户详细
 export function getUser(userId: string = '') {
 	return request({
-		url: '/system/user/' + userId,
-		method: 'get'
+		method: 'get',
+		url: '/system/user/' + userId
 	})
 }
 
 // 新增用户
 export function addUser(data) {
 	return request({
-		url: '/system/user',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/system/user'
 	})
 }
 
 // 修改用户
 export function updateUser(data) {
 	return request({
-		url: '/system/user',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/user'
 	})
 }
 
 // 删除用户
 export function delUser(userId) {
 	return request({
-		url: '/system/user/' + userId,
-		method: 'delete'
+		method: 'delete',
+		url: '/system/user/' + userId
 	})
 }
 
 // 用户密码重置
 export function resetUserPwd(userId, password) {
 	const data = {
-		userId,
-		password
+		password,
+		userId
 	}
 	return request({
-		url: '/system/user/resetPwd',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/system/user/resetPwd'
 	})
 }
 
 // 用户管理导出
 export function userExport(data) {
 	return request({
-		url: '/system/user/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/system/user/export'
 	})
 }
 
@@ -166,11 +166,11 @@ export const USER_UPLOAD_URL = import.meta.env.VITE_API_URL + '/system/user/impo
 // 下载地址
 export function userImportTemplate() {
 	return request({
-		url: '/system/user/importTemplate',
-		method: 'post',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/system/user/importTemplate'
 	})
 }

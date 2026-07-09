@@ -25,9 +25,9 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
 	options: null,
-	value: '',
+	separator: ',',
 	showValue: true,
-	separator: ','
+	value: ''
 })
 
 const values = computed(() => {
@@ -73,17 +73,17 @@ function handleArray(array) {
 				<span
 					v-if="(item.elTagType == 'default' || item.elTagType == '') && (item.elTagClass == '' || item.elTagClass == null)"
 					:key="item.value"
-					:index="index"
 					:class="item.elTagClass"
+					:index="index"
 					>{{ item.label + ' ' }}</span
 				>
 				<ElTag
 					v-else
 					:key="item.value + ''"
-					:disable-transitions="true"
+					:class="item.elTagClass"
+					:disableTransitions="true"
 					:index="index"
 					:type="item.elTagType"
-					:class="item.elTagClass"
 				>
 					{{ item.label + ' ' }}
 				</ElTag>

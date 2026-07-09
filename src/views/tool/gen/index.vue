@@ -26,12 +26,12 @@ const previewDialogShow = ref(false)
 const previewInfo = ref({})
 
 const formData = ref<Record<string, any>>({
-	orderByColumn: 'createTime',
-	isAsc: 'descending'
+	isAsc: 'descending',
+	orderByColumn: 'createTime'
 })
 const defaultSort = {
-	prop: 'createTime',
-	order: 'descending'
+	order: 'descending',
+	prop: 'createTime'
 } as Sort
 
 interface IListRow {
@@ -50,93 +50,90 @@ const single = computed(() => {
 }) as unknown as boolean
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
-	fields: [
-		{
-			type: 'input',
-			label: '表名称',
-			prop: 'tableName',
-			placeholder: '请输入表名称'
-		},
-		{
-			type: 'input',
-			label: '表描述',
-			prop: 'tableComment',
-			placeholder: '请输入表描述'
-		},
-		{
-			type: 'date-picker',
-			label: '创建时间',
-			prop: 'daterange',
-			placeholder: '请选择创建时间',
-			dateType: 'daterange',
-			span: 8
-		}
-	],
+	api: getGenList,
 	buttons: [
 		{
-			label: '搜索',
-			type: 'primary',
 			event: 'search',
-			icon: 'Search'
+			icon: 'Search',
+			label: '搜索',
+			type: 'primary'
 		},
 		{
-			label: '重置',
 			event: 'reset',
-			icon: 'Refresh'
+			icon: 'Refresh',
+			label: '重置'
 		}
 	],
+	fields: [
+		{
+			label: '表名称',
+			placeholder: '请输入表名称',
+			prop: 'tableName',
+			type: 'input'
+		},
+		{
+			label: '表描述',
+			placeholder: '请输入表描述',
+			prop: 'tableComment',
+			type: 'input'
+		},
+		{
+			dateType: 'daterange',
+			label: '创建时间',
+			placeholder: '请选择创建时间',
+			prop: 'daterange',
+			span: 8,
+			type: 'date-picker'
+		}
+	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '生成',
-			type: 'primary',
+			disabled: multiple,
 			event: 'handleGenTable',
-			plain: true,
 			icon: 'Download',
+			label: '生成',
+			plain: true,
 			show: checkPermission(['tool:gen:code']),
-			disabled: multiple
+			type: 'primary'
 		},
 		{
-			label: '创建',
-			type: 'primary',
 			event: 'openCreateTable',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['admin'])
+			label: '创建',
+			plain: true,
+			show: checkPermission(['admin']),
+			type: 'primary'
 		},
 		{
-			label: '导入',
-			type: 'info',
 			event: 'openImportTable',
-			plain: true,
 			icon: 'Upload',
-			show: checkPermission(['tool:gen:import'])
+			label: '导入',
+			plain: true,
+			show: checkPermission(['tool:gen:import']),
+			type: 'info'
 		},
 		{
-			label: '修改',
-			type: 'success',
+			disabled: single,
 			event: 'handleEditTable',
-			plain: true,
 			icon: 'Edit',
+			label: '修改',
+			plain: true,
 			show: checkPermission(['tool:gen:edit']),
-			disabled: single
+			type: 'success'
 		},
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['tool:gen:remove']),
-			disabled: multiple
+			type: 'danger'
 		}
 	],
 
-	tableShow: true,
-	api: getGenList,
-	tableShowSelection: true,
-	tableShowIndex: true,
+	span: 6,
 	tableHeader: [
 		{
 			label: '表名称',
@@ -160,53 +157,56 @@ const formConfig = ref<FormConfig>({
 			prop: 'updateTime'
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'View',
-					tip: '预览',
 					event: 'handlePreview',
-					show: checkPermission(['tool:gen:preview'])
+					icon: 'View',
+					link: true,
+					show: checkPermission(['tool:gen:preview']),
+					tip: '预览',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
 					event: 'handleEditTable',
-					show: checkPermission(['tool:gen:edit'])
+					icon: 'Edit',
+					link: true,
+					show: checkPermission(['tool:gen:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
 					event: 'handleDelete',
-					show: checkPermission(['tool:gen:remove'])
+					icon: 'Delete',
+					link: true,
+					show: checkPermission(['tool:gen:remove']),
+					tip: '删除',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Refresh',
-					tip: '同步',
 					event: 'handleSynchDb',
-					show: checkPermission(['tool:gen:edit'])
+					icon: 'Refresh',
+					link: true,
+					show: checkPermission(['tool:gen:edit']),
+					tip: '同步',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Download',
 					event: 'handleGenTable',
+					icon: 'Download',
+					link: true,
 					show: checkPermission(['tool:gen:code']),
-					tip: '生成代码'
+					tip: '生成代码',
+					type: 'primary'
 				}
 			]
 		}
-	]
+	],
+	tableShow: true,
+	tableShowIndex: true,
+	tableShowSelection: true
 })
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
@@ -255,13 +255,13 @@ async function tableEditClick(row, btn) {
 		if (editTablePage) {
 			tagsViewStore.addView({
 				...editTablePage,
-				path: `/tool/gen-edit/index/${row.tableId}`,
-				query: {
-					pageNum: '1'
-				},
 				meta: {
 					...editTablePage.meta,
 					title: '修改[' + row.tableName + ']生成配置'
+				},
+				path: `/tool/gen-edit/index/${row.tableId}`,
+				query: {
+					pageNum: '1'
 				}
 			})
 		}
@@ -272,10 +272,10 @@ async function tableEditClick(row, btn) {
 	} else if (btn.event === 'handleSynchDb') {
 		// 同步
 		await ElMessageBox.confirm('确认要强制同步"' + row.tableName + '"表结构吗？', {
-			title: '系统提示',
-			type: 'warning',
+			cancelButtonText: '取消',
 			confirmButtonText: '确定',
-			cancelButtonText: '取消'
+			title: '系统提示',
+			type: 'warning'
 		})
 		await synchDb(row.tableName)
 		ElMessage({
@@ -300,10 +300,10 @@ function handleEditTable(id: string) {
 // 删除
 async function handleDelete(ids: string) {
 	await ElMessageBox.confirm('是否确认删除表编号为"' + ids + '"的数据项？', {
-		title: '系统提示',
-		type: 'warning',
+		cancelButtonText: '取消',
 		confirmButtonText: '确定',
-		cancelButtonText: '取消'
+		title: '系统提示',
+		type: 'warning'
 	})
 	await delTable(ids)
 	ElMessage({
@@ -328,10 +328,10 @@ function handleGenTable(tableName: string) {
 			ref="formGeneratorRef"
 			v-model="formData"
 			:config="formConfig"
-			:default-sort="defaultSort"
+			:defaultSort="defaultSort"
 			@buttonClick="handleButtonClick"
-			@tableEditClick="tableEditClick"
 			@selectionChange="selectionChange"
+			@tableEditClick="tableEditClick"
 		/>
 
 		<!-- 新增弹窗 -->
@@ -349,7 +349,7 @@ function handleGenTable(tableName: string) {
 		<!-- 查看弹窗 -->
 		<PreviewDialog
 			v-model:show="previewDialogShow"
-			:preview-info="previewInfo"
+			:previewInfo="previewInfo"
 		/>
 	</div>
 </template>

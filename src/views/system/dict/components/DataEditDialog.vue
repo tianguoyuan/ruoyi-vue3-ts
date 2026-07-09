@@ -19,37 +19,37 @@ const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 const listClassOptions = ref([
 	{
-		value: 'default',
-		label: '默认(default)'
+		label: '默认(default)',
+		value: 'default'
 	},
 	{
-		value: 'primary',
-		label: '主要(primary)'
+		label: '主要(primary)',
+		value: 'primary'
 	},
 	{
-		value: 'success',
-		label: '成功(success)'
+		label: '成功(success)',
+		value: 'success'
 	},
 	{
-		value: 'info',
-		label: '信息(info)'
+		label: '信息(info)',
+		value: 'info'
 	},
 	{
-		value: 'warning',
-		label: '警告(warning)'
+		label: '警告(warning)',
+		value: 'warning'
 	},
 	{
-		value: 'danger',
-		label: '危险(danger)'
+		label: '危险(danger)',
+		value: 'danger'
 	}
 ])
 
 const initFormData = {
-	dictType: '',
 	dictSort: 0,
-	status: '0',
+	dictType: '',
+	listClass: 'default',
 	remark: '',
-	listClass: 'default'
+	status: '0'
 }
 const formData = ref({ ...initFormData })
 
@@ -70,86 +70,86 @@ watch(
 	}
 )
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 24,
+	buttons: [],
+	fields: [
+		{
+			disabled: true,
+			label: '字典类型',
+			placeholder: '请输入字典类型',
+			prop: 'dictType',
+			type: 'input'
+		},
+
+		{
+			label: '数据标签',
+			placeholder: '请输入数据标签',
+			prop: 'dictLabel',
+			type: 'input'
+		},
+		{
+			label: '数据键值',
+			placeholder: '请输入数据键值',
+			prop: 'dictValue',
+			type: 'input'
+		},
+		{
+			label: '样式属性',
+			placeholder: '请输入样式属性',
+			prop: 'cssClass',
+			type: 'input'
+		},
+		{
+			label: '显示排序',
+			min: 0,
+			placeholder: '请输入显示排序',
+			prop: 'dictSort',
+			type: 'input-number'
+		},
+		{
+			label: '回显样式',
+			options: listClassOptions as unknown as any[],
+			placeholder: '请选择回显样式',
+			prop: 'listClass',
+			type: 'select'
+		},
+		{
+			label: '状态',
+			options: sysNormalDisable as unknown as any[],
+			prop: 'status',
+			type: 'radio'
+		},
+		{
+			label: '备注',
+			placeholder: '请输入备注',
+			prop: 'remark',
+			rows: 3,
+			type: 'textarea'
+		}
+	],
 	formRules: {
 		dictLabel: [
 			{
-				required: true,
-				message: '请输入数据标签'
-			}
-		],
-		dictValue: [
-			{
-				required: true,
-				message: '请输入数据键值'
+				message: '请输入数据标签',
+				required: true
 			}
 		],
 		dictSort: [
 			{
-				required: true,
-				message: '请输入显示排序'
+				message: '请输入显示排序',
+				required: true
+			}
+		],
+		dictValue: [
+			{
+				message: '请输入数据键值',
+				required: true
 			}
 		]
 	},
-	fields: [
-		{
-			type: 'input',
-			label: '字典类型',
-			prop: 'dictType',
-			disabled: true,
-			placeholder: '请输入字典类型'
-		},
-
-		{
-			type: 'input',
-			label: '数据标签',
-			prop: 'dictLabel',
-			placeholder: '请输入数据标签'
-		},
-		{
-			type: 'input',
-			label: '数据键值',
-			prop: 'dictValue',
-			placeholder: '请输入数据键值'
-		},
-		{
-			type: 'input',
-			label: '样式属性',
-			prop: 'cssClass',
-			placeholder: '请输入样式属性'
-		},
-		{
-			type: 'input-number',
-			label: '显示排序',
-			min: 0,
-			prop: 'dictSort',
-			placeholder: '请输入显示排序'
-		},
-		{
-			type: 'select',
-			label: '回显样式',
-			prop: 'listClass',
-			placeholder: '请选择回显样式',
-			options: listClassOptions as unknown as any[]
-		},
-		{
-			type: 'radio',
-			label: '状态',
-			prop: 'status',
-			options: sysNormalDisable as unknown as any[]
-		},
-		{
-			type: 'textarea',
-			rows: 3,
-			label: '备注',
-			prop: 'remark',
-			placeholder: '请输入备注'
-		}
-	],
-	buttons: [],
-	tableShow: false,
-	tableInitQueryRefuse: true
+	labelWidth: '80px',
+	span: 24,
+	tableInitQueryRefuse: true,
+	tableShow: false
 })
 
 async function submit() {
@@ -172,9 +172,9 @@ init()
 
 <template>
 	<ElDialog
-		:model-value="props.visible"
+		:closeOnClickModal="false"
+		:modelValue="props.visible"
 		:title="id ? '修改字典类型' : '添加字典类型'"
-		:close-on-click-modal="false"
 		width="500px"
 		@update:modelValue="v => emits('update:visible', v)"
 	>

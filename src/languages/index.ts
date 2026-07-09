@@ -13,8 +13,8 @@ const i18n = createI18n({
 	legacy: false,
 	locale: Storage.get('lang') || getBrowserLang(),
 	messages: {
-		'zh-CN': zhCN,
-		en
+		en,
+		'zh-CN': zhCN
 	}
 })
 

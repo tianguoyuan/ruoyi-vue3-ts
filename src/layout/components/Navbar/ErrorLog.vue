@@ -9,34 +9,34 @@ const errorLogs = computed(() => errorStore.logs)
 	<div>
 		<ElBadge
 			class="item"
-			:is-dot="errorLogs.length > 0"
+			:isDot="errorLogs.length > 0"
 			:offset="[0, 15]"
 			@click="dialogVisible = !dialogVisible"
 		>
 			<SvgIcon
-				icon-class="bug"
+				iconClass="bug"
 				size="18px"
 			/>
 		</ElBadge>
 		<ElDialog
 			v-model="dialogVisible"
-			:append-to-body="true"
+			:appendToBody="true"
+			:closeOnClickModal="false"
+			:closeOnPressEscape="false"
+			destroyOnClose
 			title="错误日志"
 			width="80%"
-			:close-on-press-escape="false"
-			:close-on-click-modal="false"
-			destroy-on-close
 		>
 			<ElTable :data="errorLogs">
 				<ElTableColumn
-					prop="message"
-					label="错误信息"
 					align="center"
+					label="错误信息"
+					prop="message"
 				/>
 
 				<ElTableColumn
-					label="错误详情"
 					align="center"
+					label="错误详情"
 				>
 					<template #default="{ row }">
 						<ElTag type="warning"> {{ row.vm?.$vnode?.tag }} error in {{ row.info }} </ElTag>
@@ -44,14 +44,14 @@ const errorLogs = computed(() => errorStore.logs)
 				</ElTableColumn>
 
 				<ElTableColumn
+					align="center"
 					label="错误地址"
 					prop="url"
-					align="center"
 				/>
 				<ElTableColumn
-					prop="stack"
-					label="错误堆栈"
 					align="center"
+					label="错误堆栈"
+					prop="stack"
 				/>
 			</ElTable>
 		</ElDialog>

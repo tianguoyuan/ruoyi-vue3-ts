@@ -7,44 +7,44 @@ import UserInfo from './components/UserInfo.vue'
 const userProfile = ref<{ label: string; value: string; icon: string }[]>([])
 
 const userForm = ref({
+	email: '',
 	nickName: '',
 	phonenumber: '',
-	email: '',
 	sex: ''
 })
 const selectedTab = ref('userinfo')
 
 async function getUserProfile() {
-	const { postGroup, roleGroup, data } = await systemUserProfile()
+	const { data, postGroup, roleGroup } = await systemUserProfile()
 	userProfile.value = [
 		{
-			label: '用户名称',
 			icon: 'user',
+			label: '用户名称',
 			value: data.userName
 		},
 		{
-			label: '手机号码',
 			icon: 'phone',
+			label: '手机号码',
 			value: data.phonenumber
 		},
 		{
-			label: '用户邮箱',
 			icon: 'email',
+			label: '用户邮箱',
 			value: data.email
 		},
 		{
-			label: '所属部门',
 			icon: 'tree',
+			label: '所属部门',
 			value: data.dept.deptName + ' / ' + postGroup
 		},
 		{
-			label: '所属角色',
 			icon: 'peoples',
+			label: '所属角色',
 			value: roleGroup
 		},
 		{
-			label: '创建日期',
 			icon: 'date',
+			label: '创建日期',
 			value: data.createTime
 		}
 	]
@@ -77,7 +77,7 @@ getUserProfile()
 					>
 						<div>
 							<SvgIcon
-								:icon-class="item.icon"
+								:iconClass="item.icon"
 								size="13"
 							/>
 
@@ -101,7 +101,7 @@ getUserProfile()
 							name="userinfo"
 						>
 							<UserInfo
-								:user-form="userForm"
+								:userForm="userForm"
 								@refreshInfo="getUserProfile"
 							/>
 						</ElTabPane>

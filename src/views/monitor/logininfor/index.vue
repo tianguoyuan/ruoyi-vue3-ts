@@ -13,12 +13,12 @@ const router = useRouter()
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const formData = ref({
 	deptId: '',
-	orderByColumn: 'loginTime',
-	isAsc: 'descending'
+	isAsc: 'descending',
+	orderByColumn: 'loginTime'
 })
 const defaultSort = {
-	prop: 'loginTime',
-	order: 'descending'
+	order: 'descending',
+	prop: 'loginTime'
 } as Sort
 
 const selectionList = ref<string[]>([])
@@ -34,76 +34,74 @@ function selectionChange(v) {
 const sysCommonStatus = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 7,
+	api: list,
 	fields: [
 		{
-			type: 'input',
 			label: '登录地址',
+			placeholder: '请输入登录地址',
 			prop: 'ipaddr',
-			placeholder: '请输入登录地址'
+			type: 'input'
 		},
 		{
-			type: 'input',
 			label: '用户名称',
+			placeholder: '请输入用户名称',
 			prop: 'userName',
-			placeholder: '请输入用户名称'
+			type: 'input'
 		},
 		{
-			type: 'select',
 			label: '登录状态',
-			prop: 'status',
+			options: sysCommonStatus as unknown as any[],
 			placeholder: '请选择登录状态',
-			options: sysCommonStatus as unknown as any[]
+			prop: 'status',
+			type: 'select'
 		},
 		{
-			type: 'date-picker',
 			dateType: 'daterange',
-			prop: 'daterange',
+			defaultTime: [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 1, 1, 23, 59, 59)],
 			label: '登录时间',
-			valueFormat: 'YYYY-MM-DD HH:mm:ss',
-			defaultTime: [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 1, 1, 23, 59, 59)]
+			prop: 'daterange',
+			type: 'date-picker',
+			valueFormat: 'YYYY-MM-DD HH:mm:ss'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '删除',
-			type: 'danger',
+			disabled: multiple as unknown as boolean,
 			event: 'handleDelete',
-			plain: true,
 			icon: 'Delete',
+			label: '删除',
+			plain: true,
 			show: checkPermission(['monitor:logininfor:remove']),
-			disabled: multiple as unknown as boolean
+			type: 'danger'
 		},
 		{
-			label: '清空',
-			type: 'danger',
 			event: 'handleClean',
-			plain: true,
 			icon: 'Delete',
-			show: checkPermission(['monitor:logininfor:remove'])
+			label: '清空',
+			plain: true,
+			show: checkPermission(['monitor:logininfor:remove']),
+			type: 'danger'
 		},
 		{
-			label: '解锁',
-			type: 'primary',
+			disabled: single as unknown as boolean,
 			event: 'handleUnlock',
-			plain: true,
 			icon: 'Unlock',
+			label: '解锁',
+			plain: true,
 			show: checkPermission(['monitor:logininfor:unlock']),
-			disabled: single as unknown as boolean
+			type: 'primary'
 		},
 		{
-			label: '导出',
-			type: 'warning',
 			event: 'handleExport',
-			plain: true,
 			icon: 'Download',
-			show: checkPermission(['monitor:logininfor:export'])
+			label: '导出',
+			plain: true,
+			show: checkPermission(['monitor:logininfor:export']),
+			type: 'warning'
 		}
 	],
-	tableShow: true,
-	api: list,
-	tableShowSelection: true,
+	span: 7,
 	tableHeader: [
 		{
 			label: '访问编号',
@@ -146,13 +144,15 @@ const formConfig = ref<FormConfig>({
 			showOverflowTooltip: true
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '访问时间',
 			prop: 'loginTime',
 			sortable: 'custom',
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			width: '160px'
 		}
-	]
+	],
+	tableShow: true,
+	tableShowSelection: true
 })
 
 // 表单按钮
@@ -164,12 +164,12 @@ async function handleButtonClick(event: string) {
 	} else if (event === 'handleClean') {
 		// 清空
 		await ElMessageBox({
-			title: '提示',
-			type: 'warning',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: `是否确认清空所有操作日志数据项？`,
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		})
 		await cleanLogininfor()
 		ElMessage.success('清空成功')
@@ -178,12 +178,12 @@ async function handleButtonClick(event: string) {
 		// 解锁
 		const username = selectionNameList.value.join(',')
 		await ElMessageBox({
-			title: '提示',
-			type: 'warning',
+			cancelButtonText: '取消',
+			confirmButtonText: '确定',
 			message: `是否确认解锁用户${username}数据项?`,
 			showCancelButton: true,
-			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			title: '提示',
+			type: 'warning'
 		})
 
 		await unlockLogininfor(username)
@@ -202,12 +202,12 @@ async function handleButtonClick(event: string) {
 
 async function handleDelete(ids: string) {
 	await ElMessageBox({
-		title: '提示',
-		type: 'warning',
+		cancelButtonText: '取消',
+		confirmButtonText: '确定',
 		message: `是否确认删除用户编号为"${ids}"的数据项？`,
 		showCancelButton: true,
-		cancelButtonText: '取消',
-		confirmButtonText: '确定'
+		title: '提示',
+		type: 'warning'
 	})
 	await delLogininfor(ids)
 	ElMessage.success('删除成功')
@@ -235,7 +235,7 @@ init()
 			ref="formGeneratorRef"
 			v-model="formData"
 			:config="formConfig"
-			:default-sort="defaultSort"
+			:defaultSort="defaultSort"
 			@buttonClick="handleButtonClick"
 			@selectionChange="selectionChange"
 		>

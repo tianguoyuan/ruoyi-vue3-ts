@@ -16,58 +16,52 @@ const formData = ref({
 const sysNormalDisable = ref<API.IGetDictsRes>([])
 
 const formConfig = ref<FormConfig>({
-	labelWidth: '80px',
-	span: 6,
+	api: listMenu,
 	fields: [
 		{
-			type: 'input',
 			label: '部门名称',
+			placeholder: '请输入部门名称',
 			prop: 'deptName',
-			placeholder: '请输入部门名称'
+			type: 'input'
 		},
 
 		{
-			type: 'select',
 			label: '部门状态',
-			prop: 'roleName',
+			options: sysNormalDisable as unknown as any[],
 			placeholder: '请选择部门状态',
-			options: sysNormalDisable as unknown as any[]
+			prop: 'roleName',
+			type: 'select'
 		}
 	],
+	labelWidth: '80px',
 	leftButtons: [
 		{
-			label: '新增',
-			type: 'primary',
 			event: 'handleAdd',
-			plain: true,
 			icon: 'Plus',
-			show: checkPermission(['system:dept:add'])
+			label: '新增',
+			plain: true,
+			show: checkPermission(['system:dept:add']),
+			type: 'primary'
 		},
 
 		{
-			label: '展开/折叠',
-			type: 'info',
 			event: 'toggleExpandAll',
+			icon: 'Sort',
+			label: '展开/折叠',
 			plain: true,
-			icon: 'Sort'
+			type: 'info'
 		}
 	],
 
-	tableShow: true,
-	api: listMenu,
-	tableExpandAll: false,
-	tableTreeRowKey: 'menuId',
 	removePageParams: true,
-	tableTreeProps: {
-		children: 'children',
-		hasChildren: 'hasChildren'
-	},
+	span: 6,
+	tableExpandAll: false,
 	tableHeader: [
 		{
+			align: 'left',
 			label: '菜单名称',
 			prop: 'menuName',
-			showOverflowTooltip: true,
-			align: 'left'
+			showOverflowTooltip: true
 		},
 		{
 			label: '图标',
@@ -78,8 +72,8 @@ const formConfig = ref<FormConfig>({
 		{
 			label: '排序',
 			prop: 'orderNum',
-			width: '60px',
-			showOverflowTooltip: true
+			showOverflowTooltip: true,
+			width: '60px'
 		},
 		{
 			label: '权限标识',
@@ -97,48 +91,54 @@ const formConfig = ref<FormConfig>({
 			slotName: 'statusSlot'
 		},
 		{
+			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss'),
 			label: '创建时间',
 			prop: 'createTime',
-			showOverflowTooltip: true,
-			format: v => dayjs(v).format('YYYY-MM-DD hh:mm:ss')
+			showOverflowTooltip: true
 		},
 		{
-			label: '操作',
 			custom: true,
+			label: '操作',
 			prop: '',
-			width: '200px',
 			tableEditBtn: [
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Edit',
-					tip: '修改',
-					label: '修改',
 					event: 'handleUpdate',
-					show: checkPermission(['system:menu:edit'])
+					icon: 'Edit',
+					label: '修改',
+					link: true,
+					show: checkPermission(['system:menu:edit']),
+					tip: '修改',
+					type: 'primary'
 				},
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Plus',
-					tip: '新增',
-					label: '新增',
 					event: 'handleAdd',
-					show: checkPermission(['system:menu:add'])
+					icon: 'Plus',
+					label: '新增',
+					link: true,
+					show: checkPermission(['system:menu:add']),
+					tip: '新增',
+					type: 'primary'
 				},
 
 				{
-					type: 'primary',
-					link: true,
-					icon: 'Delete',
-					tip: '删除',
-					label: '删除',
 					event: 'handleDelete',
-					show: row => checkPermission(['system:menu:remove'])
+					icon: 'Delete',
+					label: '删除',
+					link: true,
+					show: row => checkPermission(['system:menu:remove']),
+					tip: '删除',
+					type: 'primary'
 				}
-			]
+			],
+			width: '200px'
 		}
-	]
+	],
+	tableShow: true,
+	tableTreeProps: {
+		children: 'children',
+		hasChildren: 'hasChildren'
+	},
+	tableTreeRowKey: 'menuId'
 })
 
 function handleButtonClick(event: string) {
@@ -162,12 +162,12 @@ async function tableEditClick(row, btn) {
 	} else if (event === 'handleDelete') {
 		// 删除
 		await ElMessageBox({
-			title: '提示',
-			message: `是否确认删除名称为"${row.menuName}"的数据项?`,
-			type: 'warning',
-			showCancelButton: true,
 			cancelButtonText: '取消',
-			confirmButtonText: '确定'
+			confirmButtonText: '确定',
+			message: `是否确认删除名称为"${row.menuName}"的数据项?`,
+			showCancelButton: true,
+			title: '提示',
+			type: 'warning'
 		})
 
 		await delMenu(row.menuId)
@@ -224,13 +224,13 @@ init()
 			@tableEditClick="tableEditClick"
 		>
 			<template #iconSlot="{ row }">
-				<SvgIcon :icon-class="row.icon" />
+				<SvgIcon :iconClass="row.icon" />
 			</template>
 			<!-- table-状态 -->
 			<template #statusSlot="{ row }">
 				<DictTag
-					:value="row.status"
 					:options="sysNormalDisable"
+					:value="row.status"
 				/>
 			</template>
 		</FormGenerator>
@@ -238,8 +238,8 @@ init()
 		<EditDialog
 			:id="dialogId"
 			v-model:visible="dialogVisible"
-			:parent-id="dialogParentId"
 			:flag="dialogFlag"
+			:parentId="dialogParentId"
 			@refresh="queryList"
 		/>
 	</div>

@@ -2,29 +2,29 @@ import { request } from '@/utils/request'
 
 export function captchaImage(): Promise<API.ICaptchaImageRes> {
 	return request({
-		url: '/captchaImage',
-		method: 'get'
+		method: 'get',
+		url: '/captchaImage'
 	})
 }
 
 export function login(data: API.ILogin): Promise<API.ILoginRes> {
 	return request({
-		url: '/login',
+		data,
 		method: 'post',
-		data
+		url: '/login'
 	})
 }
 
 export function getUserInfo(): Promise<API.IUserInfoRes> {
 	return request({
-		url: '/getInfo',
-		method: 'get'
+		method: 'get',
+		url: '/getInfo'
 	})
 }
 
 export function userLogout(): Promise<null> {
 	return request({
-		url: '/logout',
-		method: 'get'
+		method: 'get',
+		url: '/logout'
 	})
 }

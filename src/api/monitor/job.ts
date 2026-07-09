@@ -3,9 +3,9 @@ import { request } from '@/utils/request'
 // 查询定时任务调度列表
 export function getListJob(query) {
 	return request({
-		url: '/monitor/job/list',
 		method: 'get',
-		params: query
+		params: query,
+		url: '/monitor/job/list'
 	})
 }
 
@@ -16,69 +16,69 @@ export function changeJobStatus(jobId: string, status: string) {
 		status
 	}
 	return request({
-		url: '/monitor/job/changeStatus',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/monitor/job/changeStatus'
 	})
 }
 
 // 导出
 export function jobExport(data) {
 	return request({
-		url: '/monitor/job/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/monitor/job/export'
 	})
 }
 
 // 定时任务立即执行一次
 export function runJob(jobId: string, jobGroup: string) {
 	const data = {
-		jobId,
-		jobGroup
+		jobGroup,
+		jobId
 	}
 	return request({
-		url: '/monitor/job/run',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/monitor/job/run'
 	})
 }
 
 // 删除定时任务调度
 export function delJob(jobId: string) {
 	return request({
-		url: '/monitor/job/' + jobId,
-		method: 'delete'
+		method: 'delete',
+		url: '/monitor/job/' + jobId
 	})
 }
 
 // 查询定时任务调度详细
 export function getJob(jobId: string) {
 	return request({
-		url: '/monitor/job/' + jobId,
-		method: 'get'
+		method: 'get',
+		url: '/monitor/job/' + jobId
 	})
 }
 
 // 新增定时任务调度
 export function addJob(data) {
 	return request({
-		url: '/monitor/job',
+		data: data,
 		method: 'post',
-		data: data
+		url: '/monitor/job'
 	})
 }
 
 // 修改定时任务调度
 export function updateJob(data) {
 	return request({
-		url: '/monitor/job',
+		data: data,
 		method: 'put',
-		data: data
+		url: '/monitor/job'
 	})
 }
 
@@ -92,44 +92,44 @@ export function listJobLog(params) {
 		delete apiParams.daterange
 	}
 	return request({
-		url: '/monitor/jobLog/list',
 		method: 'get',
-		params: apiParams
+		params: apiParams,
+		url: '/monitor/jobLog/list'
 	})
 }
 
 // 删除调度日志
 export function delJobLog(jobLogId) {
 	return request({
-		url: '/monitor/jobLog/' + jobLogId,
-		method: 'delete'
+		method: 'delete',
+		url: '/monitor/jobLog/' + jobLogId
 	})
 }
 
 // 清空调度日志
 export function cleanJobLog() {
 	return request({
-		url: '/monitor/jobLog/clean',
-		method: 'delete'
+		method: 'delete',
+		url: '/monitor/jobLog/clean'
 	})
 }
 // 调度日志导出
 export function jobLogExport(data) {
 	return request({
-		url: '/monitor/jobLog/export',
-		method: 'post',
 		data,
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		responseType: 'blob'
+		method: 'post',
+		responseType: 'blob',
+		url: '/monitor/jobLog/export'
 	})
 }
 
 // 查询定时任务调度详细
 export function getJobById(jobId: string) {
 	return request({
-		url: '/monitor/job/' + jobId,
-		method: 'get'
+		method: 'get',
+		url: '/monitor/job/' + jobId
 	})
 }

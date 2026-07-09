@@ -55,9 +55,9 @@ function filterAffixTags(routes: any[], basePath = '/') {
 		const tagPath = path.resolve(basePath, route!.path)
 		if (route.meta && route.meta.affix) {
 			tags.push({
-				path: tagPath,
+				meta: { ...route.meta },
 				name: route.name,
-				meta: { ...route.meta }
+				path: tagPath
 			})
 		}
 
@@ -109,8 +109,8 @@ function refreshSelectedTag(view?: RouteLocationNormalizedLoaded) {
 function closeSelectedTag(view?: RouteLocationNormalizedLoaded) {
 	if (!view) return
 	const { visitedViews } = tagsStore.delView({
-		path: view.path,
-		name: view.name as string
+		name: view.name as string,
+		path: view.path
 	})
 	if (isActive(view)) {
 		toLastView(visitedViews, view)
@@ -120,8 +120,8 @@ function closeOthersTags() {
 	if (!selectedTag.value) return
 	router.push(selectedTag.value)
 	tagsStore.delOthersViews({
-		path: selectedTag.value.path,
-		name: selectedTag.value.name as string
+		name: selectedTag.value.name as string,
+		path: selectedTag.value.path
 	})
 	moveToCurrentTag()
 }
@@ -188,11 +188,11 @@ function handleScroll() {
 		>
 			<RouterLink
 				v-for="tag in visitedViews"
-				ref="tag"
 				:key="tag.path"
+				ref="tag"
+				class="tags-view-item"
 				:class="isActive(tag) ? 'active' : ''"
 				:to="{ path: tag.path, query: tag.query }"
-				class="tags-view-item"
 				@click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
 				@contextmenu.prevent="openMenu(tag, $event)"
 			>
@@ -208,8 +208,8 @@ function handleScroll() {
 		</ScrollPane>
 		<ul
 			v-show="visible"
-			:style="{ left: left + 'px', top: top + 'px' }"
 			class="contextmenu"
+			:style="{ left: left + 'px', top: top + 'px' }"
 		>
 			<li @click="refreshSelectedTag(selectedTag)">刷新</li>
 			<li
