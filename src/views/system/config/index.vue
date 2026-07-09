@@ -268,6 +268,7 @@ init()
 		<EditDialog
 			:id="dialogId"
 			v-model:visible="dialogVisible"
+			:sysYesNo="sysYesNo"
 			@refresh="queryList"
 		/>
 	</div>

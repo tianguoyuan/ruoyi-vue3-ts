@@ -7,15 +7,15 @@ import type { FormConfig } from '@/components/FormGenerator/types'
 const props = defineProps<{
 	visible: boolean
 	id?: string
+	sysYesNo: API.IGetDictsRes
 }>()
 const emits = defineEmits<{
 	'update:visible': [v: boolean]
 	refresh: []
 }>()
 
+const sysYesNo = computed(() => props.sysYesNo)
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
-
-const sysYesNo = ref<API.IGetDictsRes>([])
 
 const initFormData = {
 	configKey: undefined,
@@ -39,6 +39,7 @@ watch(
 		})
 	}
 )
+
 const formConfig = ref<FormConfig>({
 	buttons: [],
 	fields: [
@@ -110,13 +111,6 @@ async function submit() {
 	emits('update:visible', false)
 	emits('refresh')
 }
-
-function init() {
-	getDicts('sys_yes_no').then(data => {
-		sysYesNo.value = data
-	})
-}
-init()
 </script>
 
 <template>
