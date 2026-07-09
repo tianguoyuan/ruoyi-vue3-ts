@@ -1,8 +1,9 @@
 <script lang="ts" setup name="Demo">
 import { ref } from 'vue'
+
+import { demoList } from '@/api'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import type { FormConfig } from '@/components/FormGenerator/types'
-import { demoList } from '@/api'
 
 const formData = ref<Record<string, any>>({})
 

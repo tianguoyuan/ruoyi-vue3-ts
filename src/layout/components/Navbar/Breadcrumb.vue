@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as pathToRegexp from 'path-to-regexp'
-import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router'
 import { onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter, type RouteRecordRaw } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()

@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia'
-import { store } from '.'
 import { ref } from 'vue'
+
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
+
+import { store } from '.'
 
 export const useTagsViewStore = defineStore('tagsView', () => {
 	const cachedViews = ref<string[]>([])

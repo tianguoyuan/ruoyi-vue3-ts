@@ -1,10 +1,11 @@
 <script setup lang="ts" name="Online">
-import { forceLogout, getOnlineList } from '@/api/monitor/online'
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
 import dayjs from 'dayjs'
 import { ElMessage } from 'element-plus'
+
+import { forceLogout, getOnlineList } from '@/api/monitor/online'
 import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { checkPermission } from '@/utils/permission'
 
 const formData = ref({})
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)

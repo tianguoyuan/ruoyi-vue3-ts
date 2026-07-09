@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import Logo from './Logo.vue'
-import SidebarItem from './SidebarItem.vue'
-import { usePermissionStore } from '@/store/permission'
 import { useAppStore } from '@/store/app'
+import { usePermissionStore } from '@/store/permission'
 import { useSettingsStore } from '@/store/settings'
 import variables from '@/style/variables.scss'
+
+import Logo from './Logo.vue'
+import SidebarItem from './SidebarItem.vue'
 
 const route = useRoute()
 const appStore = useAppStore()

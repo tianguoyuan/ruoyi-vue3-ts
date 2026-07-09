@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { createTable } from '@/api/tool/gen'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { ref } from 'vue'
+
+import { createTable } from '@/api/tool/gen'
 
 const emit = defineEmits<{
 	refresh: []

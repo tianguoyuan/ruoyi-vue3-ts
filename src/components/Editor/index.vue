@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import axios from 'axios'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import axios from 'axios'
+
 import storage from '@/utils/storage'
 
 const quillEditorRef = ref()

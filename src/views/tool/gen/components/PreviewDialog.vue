@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { copyText } from '@/utils/copyText'
 import { ElMessage } from 'element-plus'
+
+import { copyText } from '@/utils/copyText'
 
 const props = defineProps<{
 	show: boolean

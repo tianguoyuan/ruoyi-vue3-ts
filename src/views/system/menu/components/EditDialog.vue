@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { Search, QuestionFilled } from '@element-plus/icons-vue'
+
+import type { IDialogFlag } from '../index.vue'
 import { getDicts } from '@/api/system/dict'
 import { addMenu, getMenu, listMenu, updateMenu } from '@/api/system/menu'
-import type { IDialogFlag } from '../index.vue'
-import type { FormInstance } from 'element-plus'
 import IconSelect from '@/components/IconSelect/index.vue'
-import { Search, QuestionFilled } from '@element-plus/icons-vue'
+import type { FormInstance } from 'element-plus'
 const props = defineProps<{
 	visible: boolean
 	id?: number
@@ -202,11 +203,11 @@ init()
 											v-if="form.icon"
 											:icon-class="form.icon"
 											class="el-input__icon"
-											style=" width: 16px;height: 32px"
+											style="width: 16px; height: 32px"
 										/>
 										<el-icon
 											v-else
-											style=" width: 16px;height: 32px"
+											style="width: 16px; height: 32px"
 										>
 											<Search />
 										</el-icon>

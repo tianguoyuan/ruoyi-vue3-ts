@@ -5,7 +5,6 @@ import { checkPermission } from '@/utils/permission'
 const userStore = useUserStore()
 const msg = ref('')
 </script>
-
 <template>
 	<div class="p-3">
 		<div>dashboard</div>
@@ -27,5 +26,4 @@ const msg = ref('')
 		<el-input v-model="msg" />
 	</div>
 </template>
-
 <style scoped></style>

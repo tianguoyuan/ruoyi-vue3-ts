@@ -1,6 +1,7 @@
 <script setup name="CacheList" lang="ts">
-import { listCacheName, listCacheKey, getCacheValue, clearCacheName, clearCacheKey, clearCacheAll } from '@/api/monitor/cache'
 import { ElMessage } from 'element-plus'
+
+import { listCacheName, listCacheKey, getCacheValue, clearCacheName, clearCacheKey, clearCacheAll } from '@/api/monitor/cache'
 
 const cacheNames = ref([])
 const cacheKeys = ref([])

@@ -1,14 +1,16 @@
 <script setup lang="ts" name="Dict">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
+
 import { getDicts, optionselect } from '@/api/system/dict'
-import { downloadBlobFile } from '@/utils'
-import DataEditDialog from './components/DataEditDialog.vue'
 import { listData, dataExport, delData, getData } from '@/api/system/dictData'
 import { getType } from '@/api/system/dictType'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { useTagsViewStore } from '@/store/tagsView'
+import { downloadBlobFile } from '@/utils'
+import { checkPermission } from '@/utils/permission'
+
+import DataEditDialog from './components/DataEditDialog.vue'
 
 const router = useRouter()
 const route = useRoute()

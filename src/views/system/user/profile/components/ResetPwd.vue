@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { updateUserPwd } from '@/api/system/user'
 import { ElMessage, type FormInstance } from 'element-plus'
+
+import { updateUserPwd } from '@/api/system/user'
 
 const formModel = ref({
 	oldPassword: undefined,

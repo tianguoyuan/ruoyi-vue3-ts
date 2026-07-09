@@ -1,10 +1,12 @@
 <script setup lang="ts" name="Dept">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { checkPermission } from '@/utils/permission'
-import { getDicts } from '@/api/system/dict'
 import dayjs from 'dayjs'
+
 import { delDept, getDept, listDept } from '@/api/system/dept'
+import { getDicts } from '@/api/system/dict'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { checkPermission } from '@/utils/permission'
+
 import EditDialog from './components/EditDialog.vue'
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)

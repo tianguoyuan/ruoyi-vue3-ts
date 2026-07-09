@@ -1,9 +1,11 @@
 import axios, { type AxiosRequestConfig, type AxiosInstance, type Canceler, type Method } from 'axios'
-import { ResultEnum as REQUEST } from '@/enums/ResultEnum'
-import Storage from './storage'
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+
+import { ResultEnum as REQUEST } from '@/enums/ResultEnum'
 import router from '@/router'
 import { useUserStoreWidthOut } from '@/store/user'
+
+import Storage from './storage'
 
 // 是否显示重新登录
 export let isReLogin = { show: false }

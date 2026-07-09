@@ -1,10 +1,13 @@
 <script setup lang="ts" name="Layout">
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
-import RightPanel from '@/components/RightPanel/index.vue'
+import { computed } from 'vue'
+
 import BackToTop from '@/components/BackToTop/index.vue'
+import RightPanel from '@/components/RightPanel/index.vue'
 import { useAppStore } from '@/store/app'
 import { useSettingsStore } from '@/store/settings'
-import { computed } from 'vue'
+
+import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
 const sidebarOpened = computed(() => appStore.sidebarOpened)

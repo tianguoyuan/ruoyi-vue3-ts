@@ -1,15 +1,17 @@
 <script setup lang="ts" name="GenEditIndex">
+import { ElMessage, type Sort } from 'element-plus'
+
 import { delTable, genBatchGenCode, getGenList, previewTable, synchDb } from '@/api/tool/gen'
 import FormGenerator from '@/components/FormGenerator/index.vue'
 import type { FormConfig } from '@/components/FormGenerator/types'
+import { useTagsViewStore } from '@/store/tagsView'
 import { downloadBlobFile } from '@/utils'
 import { checkPermission } from '@/utils/permission'
-import { ElMessage, type Sort } from 'element-plus'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
+
 import CreateDialog from './components/CreateDialog.vue'
 import ImportDialog from './components/ImportDialog.vue'
 import PreviewDialog from './components/PreviewDialog.vue'
-import { useTagsViewStore } from '@/store/tagsView'
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()

@@ -1,7 +1,9 @@
 <script setup lang="ts" name="SidebarItem">
 import path from 'path-browserify'
+
 import { isExternal } from '@/utils/is'
 import type { RouteRecordRaw } from 'vue-router'
+
 import AppLink from './Link.vue'
 import MenuItem from './MenuItem'
 // import SidebarItem from './SidebarItem.vue'

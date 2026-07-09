@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia'
-import { store } from '.'
+import { ref } from 'vue'
+
 import defaultSettings from '@/settings'
 import variables from '@/styles/element-variables.module.scss'
-import { ref } from 'vue'
+
+import { store } from '.'
+
 const { showSettings, tagsView, fixedHeader, sidebarLogo, watermarkEnabled, watermarkContent } = defaultSettings
 
 interface ISettings {

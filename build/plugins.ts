@@ -1,22 +1,22 @@
-import { resolve } from 'path'
-import { type PluginOption } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
-import { createHtmlPlugin } from 'vite-plugin-html'
-import { visualizer } from 'rollup-plugin-visualizer'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import eslintPlugin from 'vite-plugin-eslint'
-import viteCompression from 'vite-plugin-compression'
-import vueSetupExtend from 'unplugin-vue-setup-extend-plus/vite'
+import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 // https://devtools-next.vuejs.org/
-import VueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
+import vueSetupExtend from 'unplugin-vue-setup-extend-plus/vite'
+import { type PluginOption } from 'vite'
+import viteCompression from 'vite-plugin-compression'
+import eslintPlugin from 'vite-plugin-eslint'
+import { createHtmlPlugin } from 'vite-plugin-html'
 // import IconsResolver from 'unplugin-icons/resolver'
 import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
+import { VitePWA } from 'vite-plugin-pwa'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 /**
  * 创建 vite 插件
@@ -68,7 +68,7 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 			imports: ['vue', '@vueuse/core', 'pinia', 'vue-router', 'vue-i18n'],
 			resolvers: [
 				// 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-				ElementPlusResolver()
+				ElementPlusResolver({ importStyle: false })
 				// 自动导入图标组件
 				// IconsResolver({})
 			],
@@ -88,7 +88,7 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 		Components({
 			resolvers: [
 				// 自动导入 Element Plus 组件
-				ElementPlusResolver()
+				ElementPlusResolver({ importStyle: false })
 				// 自动注册图标组件
 				// IconsResolver({
 				// 	// element-plus图标库，其他图标库 https://icon-sets.iconify.design/

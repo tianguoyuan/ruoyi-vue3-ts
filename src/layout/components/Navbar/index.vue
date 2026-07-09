@@ -1,14 +1,16 @@
 <script setup lang="ts" name="Navbar">
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
 import { useAppStore } from '@/store/app'
+import { useUserStore } from '@/store/user'
+
 import Breadcrumb from './Breadcrumb.vue'
 import ErrorLog from './ErrorLog.vue'
 import Hamburger from './Hamburger.vue'
 import HeaderSearch from './HeaderSearch.vue'
 import Screenfull from './Screenfull.vue'
 import SizeSelect from './SizeSelect.vue'
-import { computed, ref } from 'vue'
-import { useUserStore } from '@/store/user'
-import { useRoute, useRouter } from 'vue-router'
 
 const appStore = useAppStore()
 const userStore = useUserStore()

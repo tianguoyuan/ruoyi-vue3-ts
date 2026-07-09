@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { getDbList, importTable } from '@/api/tool/gen'
-import type { FormConfig } from '@/components/FormGenerator/types'
 import { ElMessage } from 'element-plus'
+
+import { getDbList, importTable } from '@/api/tool/gen'
 import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)
 const emit = defineEmits<{

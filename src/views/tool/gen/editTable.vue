@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { ElMessage } from 'element-plus'
+
 import { getGenTable } from '@/api/system/dict'
+import { updateGenTable } from '@/api/tool/genEdit'
+import { useTagsViewStore } from '@/store/tagsView'
+
 import BaseInfo from './components/BaseInfo.vue'
 import FieldInfo from './components/FieldInfo.vue'
 import GenInfo from './components/GenInfo.vue'
-import { ElMessage } from 'element-plus'
-import { updateGenTable } from '@/api/tool/genEdit'
-import { useTagsViewStore } from '@/store/tagsView'
 
 const router = useRouter()
 const route = useRoute()

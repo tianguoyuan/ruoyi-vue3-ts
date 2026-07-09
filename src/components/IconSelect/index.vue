@@ -56,7 +56,7 @@ defineExpose({
 						<SvgIcon
 							:icon-class="item"
 							class-name="icon"
-							style=" width: 16px;height: 25px"
+							style="width: 16px; height: 25px"
 						/>
 						<span>{{ item }}</span>
 					</div>

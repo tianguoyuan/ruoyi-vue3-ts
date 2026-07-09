@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ElScrollbar } from 'element-plus'
+
 import type { ComponentInternalInstance } from 'vue'
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance

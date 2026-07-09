@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { useUserStore } from '@/store/user'
-import { listMenu } from '@/api/tool/genEdit'
-import { buildTree } from '@/utils'
 import { QuestionFilled } from '@element-plus/icons-vue'
+
+import { listMenu } from '@/api/tool/genEdit'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { useUserStore } from '@/store/user'
+import { buildTree } from '@/utils'
 
 type IColumns = {
 	columnName: string

@@ -1,8 +1,9 @@
 <script setup name="AuthRole" lang="ts">
-import { getAuthRole, updateAuthRole } from '@/api/system/user'
-import { useTagsViewStore } from '@/store/tagsView'
 import dayjs from 'dayjs'
 import { ElMessage, type TableInstance } from 'element-plus'
+
+import { getAuthRole, updateAuthRole } from '@/api/system/user'
+import { useTagsViewStore } from '@/store/tagsView'
 
 const tagsStore = useTagsViewStore()
 const route = useRoute()

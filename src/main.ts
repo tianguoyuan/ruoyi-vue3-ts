@@ -1,19 +1,17 @@
+import '@/styles/index.scss'
+import '@unocss/reset/tailwind.css'
+import 'animate.css'
+import svgIds from 'virtual:svg-icons-names'
+import 'virtual:svg-icons-register'
+import 'virtual:uno.css'
 import { createApp } from 'vue'
+
+import { setupI18n } from '@/languages'
+import { setupElementUI } from '@/plugins/elementUI'
+
 import App from './App.vue'
 import { setupRouter } from './router'
 import { setupStore } from './store'
-import { setupI18n } from '@/languages'
-
-import '@unocss/reset/tailwind.css'
-import 'virtual:uno.css'
-import '@/styles/index.scss'
-import { setupElementUI } from '@/plugins/elementUI'
-// 本地SVG图标
-import svgIds from 'virtual:svg-icons-names'
-import 'virtual:svg-icons-register'
-
-// 过渡动画
-import 'animate.css'
 
 console.log('svgIds', svgIds)
 

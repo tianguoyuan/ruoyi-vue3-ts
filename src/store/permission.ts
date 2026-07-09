@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
-import { store } from '.'
 import { ref } from 'vue'
+
 import { asyncRoutes, constantRoutes, errorPageRoute, notFoundRoute } from '@/router/routes'
 import { filterAsyncRoutes, formatRoutes } from '@/utils/permission'
 import type { RouteRecordRaw } from 'vue-router'
+
+import { store } from '.'
 
 export const usePermissionStore = defineStore('permission', () => {
 	const addRoutes = ref<RouteRecordRaw[]>([])

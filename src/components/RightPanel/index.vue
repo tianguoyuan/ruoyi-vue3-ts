@@ -1,8 +1,9 @@
 <script setup lang="ts" name="RightPanel">
+import { Close, Setting } from '@element-plus/icons-vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+
 import { useSettingsStore } from '@/store/settings'
 import { addClass, removeClass } from '@/utils'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
-import { Close, Setting } from '@element-plus/icons-vue'
 const props = defineProps({
 	clickNotClose: Boolean,
 	buttonTop: {

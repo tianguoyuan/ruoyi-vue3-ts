@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
-import { store } from '.'
 import { ref } from 'vue'
-import { login as loginApi, getUserInfo as getUserInfoApi, userLogout } from '@/api/user'
-import Storage from '@/utils/storage'
+
 import { getRouters } from '@/api/menu'
+import { login as loginApi, getUserInfo as getUserInfoApi, userLogout } from '@/api/user'
 import router from '@/router'
+import Storage from '@/utils/storage'
+
+import { store } from '.'
 
 export const useUserStore = defineStore('user', () => {
 	const userInfoDefault = {

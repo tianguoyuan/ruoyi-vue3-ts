@@ -1,13 +1,14 @@
-import type { Router } from 'vue-router'
-import Storage from '@/utils/storage'
-import defaultSettings from '@/settings'
-import NProgress from '@/plugins/nprogress'
-import { useUserStoreWidthOut } from '@/store/user'
 import { to as apiTo } from 'await-to-js'
 import { ElMessage } from 'element-plus'
+
+import NProgress from '@/plugins/nprogress'
+import defaultSettings from '@/settings'
 import { usePermissionStoreWidthOut } from '@/store/permission'
+import { useUserStoreWidthOut } from '@/store/user'
 import { isExternal } from '@/utils/is'
 import { isReLogin } from '@/utils/request'
+import Storage from '@/utils/storage'
+import type { Router } from 'vue-router'
 
 export function setupPermission(router: Router) {
 	const whiteList = ['/login'] // no redirect whitelist

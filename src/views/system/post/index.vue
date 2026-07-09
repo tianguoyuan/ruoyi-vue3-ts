@@ -1,11 +1,13 @@
 <script setup lang="ts" name="Post">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
+
 import { getDicts } from '@/api/system/dict'
-import { downloadBlobFile } from '@/utils'
 import { listPost, postExport, delPost } from '@/api/system/post'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { downloadBlobFile } from '@/utils'
+import { checkPermission } from '@/utils/permission'
+
 import EditDialog from './components/EditDialog.vue'
 
 const router = useRouter()

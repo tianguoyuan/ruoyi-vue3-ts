@@ -1,13 +1,15 @@
 <script setup lang="ts" name="Job">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { getDicts } from '@/api/system/dict'
-import { changeJobStatus, delJob, getListJob, jobExport, runJob } from '@/api/monitor/job'
 import { ElMessage } from 'element-plus'
+
+import { changeJobStatus, delJob, getListJob, jobExport, runJob } from '@/api/monitor/job'
+import { getDicts } from '@/api/system/dict'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { downloadBlobFile } from '@/utils'
-import PreviewDialog from './components/PreviewDialog.vue'
+import { checkPermission } from '@/utils/permission'
+
 import EditDialog from './components/EditDialog.vue'
+import PreviewDialog from './components/PreviewDialog.vue'
 
 const router = useRouter()
 
@@ -355,7 +357,7 @@ init()
 		</FormGenerator>
 
 		<PreviewDialog
-			v-model:previewDialogShow="previewDialogShow"
+			v-model:preview-dialog-show="previewDialogShow"
 			:preview-dialog-id="previewDialogId"
 		/>
 

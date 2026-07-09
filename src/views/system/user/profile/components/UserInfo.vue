@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ElMessage, type FormInstance } from 'element-plus'
+
 import { updateUserProfile } from '@/api/system/user'
 import { useUserStore } from '@/store/user'
 

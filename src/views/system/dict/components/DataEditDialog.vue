@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { getDicts } from '@/api/system/dict'
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import { getData, addData, updateData } from '@/api/system/dictData'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+
 const props = defineProps<{
 	visible: boolean
 	dictType: string

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
+import { ElMessage } from 'element-plus'
+
+import { getConfigKey } from '@/api/system/config'
 import { getDicts } from '@/api/system/dict'
 import { addUser, getUser, updateUser } from '@/api/system/user'
-import { getConfigKey } from '@/api/system/config'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { validEmailReg, validPhoneReg } from '@/utils/validate'
-import { ElMessage } from 'element-plus'
 
 const props = defineProps<{
 	visible: boolean

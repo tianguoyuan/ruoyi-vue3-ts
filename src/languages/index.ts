@@ -1,10 +1,11 @@
 import { createI18n } from 'vue-i18n'
-import { getBrowserLang } from '@/utils'
 
-import zhCN from './modules/zh-CN'
-import en from './modules/en'
+import { getBrowserLang } from '@/utils'
 import Storage from '@/utils/storage'
 import type { App } from 'vue'
+
+import en from './modules/en'
+import zhCN from './modules/zh-CN'
 
 const i18n = createI18n({
 	// Use Composition API, Set to false

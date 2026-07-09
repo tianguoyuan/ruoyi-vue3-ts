@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { SizeEnum, type ISizeEnumType } from '@/enums/SizeEnum'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import { SizeEnum, type ISizeEnumType } from '@/enums/SizeEnum'
 import { useAppStore } from '@/store/app'
 
 const appStore = useAppStore()

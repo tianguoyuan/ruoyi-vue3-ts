@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import CrontabSecond from './second.vue'
-import CrontabMin from './min.vue'
-import CrontabHour from './hour.vue'
 import CrontabDay from './day.vue'
+import CrontabHour from './hour.vue'
+import CrontabMin from './min.vue'
 import CrontabMonth from './month.vue'
+import CrontabResult from './result.vue'
+import CrontabSecond from './second.vue'
 import CrontabWeek from './week.vue'
 import CrontabYear from './year.vue'
-import CrontabResult from './result.vue'
 const emit = defineEmits(['hide', 'fill'])
 const props = defineProps({
 	hideComponent: {

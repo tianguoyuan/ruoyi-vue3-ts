@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import { Upload } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
 import { VueCropper } from 'vue-cropper'
+import 'vue-cropper/dist/index.css'
+
 import { uploadAvatar } from '@/api/system/user'
 import { useUserStore } from '@/store/user'
-import { ElMessage } from 'element-plus'
-import { Upload } from '@element-plus/icons-vue'
-import 'vue-cropper/dist/index.css'
 
 const userStore = useUserStore()
 const open = ref(false)

@@ -1,6 +1,7 @@
 <script setup lang="ts" name="AppMain">
-import { useTagsViewStore } from '@/store/tagsView'
 import { computed } from 'vue'
+
+import { useTagsViewStore } from '@/store/tagsView'
 
 const tagsViewStore = useTagsViewStore()
 const cachedViews = computed(() => tagsViewStore.cachedViews)

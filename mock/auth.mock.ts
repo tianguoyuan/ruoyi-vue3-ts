@@ -72,7 +72,10 @@ export default defineMock([
 								path: 'index',
 								name: 'Guide',
 								component: 'guide/index',
-								meta: { title: '指南', icon: 'guide' }
+								meta: {
+									title: '指南',
+									icon: 'guide'
+								}
 							}
 						]
 					}

@@ -1,10 +1,8 @@
 <script setup lang="ts" name="Role">
-import { listUser } from '@/api/system/user'
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
+
 import { getDicts } from '@/api/system/dict'
+import { roleMenuTreeselect, treeselect } from '@/api/system/menu'
 import {
 	addRole,
 	changeRoleStatus,
@@ -16,9 +14,12 @@ import {
 	roleExport,
 	updateRole
 } from '@/api/system/role'
+import { listUser } from '@/api/system/user'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { downloadBlobFile } from '@/utils'
+import { checkPermission } from '@/utils/permission'
 import type { TreeInstance } from 'element-plus'
-import { roleMenuTreeselect, treeselect } from '@/api/system/menu'
 
 const router = useRouter()
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)

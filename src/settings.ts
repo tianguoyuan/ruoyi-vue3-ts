@@ -1,7 +1,7 @@
-import { SizeEnum } from '@/enums/SizeEnum'
-import { LayoutEnum } from '@/enums/LayoutEnum'
-import { ThemeEnum } from '@/enums/ThemeEnum'
 import { LanguageEnum } from '@/enums/LanguageEnum'
+import { LayoutEnum } from '@/enums/LayoutEnum'
+import { SizeEnum } from '@/enums/SizeEnum'
+import { ThemeEnum } from '@/enums/ThemeEnum'
 
 const { pkg } = __APP_INFO__
 console.log('pkg', pkg)

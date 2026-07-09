@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import screenfull from 'screenfull'
 import { ElMessage } from 'element-plus'
+import screenfull from 'screenfull'
 const isFullscreen = ref(false)
 onMounted(() => {
 	init()

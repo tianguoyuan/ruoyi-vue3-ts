@@ -1,10 +1,12 @@
 <script setup lang="ts" name="Menu">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { checkPermission } from '@/utils/permission'
-import { getDicts } from '@/api/system/dict'
 import dayjs from 'dayjs'
+
+import { getDicts } from '@/api/system/dict'
 import { delMenu, listMenu } from '@/api/system/menu'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { checkPermission } from '@/utils/permission'
+
 import EditDialog from './components/EditDialog.vue'
 
 const formGeneratorRef = ref<InstanceType<typeof FormGenerator> | null>(null)

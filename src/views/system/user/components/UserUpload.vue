@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { UploadFilled } from '@element-plus/icons-vue'
+import { ElAlert, type UploadInstance } from 'element-plus'
+
 import { USER_UPLOAD_URL, userImportTemplate } from '@/api/system/user'
 import { downloadBlobFile } from '@/utils'
 import storage from '@/utils/storage'
-import { ElAlert, type UploadInstance } from 'element-plus'
-import { UploadFilled } from '@element-plus/icons-vue'
 
 const props = defineProps<{
 	visible: boolean

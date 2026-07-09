@@ -1,6 +1,7 @@
 <script setup lang="ts" name="Settings">
-import { useSettingsStore } from '@/store/settings'
 import { computed } from 'vue'
+
+import { useSettingsStore } from '@/store/settings'
 
 const settingsStore = useSettingsStore()
 const tagsView = computed({

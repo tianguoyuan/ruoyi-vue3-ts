@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { getJob } from '@/api/monitor/job'
 import dayjs from 'dayjs'
+
+import { getJob } from '@/api/monitor/job'
 
 const props = defineProps<{
 	previewDialogId?: string

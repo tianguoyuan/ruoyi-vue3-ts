@@ -1,11 +1,12 @@
 <script setup lang="ts" name="Logininfor">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import { checkPermission } from '@/utils/permission'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
+
 import { getDicts } from '@/api/system/dict'
-import { downloadBlobFile } from '@/utils'
 import { cleanLogininfor, delLogininfor, list, operLogininfor, unlockLogininfor } from '@/api/system/logininfor'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { downloadBlobFile } from '@/utils'
+import { checkPermission } from '@/utils/permission'
 import type { Sort } from 'element-plus'
 
 const router = useRouter()

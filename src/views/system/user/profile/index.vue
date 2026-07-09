@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { systemUserProfile } from '@/api/system/user'
-import UserInfo from './components/UserInfo.vue'
+
 import ResetPwd from './components/ResetPwd.vue'
+import UserInfo from './components/UserInfo.vue'
 
 const userProfile = ref<{ label: string; value: string; icon: string }[]>([])
 

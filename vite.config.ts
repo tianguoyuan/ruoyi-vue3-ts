@@ -1,14 +1,21 @@
-import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
-import { resolve } from 'path'
-import { wrapperEnv } from './build/getEnv'
-import { createProxy } from './build/proxy'
-import { createVitePlugins } from './build/plugins'
-import pkg from './package.json'
 import dayjs from 'dayjs'
+import { resolve } from 'path'
+import { defineConfig, loadEnv, type ConfigEnv, type UserConfig } from 'vite'
+
+import { wrapperEnv } from './build/getEnv'
+import { createVitePlugins } from './build/plugins'
+import { createProxy } from './build/proxy'
+import pkg from './package.json'
 
 const { dependencies, devDependencies, name, version, engines } = pkg
 const __APP_INFO__ = {
-	pkg: { dependencies, devDependencies, name, version, engines },
+	pkg: {
+		dependencies,
+		devDependencies,
+		name,
+		version,
+		engines
+	},
 	lastBuildTime: dayjs().format('YYYY-MM-DD HH:mm:ss')
 }
 
@@ -45,6 +52,9 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
 			cors: true,
 			// Load proxy configuration from .env.development
 			proxy: createProxy(viteEnv.VITE_PROXY)
+		},
+		optimizeDeps: {
+			include: ['element-plus/es', '@element-plus/icons-vue']
 		},
 		plugins: createVitePlugins(viteEnv),
 		esbuild: {

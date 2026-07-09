@@ -1,5 +1,5 @@
-import type { RouteRecordRaw } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import type { RouteRecordRaw } from 'vue-router'
 
 export const errorPageRoute: RouteRecordRaw[] = [
 	{

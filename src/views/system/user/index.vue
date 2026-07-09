@@ -1,14 +1,16 @@
 <script setup lang="ts" name="User">
-import { changeUserStatus, listUser, resetUserPwd, delUser, deptTreeSelect, userExport } from '@/api/system/user'
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { checkPermission } from '@/utils/permission'
 import dayjs from 'dayjs'
-import { getDicts } from '@/api/system/dict'
 import { ElMessage, type TreeInstance } from 'element-plus'
+
+import { getDicts } from '@/api/system/dict'
+import { changeUserStatus, listUser, resetUserPwd, delUser, deptTreeSelect, userExport } from '@/api/system/user'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { downloadBlobFile } from '@/utils'
-import UserUpload from './components/UserUpload.vue'
+import { checkPermission } from '@/utils/permission'
+
 import EditUserDialog from './components/EditUserDialog.vue'
+import UserUpload from './components/UserUpload.vue'
 
 const router = useRouter()
 

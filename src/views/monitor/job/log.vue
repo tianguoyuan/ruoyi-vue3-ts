@@ -1,13 +1,14 @@
 <script setup lang="ts" name="JobLog">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
-import { getJobById, listJobLog, delJobLog, cleanJobLog, jobLogExport, getJob } from '@/api/monitor/job'
 import dayjs from 'dayjs'
-import { checkPermission } from '@/utils/permission'
-import { getDicts } from '@/api/system/dict'
-import { downloadBlobFile } from '@/utils'
 import { ElMessage } from 'element-plus'
+
+import { getJobById, listJobLog, delJobLog, cleanJobLog, jobLogExport, getJob } from '@/api/monitor/job'
+import { getDicts } from '@/api/system/dict'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 import { useTagsViewStore } from '@/store/tagsView'
+import { downloadBlobFile } from '@/utils'
+import { checkPermission } from '@/utils/permission'
 
 const tagsViewStore = useTagsViewStore()
 const route = useRoute()

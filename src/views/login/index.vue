@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { User, Lock } from '@element-plus/icons-vue'
-import { useRoute, useRouter } from 'vue-router'
-import type { FormInstance } from 'element-plus'
-import { useUserStore } from '@/store/user'
-import { captchaImage } from '@/api/user'
-import Cookies from 'js-cookie'
-import { encrypt, decrypt } from '@/utils/jsencrypt'
 import to from 'await-to-js'
+import Cookies from 'js-cookie'
+import { ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
+import { captchaImage } from '@/api/user'
+import { useUserStore } from '@/store/user'
+import { encrypt, decrypt } from '@/utils/jsencrypt'
+import type { FormInstance } from 'element-plus'
 
 const appTitle = import.meta.env.VITE_GLOB_APP_TITLE
 const route = useRoute()

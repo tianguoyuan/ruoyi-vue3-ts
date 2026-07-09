@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
-import { allocatedUserList, authUserCancelAll, authUserSelectAll, unallocatedUserList } from '@/api/system/role'
-import { checkPermission } from '@/utils/permission'
-import { useTagsViewStore } from '@/store/tagsView'
+
 import { getDicts } from '@/api/system/dict'
+import { allocatedUserList, authUserCancelAll, authUserSelectAll, unallocatedUserList } from '@/api/system/role'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+import { useTagsViewStore } from '@/store/tagsView'
+import { checkPermission } from '@/utils/permission'
 
 const router = useRouter()
 const route = useRoute()

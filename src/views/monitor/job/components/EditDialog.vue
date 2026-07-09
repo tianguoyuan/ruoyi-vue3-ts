@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { addJob, getJob, updateJob } from '@/api/monitor/job'
-import type { FormConfig } from '@/components/FormGenerator/types'
-import FormGenerator from '@/components/FormGenerator/index.vue'
 import dayjs from 'dayjs'
-import { getDicts } from '@/api/system/dict'
-import Crontab from './Crontab/index.vue'
 import { ElMessage } from 'element-plus'
+
+import { addJob, getJob, updateJob } from '@/api/monitor/job'
+import { getDicts } from '@/api/system/dict'
+import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
+
+import Crontab from './Crontab/index.vue'
 
 const props = defineProps<{
 	editId?: string

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { QuestionFilled } from '@element-plus/icons-vue'
 import { ref, watch, onMounted } from 'vue'
+
 import type { FormConfig } from './types'
 import type { FormInstance, Sort, TableInstance } from 'element-plus'
-import { QuestionFilled } from '@element-plus/icons-vue'
 
 const tableRef = ref<null | TableInstance>(null)
 const props = defineProps<{

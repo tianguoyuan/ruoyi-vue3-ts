@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { FormConfig } from '@/components/FormGenerator/types'
 import FormGenerator from '@/components/FormGenerator/index.vue'
+import type { FormConfig } from '@/components/FormGenerator/types'
 
 const props = defineProps<{
 	info: API.IGetGenTableRes['data']['info']

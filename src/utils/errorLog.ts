@@ -1,7 +1,9 @@
 import Vue from 'vue'
-import { useErrorStoreWithOut } from '@/store/error'
-import { isString, isArray } from './is'
+
 import settings from '@/settings'
+import { useErrorStoreWithOut } from '@/store/error'
+
+import { isString, isArray } from './is'
 
 const { needErrorLog } = settings
 
