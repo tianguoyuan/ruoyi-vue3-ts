@@ -1,5 +1,6 @@
 import axios, { type AxiosRequestConfig, type AxiosInstance, type Canceler, type Method } from 'axios'
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import { debounce } from 'throttle-debounce'
 
 import { ResultEnum as REQUEST } from '@/enums/ResultEnum'
 import router from '@/router'
@@ -20,13 +21,11 @@ interface InterceptorsState {
 	cancelToken: boolean
 }
 class Request {
-	public queueUrl: number
+	public queueUrl: number = 0
 	public cancelTokenList: { url?: string; cancel: Canceler }[] = []
 	private baseUrl: string
 	private loadingInstance: null | ReturnType<typeof ElLoading.service> = null
 	constructor(props: RequestState) {
-		this.queueUrl = 0
-		this.cancelTokenList = []
 		this.baseUrl = props.baseUrl
 	}
 
@@ -78,18 +77,17 @@ class Request {
 			background: 'rgba(0, 0, 0, 0.7)'
 		})
 	}
+	private debouncedHideLoading = debounce(600, () => {
+		!this.queueUrl && this.hideLoading()
+	})
+
 	private destroy(url: string, loading: boolean) {
 		if (loading) {
 			this.queueUrl--
 		}
 		this.cancelTokenList = this.cancelTokenList.filter(cancel => url !== cancel.url)
 
-		setTimeout(() => {
-			!this.queueUrl && this.hideLoading()
-		}, 600)
-		// if (!this.queueUrl) {
-		// 	this.hideLoading()
-		// }
+		this.debouncedHideLoading()
 	}
 	private interceptors(options: InterceptorsState) {
 		const { instance, url, loading, cancelToken } = options
