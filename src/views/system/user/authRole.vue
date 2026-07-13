@@ -89,7 +89,7 @@ init()
 </script>
 
 <template>
-	<div class="app-container">
+	<div class="p-5">
 		<h4 class="text-4 color-#6379bb border-b border-#ddd border-b-solid pb-1 mb-6">基本信息</h4>
 		<ElForm
 			labelWidth="80px"

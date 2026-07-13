@@ -1,4 +1,5 @@
 <script setup name="CacheList" lang="ts">
+import { Collection, Document, Key } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 import { listCacheName, listCacheKey, getCacheValue, clearCacheName, clearCacheKey, clearCacheAll } from '@/api/monitor/cache'
@@ -94,7 +95,7 @@ getCacheNames()
 </script>
 
 <template>
-	<div class="app-container">
+	<div class="p-5">
 		<ElRow :gutter="10">
 			<ElCol :span="8">
 				<ElCard style="height: calc(100vh - 125px)">

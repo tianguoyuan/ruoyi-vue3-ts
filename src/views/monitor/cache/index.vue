@@ -1,4 +1,5 @@
 <script setup lang="ts" name="Cache">
+import { Monitor, PieChart, Odometer } from '@element-plus/icons-vue'
 import * as echarts from 'echarts'
 
 import { getCache } from '@/api/monitor/cache'
@@ -68,7 +69,7 @@ getList()
 </script>
 
 <template>
-	<div class="app-container">
+	<div class="p-5">
 		<ElRow :gutter="10">
 			<ElCol
 				class="card-box"

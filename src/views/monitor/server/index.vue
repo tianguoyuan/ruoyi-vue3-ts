@@ -1,4 +1,6 @@
 <script setup lang="ts" name="Serve">
+import { Cpu, Tickets, Monitor } from '@element-plus/icons-vue'
+
 import { getServer } from '@/api/monitor/server'
 const server = ref<API.IGetServer>({
 	cpu: {},

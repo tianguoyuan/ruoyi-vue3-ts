@@ -26,3 +26,9 @@ const settingsStore = useSettingsStore()
 		</ElWatermark>
 	</ElConfigProvider>
 </template>
+
+<style lang="scss">
+svg {
+	display: inline;
+}
+</style>
