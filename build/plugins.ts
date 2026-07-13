@@ -5,6 +5,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import UnoCSS from 'unocss/vite'
 // https://devtools-next.vuejs.org/
 import AutoImport from 'unplugin-auto-import/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import vueSetupExtend from 'unplugin-vue-setup-extend-plus/vite'
@@ -12,7 +13,6 @@ import { type PluginOption } from 'vite'
 import viteCompression from 'vite-plugin-compression'
 import eslintPlugin from 'vite-plugin-eslint'
 import { createHtmlPlugin } from 'vite-plugin-html'
-// import IconsResolver from 'unplugin-icons/resolver'
 import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
 import { VitePWA } from 'vite-plugin-pwa'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
@@ -77,9 +77,9 @@ export function createVitePlugins(viteEnv: ViteEnv): (PluginOption | PluginOptio
 			imports: ['vue', '@vueuse/core', 'pinia', 'vue-router', 'vue-i18n'],
 			resolvers: [
 				// 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-				ElementPlusResolver({ importStyle: false })
+				ElementPlusResolver({ importStyle: false }),
 				// 自动导入图标组件
-				// IconsResolver({})
+				IconsResolver({})
 			],
 			// 是否在 vue 模板中自动导入
 			vueTemplate: true

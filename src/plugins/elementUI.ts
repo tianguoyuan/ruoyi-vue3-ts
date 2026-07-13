@@ -14,7 +14,7 @@ export function setupElementUI(app: App) {
 	app.use(ElementPlus, {
 		size: (appStore.size || 'default') as ISizeEnumType
 	})
-	// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-	// 	app.component(key, component)
-	// }
+	for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+		app.component(key, component)
+	}
 }
