@@ -4,8 +4,6 @@ import errGif from '@/assets/images/401_images/401.gif'
 const router = useRouter()
 const route = useRoute()
 const errImg = errGif + '?' + +new Date()
-const ewizardClap = 'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646'
-const dialogVisible = ref(false)
 function back() {
 	if (route.query.noGoBack) {
 		router.push({ path: '/' })
@@ -19,7 +17,8 @@ function back() {
 	<div class="errPage-container">
 		<ElButton
 			class="pan-back-btn"
-			icon="el-icon-arrow-left"
+			icon="ArrowLeft"
+			type="primary"
 			@click="back"
 		>
 			返回
@@ -27,29 +26,11 @@ function back() {
 		<ElRow>
 			<ElCol :span="12">
 				<h1 class="text-jumbo text-ginormous">Oops!</h1>
-				gif来源
-				<a
-					href="https://zh.airbnb.com/"
-					target="_blank"
-					>airbnb</a
-				>
-				页面
+
 				<h2>你没有权限去该页面</h2>
-				<h6>如有不满请联系你领导</h6>
 				<ul class="list-unstyled">
-					<li>或者你可以去:</li>
 					<li class="link-type">
 						<RouterLink to="/"> 回首页 </RouterLink>
-					</li>
-					<li class="link-type">
-						<a href="https://www.taobao.com/">随便看看</a>
-					</li>
-					<li>
-						<a
-							href="#"
-							@click.prevent="dialogVisible = true"
-							>点我看图</a
-						>
 					</li>
 				</ul>
 			</ElCol>
@@ -62,15 +43,6 @@ function back() {
 				/>
 			</ElCol>
 		</ElRow>
-		<ElDialog
-			v-model:visible="dialogVisible"
-			title="随便看"
-		>
-			<img
-				class="pan-img"
-				:src="ewizardClap"
-			/>
-		</ElDialog>
 	</div>
 </template>
 

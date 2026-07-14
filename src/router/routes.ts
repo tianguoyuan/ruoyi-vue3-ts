@@ -5,7 +5,8 @@ export const errorPageRoute: RouteRecordRaw[] = [
 	{
 		component: () => import('@/views/errorPage/404.vue'),
 		meta: {
-			hidden: true
+			hidden: true,
+			title: '404'
 		},
 		name: 'Page404',
 		path: '/404'
@@ -13,7 +14,8 @@ export const errorPageRoute: RouteRecordRaw[] = [
 	{
 		component: () => import('@/views/errorPage/401.vue'),
 		meta: {
-			hidden: true
+			hidden: true,
+			title: '401'
 		},
 		name: 'Page401',
 		path: '/401'

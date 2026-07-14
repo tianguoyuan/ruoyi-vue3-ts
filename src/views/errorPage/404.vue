@@ -29,15 +29,6 @@ const message = 'The webmaster said that you can not enter this page...'
 			</div>
 			<div class="bullshit">
 				<div class="bullshit__oops">OOPS!</div>
-				<div class="bullshit__info">
-					All rights reserved
-					<a
-						href="https://wallstreetcn.com"
-						style="color: #20a0ff"
-						target="_blank"
-						>wallstreetcn</a
-					>
-				</div>
 				<div class="bullshit__headline">{{ message }}</div>
 				<div class="bullshit__info">
 					Please check that the URL you entered is correct, or click the button below to return to the homepage.
@@ -55,12 +46,10 @@ const message = 'The webmaster said that you can not enter this page...'
 
 <style lang="scss" scoped>
 .wscn-http404-container {
-	position: absolute;
-	top: 40%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	padding-top: 20vh;
 }
 .wscn-http404 {
+	margin: 0 auto;
 	position: relative;
 	width: 1200px;
 	padding: 0 50px;

@@ -16,7 +16,7 @@ export function setupPermission(router: Router) {
 	router.beforeEach((to, _from, next) => {
 		NProgress.start()
 		// 设置页面标题
-		document.title = `${to.meta?.title} - ${defaultSettings.title}`
+		document.title = `${to.meta?.title || ''} - ${defaultSettings.title}`
 		const userStore = useUserStoreWidthOut()
 		const permissionStore = usePermissionStoreWidthOut()
 
