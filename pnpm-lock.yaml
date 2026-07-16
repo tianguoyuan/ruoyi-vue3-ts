@@ -204,9 +204,6 @@ importers:
       svgo:
         specifier: ^4.0.0
         version: 4.0.0
-      tsx:
-        specifier: ^4.23.0
-        version: 4.23.0
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
