@@ -94,7 +94,7 @@
 		"eslint-plugin-vue": "^10.0.0",
 		"globals": "^17.7.0",
 		"husky": "^8.0.3",
-		"lint-staged": "^15.2.0",
+		"lint-staged": "^17.0.8",
 		"postcss": "^8.4.33",
 		"postcss-px-to-viewport": "^1.1.1",
 		"prettier": "^3.1.1",
